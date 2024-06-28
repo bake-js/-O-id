@@ -17,6 +17,7 @@
 	"main": "./dist/kuba.cjs",
 	"module": "./dist/kuba.js",
 	"name": "@bake-js/element",
+	"private": true,
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/bake-js/element.git"
@@ -28,6 +29,6 @@
 	"source": "./index.js",
 	"type": "module",
 	"types": "./index.d.ts",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"workspaces": ["packages/*"]
 }
