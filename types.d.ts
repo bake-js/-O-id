@@ -1,1 +1,1 @@
-/// <reference path="./packages/standard/define/types.d.ts" />
+import "standard/define/types.d.ts";
