@@ -1,5 +1,15 @@
 {
-	"dependencies": {
+	"devDependencies": {
+		"@babel/plugin-proposal-decorators": "^7.24.7",
+		"vite": "^5.3.1",
+		"vite-plugin-babel": "^1.2.0"
+	},
+	"files": ["dist/*", "packages/**/*.d.ts", "index.d.ts"],
+	"license": "MIT",
+	"main": "./dist/kuba.cjs",
+	"module": "./dist/kuba.js",
+	"name": "@bake-js/element",
+	"peerDependencies": {
 		"artifact": "workspace:*",
 		"directive": "workspace:*",
 		"element": "workspace:*",
@@ -7,15 +17,6 @@
 		"polyfill": "workspace:*",
 		"standard": "workspace:*"
 	},
-	"devDependencies": {
-		"@babel/plugin-proposal-decorators": "^7.24.7",
-		"vite": "^5.3.1",
-		"vite-plugin-babel": "^1.2.0"
-	},
-	"license": "MIT",
-	"main": "./dist/kuba.cjs",
-	"module": "./dist/kuba.js",
-	"name": "@bake-js/element",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/bake-js/element.git"
