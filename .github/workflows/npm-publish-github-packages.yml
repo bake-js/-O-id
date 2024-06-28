@@ -25,7 +25,6 @@ jobs:
       packages: write
     steps:
       - uses: oven-sh/setup-bun@v1
-      - uses: actions/setup-node@v3
         with:
           bun-version: latest
           registry-url: https://npm.pkg.github.com/
