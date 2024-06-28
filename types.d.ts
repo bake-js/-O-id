@@ -1,1 +1,1 @@
-import "standard/define/types.d.ts";
+export * from "standard/define";
