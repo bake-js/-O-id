@@ -24,6 +24,7 @@ jobs:
       contents: read
       packages: write
     steps:
+      - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v1
         with:
           bun-version: latest
