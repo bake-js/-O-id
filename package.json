@@ -4,7 +4,7 @@
 		"vite": "^5.3.1",
 		"vite-plugin-babel": "^1.2.0"
 	},
-	"files": ["dist/*", "packages/**/*.d.ts", "types.d.ts"],
+	"files": ["dist/*", "types.d.ts"],
 	"license": "MIT",
 	"main": "./dist/element.cjs",
 	"module": "./dist/element.js",
@@ -28,6 +28,6 @@
 	"source": "./index.js",
 	"type": "module",
 	"types": "./types.d.ts",
-	"version": "0.0.14",
+	"version": "0.0.15",
 	"workspaces": ["packages/*"]
 }
