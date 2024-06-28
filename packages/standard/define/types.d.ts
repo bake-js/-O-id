@@ -5,7 +5,7 @@
  * @param {ElementDefinitionOptions} options - As opções para definir o elemento personalizado.
  * @returns {Function} - Uma função decoradora para definir a classe do elemento personalizado.
  */
-declare function define(
+export declare function define(
 	tagName: string,
 	options?: ElementDefinitionOptions,
 ): (constructor: CustomElementConstructor) => void;
