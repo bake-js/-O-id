@@ -17,7 +17,6 @@
 	"main": "./dist/kuba.cjs",
 	"module": "./dist/kuba.js",
 	"name": "@bake-js/element",
-	"private": true,
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/bake-js/element.git"
