@@ -4,10 +4,10 @@
 		"vite": "^5.3.1",
 		"vite-plugin-babel": "^1.2.0"
 	},
-	"files": ["dist/*", "packages/**/*.d.ts", "types.d.ts"],
+	"files": ["dist", "types.d.ts"],
 	"license": "MIT",
-	"main": "./dist/element.cjs",
-	"module": "./dist/element.js",
+	"main": "dist/element.cjs",
+	"module": "dist/element.js",
 	"name": "@bake-js/element",
 	"peerDependencies": {
 		"artifact": "workspace:*",
@@ -25,9 +25,9 @@
 		"dev": "vite",
 		"build": "vite build"
 	},
-	"source": "./index.js",
+	"source": "index.js",
 	"type": "module",
-	"types": "./types.d.ts",
-	"version": "0.0.16",
+	"types": "types.d.ts",
+	"version": "0.0.17",
 	"workspaces": ["packages/*"]
 }
