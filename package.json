@@ -17,9 +17,6 @@
 	"main": "./dist/kuba.cjs",
 	"module": "./dist/kuba.js",
 	"name": "@bake-js/element",
-	"publishConfig": {
-		"registry": "https://npm.pkg.github.com"
-	},
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build"
