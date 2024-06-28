@@ -9,5 +9,3 @@ declare function define(
 	tagName: string,
 	options?: ElementDefinitionOptions,
 ): (constructor: CustomElementConstructor) => void;
-
-export { define };
