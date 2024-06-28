@@ -6,8 +6,8 @@
 	},
 	"files": ["dist/*", "packages/**/*.d.ts", "index.d.ts"],
 	"license": "MIT",
-	"main": "./dist/kuba.cjs",
-	"module": "./dist/kuba.js",
+	"main": "./dist/element.cjs",
+	"module": "./dist/element.js",
 	"name": "@bake-js/element",
 	"peerDependencies": {
 		"artifact": "workspace:*",
@@ -28,6 +28,6 @@
 	"source": "./index.js",
 	"type": "module",
 	"types": "./index.d.ts",
-	"version": "0.0.7",
+	"version": "0.0.8",
 	"workspaces": ["packages/*"]
 }
