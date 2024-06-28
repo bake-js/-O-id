@@ -17,6 +17,10 @@
 	"main": "./dist/kuba.cjs",
 	"module": "./dist/kuba.js",
 	"name": "@bake-js/element",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/bake-js/element.git"
+	},
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build"
@@ -24,6 +28,6 @@
 	"source": "./index.js",
 	"type": "module",
 	"types": "./index.d.ts",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"workspaces": ["packages/*"]
 }
