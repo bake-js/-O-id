@@ -14,7 +14,7 @@ export declare function adopted(target: any, propertyKey: PropertyKey): void;
  * @param {string} attributeName - O nome do atributo a ser observado.
  */
 export declare function attributeChanged(
-	attributeName: string,
+  attributeName: string,
 ): (target: any, propertKey: PropertyKey) => void;
 
 /**
@@ -34,8 +34,8 @@ export declare function connected(target: any, propertyKey: PropertyKey): void;
  * @returns {Function} - Uma função decoradora para definir a classe do elemento personalizado.
  */
 export declare function define(
-	tagName: string,
-	options?: ElementDefinitionOptions,
+  tagName: string,
+  options?: ElementDefinitionOptions,
 ): (constructor: CustomElementConstructor) => void;
 
 /**
@@ -55,8 +55,8 @@ export declare function didPaint(target: any, propertyKey: PropertyKey): void;
  * @param {PropertyKey} propertyKey - A chave da propriedade.
  */
 export declare function disconnected(
-	target: any,
-	propertyKey: PropertyKey,
+  target: any,
+  propertyKey: PropertyKey,
 ): void;
 
 /**
@@ -66,7 +66,17 @@ export declare function disconnected(
  * @param {string} event - O nome do evento a ser observado.
  */
 export declare const on: {
-	[event: string]: (
-		query: string,
-	) => (target: any, propertyKey: PropertyKey) => void;
+  [event: string]: (
+    query: string,
+  ) => (target: any, propertyKey: PropertyKey) => void;
 };
+
+/**
+ * Decorator utilizado para renderizar o conteúdo do elemento customizado.
+ *
+ * @param {Function} component - Uma função assíncrona que retorna o conteúdo HTML a ser renderizado.
+ * @returns {Function} - Uma função que aplica o decorator a um elemento alvo.
+ */
+export declare function paint(
+  component: (target: any) => string,
+): (constructor: CustomElementConstructor) => void;
