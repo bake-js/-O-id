@@ -6,6 +6,6 @@
  * @param {PropertyKey} propertyKey - A chave da propriedade.
  */
 export declare function disconnected(
-	target: any,
-	propertyKey: PropertyKey,
+  target: any,
+  propertyKey: PropertyKey,
 ): void;

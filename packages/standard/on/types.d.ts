@@ -5,7 +5,7 @@
  * @param {string} event - O nome do evento a ser observado.
  */
 export declare const on: {
-	[event: string]: (
-		query: string,
-	) => (target: any, propertyKey: PropertyKey) => void;
+  [event: string]: (
+    query: string,
+  ) => (target: any, propertyKey: PropertyKey) => void;
 };

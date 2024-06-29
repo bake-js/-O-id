@@ -5,5 +5,5 @@
  * @param {string} attributeName - O nome do atributo a ser observado.
  */
 export declare function attributeChanged(
-	attributeName: string,
+  attributeName: string,
 ): (target: any, propertKey: PropertyKey) => void;

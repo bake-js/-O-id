@@ -6,6 +6,6 @@
  * @returns {Function} - Uma função decoradora para definir a classe do elemento personalizado.
  */
 export declare function define(
-	tagName: string,
-	options?: ElementDefinitionOptions,
+  tagName: string,
+  options?: ElementDefinitionOptions,
 ): (constructor: CustomElementConstructor) => void;
