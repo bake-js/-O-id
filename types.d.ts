@@ -40,7 +40,7 @@ export declare function define(
 
 /**
  * Decorator utilizado para definir um método como manipulador de pintura.
- * O método decorado será chamado antes do método `connectedCallback`.
+ * O método decorado será chamado antes do método decorado com `@paint`.
  *
  * @param {any} target - O alvo do decorator.
  * @param {PropertyKey} propertyKey - A chave da propriedade.
@@ -58,6 +58,19 @@ export declare function disconnected(
   target: any,
   propertyKey: PropertyKey,
 ): void;
+
+/**
+ * Decorator utilizado para agendar a execução de um método após o método decorado.
+ *
+ * @param {string | symbol} method - O nome do método a ser agendado para execução.
+ */
+export declare function joinCut(
+  method: string | symbol,
+): (
+  target: any,
+  propertyKey: PropertyKey,
+  descriptor: PropertyDescriptor,
+) => void;
 
 /**
  * Decorator utilizado para adicionar um ouvinte de eventos a um elemento customizado.
@@ -80,3 +93,33 @@ export declare const on: {
 export declare function paint(
   component: (target: any) => string,
 ): (constructor: CustomElementConstructor) => void;
+
+/**
+ * Decorator utilizado para forçar a atualização da renderização do elemento customizado.
+ *
+ * @param {any} target - O alvo do decorator.
+ * @param {PropertyKey} propertyKey - A chave da propriedade.
+ * @param {PropertyDescriptor} descriptor - O descritor da propriedade.
+ */
+export declare function repaint(
+  target: any,
+  propertyKey: PropertyKey,
+  descriptor: PropertyDescriptor,
+): void;
+
+/**
+ * Um objeto contendo símbolos para métodos em componentes web.
+ * Cada símbolo representa um método específico que pode ser utilizado dinamicamente.
+ */
+export declare const trait: {
+  [key: string]: unique symbol;
+};
+
+/**
+ * Decorator utilizado para definir um método como manipulador de pintura.
+ * O método decorado será chamado depois do método decorado com `@paint`.
+ *
+ * @param {any} target - O alvo do decorator.
+ * @param {PropertyKey} propertyKey - A chave da propriedade.
+ */
+export declare function willPaint(target: any, propertyKey: PropertyKey): void;

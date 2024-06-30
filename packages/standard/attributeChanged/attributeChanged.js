@@ -7,6 +7,7 @@ function attributeChanged(attributeName) {
       async value(name, oldValue, newValue) {
         await Reflect.apply(attributeChangedCallback, this, arguments);
         name === attributeName && (await this[propertyKey](newValue, oldValue));
+        return this;
       },
       writable: true,
     });

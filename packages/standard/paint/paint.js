@@ -1,23 +1,23 @@
-const willPaint = Symbol.for("willPaint");
-const paintCallback = Symbol.for("paint");
-const didPaint = Symbol.for("didPaint");
+import trait from "standard/trait";
 
 function paint(component) {
   return (target) => {
     const connectedCallback = target.connectedCallback ?? (() => undefined);
 
-    Reflect.defineProperty(target, paintCallback, {
+    Reflect.defineProperty(target, trait.paint, {
       async value() {
-        await this[willPaint]?.();
+        await this[trait.willPaint]?.();
         (this.shadownRoot ?? this).innerHTML = await component(this);
-        await this[didPaint]?.();
+        await this[trait.didPaint]?.();
       },
+      writable: true,
     });
 
     Reflect.defineProperty(target, "connectedCallback", {
       async value() {
         await Reflect.apply(connectedCallback, this, arguments);
-        await this[paintCallback]();
+        await this[trait.paint]();
+        return this;
       },
       writable: true,
     });

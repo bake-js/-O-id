@@ -5,6 +5,7 @@ function disconnected(target, propertyKey) {
     async value() {
       await Reflect.apply(disconnectedCallback, this, arguments);
       await this[propertyKey](...arguments);
+      return this;
     },
     writable: true,
   });

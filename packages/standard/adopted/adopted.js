@@ -5,6 +5,7 @@ function adopted(target, propertyKey) {
     async value() {
       await Reflect.apply(adoptedCallback, this, arguments);
       await this[propertyKey](...arguments);
+      return this;
     },
     writable: true,
   });

@@ -17,6 +17,7 @@ const on = new Proxy(
             listener.bind(this);
             await Reflect.apply(connectedCallback, this, arguments);
             await this.shadowRoot.addEventListener(event, listener);
+            return this;
           },
           writable: true,
         });
@@ -25,6 +26,7 @@ const on = new Proxy(
           async value() {
             await Reflect.apply(disconnectedCallback, this, arguments);
             await this.shadowRoot.removeEventListener(event, listener);
+            return this;
           },
           writable: true,
         });

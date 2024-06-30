@@ -1,11 +1,13 @@
-function didPaint(target, propertyKey) {
-  const method = Symbol.for("didPaint");
-  const didPaintCallback = target[method] ?? (() => undefined);
+import trait from "standard/trait";
 
-  Reflect.defineProperty(target, method, {
+function didPaint(target, propertyKey) {
+  const didPaintCallback = target[trait.didPaint] ?? (() => undefined);
+
+  Reflect.defineProperty(target, trait.didPaint, {
     async value() {
       await Reflect.apply(didPaintCallback, this, arguments);
       await this[propertyKey](...arguments);
+      return this;
     },
     writable: true,
   });

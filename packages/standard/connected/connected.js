@@ -5,6 +5,7 @@ function connected(target, propertyKey) {
     async value() {
       await Reflect.apply(connectedCallback, this, arguments);
       await this[propertyKey](...arguments);
+      return this;
     },
     writable: true,
   });
