@@ -2,18 +2,20 @@ import trait from "standard/trait";
 
 function paint(component) {
   return (target) => {
-    const connectedCallback = target.connectedCallback ?? (() => undefined);
+    const connectedCallback =
+      target.prototype.connectedCallback ?? (() => undefined);
 
-    Reflect.defineProperty(target, trait.paint, {
+    Reflect.defineProperty(target.prototype, trait.paint, {
       async value() {
         await this[trait.willPaint]?.();
-        (this.shadownRoot ?? this).innerHTML = await component(this);
+        (this.shadowRoot ?? this).innerHTML = await component(this);
         await this[trait.didPaint]?.();
+        this[trait.painted] = true;
       },
       writable: true,
     });
 
-    Reflect.defineProperty(target, "connectedCallback", {
+    Reflect.defineProperty(target.prototype, "connectedCallback", {
       async value() {
         await Reflect.apply(connectedCallback, this, arguments);
         await this[trait.paint]();

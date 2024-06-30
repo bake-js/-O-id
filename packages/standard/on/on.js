@@ -16,7 +16,7 @@ const on = new Proxy(
           async value() {
             listener.bind(this);
             await Reflect.apply(connectedCallback, this, arguments);
-            await this.shadowRoot.addEventListener(event, listener);
+            (this.shadowRoot ?? this).addEventListener(event, listener);
             return this;
           },
           writable: true,
@@ -25,7 +25,7 @@ const on = new Proxy(
         Reflect.defineProperty(target, "disconnectedCallback", {
           async value() {
             await Reflect.apply(disconnectedCallback, this, arguments);
-            await this.shadowRoot.removeEventListener(event, listener);
+            (this.shadowRoot ?? this).removeEventListener(event, listener);
             return this;
           },
           writable: true,
