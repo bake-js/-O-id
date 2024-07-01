@@ -22,12 +22,18 @@
   "module": "dist/element.js",
   "name": "@bake-js/element",
   "peerDependencies": {
-    "artifact": "workspace:*",
-    "directive": "workspace:*",
-    "element": "workspace:*",
-    "pixel": "workspace:*",
-    "polyfill": "workspace:*",
-    "standard": "workspace:*"
+    "adopted": "workspace:*",
+    "attributeChanged": "workspace:*",
+    "connected": "workspace:*",
+    "define": "workspace:*",
+    "didPaint": "workspace:*",
+    "disconnected": "workspace:*",
+    "joinCut": "workspace:*",
+    "on": "workspace:*",
+    "paint": "workspace:*",
+    "repaint": "workspace:*",
+    "trait": "workspace:*",
+    "willPaint": "workspace:*"
   },
   "repository": {
     "type": "git",
@@ -41,6 +47,6 @@
   "source": "index.js",
   "type": "module",
   "types": "types.d.ts",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "workspaces": ["packages/*"]
 }
