@@ -1,4 +1,4 @@
-import trait from "trait";
+import trait from "../trait";
 
 function willPaint(target, propertyKey) {
   const willPaintCallback = target[trait.willPaint] ?? (() => undefined);

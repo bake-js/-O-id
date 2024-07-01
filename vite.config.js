@@ -5,7 +5,7 @@ import babel from "vite-plugin-babel";
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, "index.js"),
+      entry: resolve(__dirname, "src/index.js"),
       fileName: "element",
       formats: ["cjs", "es"],
       name: "element",

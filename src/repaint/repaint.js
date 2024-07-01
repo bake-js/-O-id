@@ -1,4 +1,4 @@
-import trait from "trait";
+import trait from "../trait";
 
 function repaint(_target, _propertyKey, descriptor) {
   const value = descriptor.value;

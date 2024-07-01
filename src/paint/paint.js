@@ -1,4 +1,4 @@
-import trait from "trait";
+import trait from "../trait";
 
 function paint(component) {
   return (target) => {
