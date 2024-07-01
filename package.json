@@ -1,4 +1,9 @@
 {
+  "author": "Cleber de Moraes Goncalves (deMGoncalves)",
+  "bugs": {
+    "url": "https://github.com/bake-js/element/issues"
+  },
+  "description": "Uma poderosa ferramenta para desenvolvedores que desejam criar componentes web personalizados de forma rápida e eficiente",
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.24.7",
     "@biomejs/biome": "^1.8.3",
@@ -10,7 +15,9 @@
     "vite-plugin-babel": "^1.2.0"
   },
   "files": ["dist", "types.d.ts"],
+  "homepage": "https://github.com/bake-js/element#readme",
   "license": "MIT",
+  "keywords": ["Web Components", "Javascript", "TypeScript"],
   "main": "dist/element.cjs",
   "module": "dist/element.js",
   "name": "@bake-js/element",
