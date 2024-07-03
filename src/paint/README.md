@@ -18,6 +18,7 @@
 - Decorator de Ciclo de Vida de Renderização
 - Decorator de Atualização de DOM
 - Decorator de Renderização de Componente
+- Render [React](https://legacy.reactjs.org/docs/rendering-elements.html#rendering-an-element-into-the-dom)
 
 ### Motivação
 
@@ -74,7 +75,12 @@ function paint(component) {
     Reflect.defineProperty(target.prototype, trait.paint, {
       async value() {
         await this[trait.willPaint]?.();
-        (this.shadowRoot ?? this).innerHTML = await component(this);
+        await new Promise((resolve) => {
+          requestAnimationFrame(async () => {
+            (this.shadowRoot ?? this).innerHTML = await component(this);
+            resolve();
+          });
+        });
         await this[trait.didPaint]?.();
         this[trait.painted] = true;
       },
