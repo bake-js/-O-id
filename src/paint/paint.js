@@ -8,7 +8,12 @@ function paint(component) {
     Reflect.defineProperty(target.prototype, trait.paint, {
       async value() {
         await this[trait.willPaint]?.();
-        (this.shadowRoot ?? this).innerHTML = await component(this);
+        await new Promise((resolve) => {
+          requestAnimationFrame(async () => {
+            (this.shadowRoot ?? this).innerHTML = await component(this);
+            resolve();
+          });
+        });
         await this[trait.didPaint]?.();
         this[trait.painted] = true;
       },
