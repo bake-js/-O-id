@@ -78,7 +78,9 @@ bunx degit @bake-js/element my-project
 
 ## Documentation
 
-Para mais detalhes, acesse a [Documentação](https://linktodocumentation).
+Para mais detalhes, acesse:
+
+- [Paint](https://github.com/bake-js/element/blob/main/src/paint/README.md).
 
 ## Tech Stack
 
