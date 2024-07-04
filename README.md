@@ -6,19 +6,19 @@ Bem-vindo à documentação oficial da biblioteca Element – a solução defini
 
 O Element oferece simplicidade, inovação e desempenho para o desenvolvimento de componentes web. Aqui estão alguns motivos para utilizá-lo:
 
-### Simplicidade e Elegância
+#### Simplicidade e Elegância
 
 Desenvolva componentes de forma intuitiva e direta com o Element. Com uma sintaxe minimalista e poderosos decorators, você pode criar componentes complexos de maneira simples.
 
-### Inovação e Flexibilidade
+#### Inovação e Flexibilidade
 
 Os decorators `paint` e `repaint` permitem que seus componentes sejam reativos e responsivos às mudanças de estado, garantindo uma experiência de usuário fluida.
 
-### Desempenho Otimizado
+#### Desempenho Otimizado
 
 Construído em Vanilla JavaScript e otimizado para desempenho, o Element garante eficiência sem comprometer a performance. Seus componentes são leves e rápidos.
 
-### Tamanho Compacto
+#### Tamanho Compacto
 
 Com apenas 960 bits, o Element é leve e fácil de integrar em qualquer projeto, garantindo uma experiência de desenvolvimento ágil e eficiente.
 
@@ -46,18 +46,18 @@ bun add @bake-js/element
 
 ## Como Usar
 
-### Criando um Projeto
+#### Criando um Projeto
 
 Inicie um novo projeto com o Element configurado:
 
 ```bash
-bunx degit @bake-js/element-template my-project
+bunx degit bake-js/element-template my-project
 cd my-project
 bun install
 bun dev
 ```
 
-### Exemplo de Uso
+#### Exemplo de Uso
 
 Veja como é fácil criar um componente com o Element:
 
@@ -108,7 +108,6 @@ Explore a documentação detalhada de cada parte do projetoe:
 - [repaint](https://github.com/bake-js/element/blob/main/src/repaint/README.md)
 - [trait](https://github.com/bake-js/element/blob/main/src/trait/README.md)
 - [willPaint](https://github.com/bake-js/element/blob/main/src/willPaint/README.md)
-
 
 ## Contribua
 
