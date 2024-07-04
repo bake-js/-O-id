@@ -61,35 +61,32 @@ bun dev
 
 Veja como é fácil criar um componente com o Element:
 
-```typescript
+```javascript
 import { define, paint, on, repaint } from '@bake-js/element';
 
-function component(counter): string {
+function component(self) {
   return (`
-    <div>
-      <strong>${counter.n}</strong>
-      <button>+ add</button>
-    </div>
+    <button>Increment ${self.number}</button>
   `);
 }
 
 @define('element-counter')
 @paint(component)
 class Counter extends HTMLElement {
-  #n: number;
+  #nnumber;
 
-  get n(): number {
-    return (this.#n ??= 0);
+  get number() {
+    return (this.#number ??= 0);
   }
 
-  set n(value: number): void {
-    this.#n = value;
+  set number(value) {
+    this.#number = value;
   }
 
   @on.click('button')
   @repaint
-  inc(): Counter {
-    this.n += 1;
+  increment() {
+    this.number += 1;
     return this;
   }
 }

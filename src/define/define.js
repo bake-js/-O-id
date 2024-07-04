@@ -1,5 +1,5 @@
-function define(tagName, options) {
-  return (constructor) => customElements.define(tagName, constructor, options);
+function define(name, options) {
+  return (constructor) => customElements.define(name, constructor, options);
 }
 
 export default define;

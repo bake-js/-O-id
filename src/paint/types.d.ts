@@ -9,10 +9,10 @@ export declare function paint(component: Component): Decorator;
 /**
  * Tipo para uma função que retorna o conteúdo HTML a ser renderizado.
  *
- * @param {any} target - O elemento alvo que será renderizado.
+ * @param {any} self - O elemento alvo que será renderizado.
  * @returns {Promise<string> | string} - O conteúdo HTML a ser renderizado.
  */
-type Component = (target: any) => Promise<string> | string;
+type Component = (self: any) => Promise<string> | string;
 
 /**
  * Tipo para a função decoradora que aplica o decorator a um elemento alvo.

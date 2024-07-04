@@ -1,5 +1,3 @@
-import "../polyfill";
-
 import { beforeEach, describe, expect, it } from "bun:test";
 import trait from "../trait";
 import paint from "./paint";
