@@ -1,3 +1,7 @@
+# Define
+
+Bem-vindo à documentação do `define`, um decorator que permite registrar Custom Elements de maneira simples e declarativa. Este pacote é parte integrante da biblioteca Element, que visa simplificar o desenvolvimento de Web Components.
+
 ## Documentação do Código
 
 ### Nome e Classificação

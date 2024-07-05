@@ -1,3 +1,7 @@
+# Repaint
+
+Bem-vindo à documentação do `repaint`, um decorator que permite adicionar um hook a métodos específicos de Custom Elements para forçar a execução do método `paint` sempre que o método decorado for chamado. Este pacote é parte integrante da biblioteca Element, que visa simplificar o desenvolvimento de Web Components.
+
 ## Documentação do Código
 
 ### Nome e Classificação

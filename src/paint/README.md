@@ -1,3 +1,7 @@
+# Paint
+
+Bem-vindo à documentação do `paint`, um decorator aplicado a classes de Custom Elements para definir o ciclo de vida de renderização e pintar o componente com a instância do elemento. Este pacote é parte integrante da biblioteca Element, que visa simplificar o desenvolvimento de Web Components.
+
 ## Documentação do Código
 
 ### Nome e Classificação
