@@ -1,3 +1,3 @@
 module.exports = {
-  "*": ["biome check --write"],
+  "*": ["biome check --apply"],
 };
