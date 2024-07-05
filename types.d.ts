@@ -2,7 +2,7 @@
  * Decorator utilizado para modificar o comportamento do método `adoptedCallback` de um elemento customizado.
  * Permite a execução de ações adicionais ao adotar o elemento por outro documento.
  *
- * @param {any} target - O alvo do decorator.
+ * @param {any} target - O protótipo da classe do elemento customizado.
  * @param {PropertyKey} propertyKey - A chave da propriedade.
  */
 export declare function adopted(target: any, propertyKey: PropertyKey): void;
@@ -29,12 +29,12 @@ export declare function connected(target: any, propertyKey: PropertyKey): void;
 /**
  * Função decoradora para definir elementos personalizados.
  *
- * @param {string} tagName - O nome do elemento personalizado.
+ * @param {string} name - O nome do elemento personalizado.
  * @param {ElementDefinitionOptions} options - As opções para definir o elemento personalizado.
  * @returns {Function} - Uma função decoradora para definir a classe do elemento personalizado.
  */
 export declare function define(
-  tagName: string,
+  name: string,
   options?: ElementDefinitionOptions,
 ): (constructor: CustomElementConstructor) => void;
 
