@@ -13,6 +13,7 @@
         "useNodejsImportProtocol": "off"
       },
       "suspicious": {
+        "noAssignInExpressions": "off",
         "noExplicitAny": "off",
         "noShadowRestrictedNames": "off"
       }
