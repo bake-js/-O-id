@@ -14,9 +14,11 @@ const on = new Proxy(
 
         Reflect.defineProperty(target, "connectedCallback", {
           async value() {
-            listener.bind(this);
             await Reflect.apply(connectedCallback, this, arguments);
-            (this.shadowRoot ?? this).addEventListener(event, listener);
+            (this.shadowRoot ?? this).addEventListener(
+              event,
+              listener.bind(this),
+            );
             return this;
           },
           writable: true,
@@ -25,7 +27,10 @@ const on = new Proxy(
         Reflect.defineProperty(target, "disconnectedCallback", {
           async value() {
             await Reflect.apply(disconnectedCallback, this, arguments);
-            (this.shadowRoot ?? this).removeEventListener(event, listener);
+            (this.shadowRoot ?? this).removeEventListener(
+              event,
+              listener.bind(this),
+            );
             return this;
           },
           writable: true,

@@ -1,9 +1,11 @@
 export { default as adopted } from "./adopted";
 export { default as attributeChanged } from "./attributeChanged";
 export { default as connected } from "./connected";
+export { default as css } from "./css";
 export { default as define } from "./define";
 export { default as didPaint } from "./didPaint";
 export { default as disconnected } from "./disconnected";
+export { default as html } from "./html";
 export { default as joinCut } from "./joinCut";
 export { default as on } from "./on";
 export { default as paint } from "./paint";

@@ -1,6 +1,6 @@
 import trait from "../trait";
 
-function paint(component) {
+function paint(component, style) {
   return (target) => {
     const connectedCallback =
       target.prototype.connectedCallback ?? (() => undefined);
@@ -10,6 +10,7 @@ function paint(component) {
         await this[trait.willPaint]?.();
         await new Promise((resolve) => {
           requestAnimationFrame(async () => {
+            (this.shadowRoot ?? document).adoptedStyleSheets = [style?.(this)];
             (this.shadowRoot ?? this).innerHTML = await component(this);
             resolve();
           });

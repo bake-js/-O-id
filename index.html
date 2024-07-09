@@ -4,9 +4,100 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>Element App</title>
+    <style>
+      :root {
+        --border-radius-circular: 50%;
+        --border-width-hairline: 1px;
+        --color-master-darker: #1a1a1a;
+        --color-master: #626262;
+        --color-master-lightest: #fafafa;
+        --font-family-base: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        --font-size-xs: 16px;
+        --font-size-lg: 32px;
+        --font-weight-medium: 500;
+        --font-weight-regular: 400;
+        --line-height-lg: 150%;
+        --spacing_inset-nano: 8px;
+        --spacing_inset-md: 32px;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: var(--color-master-lightest);
+      }
+
+      .bake {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing_inset-md);
+        justify-content: center;
+        margin: 0 auto;
+        min-height: 100svh;
+      }
+
+      .bake__img {
+        aspect-ratio: 1 / 1;
+        border: var(--border-width-hairline) solid var(--color-master);
+        border-radius: var(--border-radius-circular);
+      }
+
+      .bake__hgroup {
+        display: flex;
+        flex-direction: column;
+        font-family: var(--font-family-base);
+        gap: var(--spacing_inset-nano);
+        line-height: var(--line-height-lg);
+        text-align: center;
+      }
+
+      .bake__h1 {
+        color: var(--color-master-darker);
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-medium);
+      }
+
+      .bake__h2 {
+        color: var(--color-master);
+        font-size: var(--font-size-xs);
+        font-weight: var(--font-weight-regular);
+
+        a {
+          color: var(--color-master-darker);
+        }
+      }
+
+      .bake__a {
+        color: var(--color-master-darker);
+        font-family: var(--font-family-base);
+        font-size: var(--font-size-xs);
+        font-weight: var(--font-weight-regular);
+        line-height: var(--line-height-lg);
+        text-align: center;
+      }
+    </style>
   </head>
   <body>
-    <script type="module" src="index.js"></script>
+    <main class="bake">
+      <figure class="bake__figure">
+        <img src="https://avatars.githubusercontent.com/u/162646816?s=200&v=4" class="bake__img" alt="@bake-js/element" />
+      </figure>
+      <hgroup class="bake__hgroup">
+        <h1 class="bake__h1">Vanilla Element!</h1>
+        <h2 class="bake__h2">Template by <cite><a href="https://github.com/deMGoncalves" target="_blank">deMGoncalves</a></cite></h2>
+      </hgroup>
+
+      <!-- Fazer um comentario aqui -->
+      <element-counter></element-counter>
+
+      <a class="bake__a" href="https://github.com/bake-js/element" target="_blank">Repository</a>
+    </main>
+    <script type="module" src="example/index.js"></script>
   </body>
 </html>
