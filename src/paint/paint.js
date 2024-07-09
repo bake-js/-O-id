@@ -16,7 +16,6 @@ function paint(component, style) {
           });
         });
         await this[trait.didPaint]?.();
-        this[trait.painted] = true;
       },
       writable: true,
     });

@@ -6,7 +6,7 @@ function repaint(_target, _propertyKey, descriptor) {
   Object.assign(descriptor, {
     async value() {
       await Reflect.apply(value, this, arguments);
-      this[trait.painted] && (await this[trait.paint]());
+      this.isConnected && (await this[trait.paint]());
       return this;
     },
   });

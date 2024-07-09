@@ -36,7 +36,6 @@ describe("paint", () => {
 
   it("Executa o ciclo de vida do component apos o evento connectedCallback", async () => {
     expect(element.innerHTML).toBeUndefined();
-    expect(element[trait.painted]).toBeUndefined();
 
     await element.connectedCallback();
 
@@ -48,6 +47,5 @@ describe("paint", () => {
     ]);
 
     expect(element.innerHTML).toBe("<div />");
-    expect(element[trait.painted]).toBeTruthy();
   });
 });

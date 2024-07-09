@@ -54,7 +54,6 @@ describe("repaint", () => {
 
   it("Re-executa o paint e o ciclo de vida ao executar o método decorado com repaint", async () => {
     expect(element.innerHTML).toBeUndefined();
-    expect(element[trait.painted]).toBeUndefined();
 
     await element.connectedCallback();
 
@@ -66,8 +65,8 @@ describe("repaint", () => {
     ]);
 
     expect(element.innerHTML).toBe("<button>Increment 0</button>");
-    expect(element[trait.painted]).toBeTruthy();
 
+    element.isConnected = true;
     await element.increment();
 
     expect(lifecycle).toEqual([
@@ -82,6 +81,5 @@ describe("repaint", () => {
     ]);
 
     expect(element.innerHTML).toBe("<button>Increment 1</button>");
-    expect(element[trait.painted]).toBeTruthy();
   });
 });
