@@ -1,3 +1,3 @@
 module.exports = {
-  "*": ["biome check --apply"],
+  "*": ["biome check --write --no-errors-on-unmatched"],
 };
