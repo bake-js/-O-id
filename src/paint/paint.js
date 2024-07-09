@@ -9,9 +9,9 @@ function paint(component, style) {
       async value() {
         await this[trait.willPaint]?.();
         await new Promise((resolve) => {
-          requestAnimationFrame(async () => {
+          requestAnimationFrame(() => {
             (this.shadowRoot ?? document).adoptedStyleSheets = [style?.(this)];
-            (this.shadowRoot ?? this).innerHTML = await component(this);
+            (this.shadowRoot ?? this).innerHTML = component(this);
             resolve();
           });
         });

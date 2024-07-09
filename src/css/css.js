@@ -1,8 +1,8 @@
 function css(strings, ...values) {
-  const styles = new CSSStyleSheet();
+  const style = new CSSStyleSheet();
   const textContent = String.raw({ raw: strings }, ...values);
-  styles.replaceSync(textContent);
-  return styles;
+  style.replaceSync(textContent);
+  return style;
 }
 
 export default css;
