@@ -27,6 +27,19 @@ export declare function attributeChanged(
 export declare function connected(target: any, propertyKey: PropertyKey): void;
 
 /**
+ * Helper para criar uma instância de CSSStyleSheet a partir de um template literal.
+ * Facilita a definição de estilos encapsulados para Web Components.
+ *
+ * @param {TemplateStringsArray} strings - As partes literais do template string.
+ * @param {...any} values - Os valores interpolados no template string.
+ * @returns {CSSStyleSheet} - A instância de CSSStyleSheet criada a partir do template literal.
+ */
+export declare function css(
+  strings: TemplateStringsArray,
+  ...values: any[]
+): CSSStyleSheet;
+
+/**
  * Função decoradora para definir elementos personalizados.
  *
  * @param {string} name - O nome do elemento personalizado.
