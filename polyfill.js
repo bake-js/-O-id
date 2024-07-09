@@ -3,6 +3,8 @@ Object.assign(self, {
     define() {},
   },
 
+  document: self,
+
   requestAnimationFrame(callback) {
     setTimeout(callback, 0);
   },
