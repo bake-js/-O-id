@@ -44,30 +44,30 @@ yarn add @bake-js/element
 bun add @bake-js/element
 ```
 
-## Como Usar
+## Arquitetura do Componente
 
-#### Criando um Projeto
+A arquitetura do Element é projetada para facilitar o desenvolvimento de componentes reativos e modulares. Abaixo está uma visão geral da arquitetura de um componente:
 
-Inicie um novo projeto com o Element configurado:
+#### Descrição da Arquitetura
 
-```bash
-bunx degit bake-js/element-template my-project
-cd my-project
-bun install
-bun dev
-```
+- **Root Aggregate (Class)**: A classe principal que atua como o ponto central do componente.
+- **View (Component)**: Representa a interface do usuário e reage às mudanças de estado.
+- **State (Getters)**: Gerencia e expõe o estado do componente.
+- **Action (Methods)**: Métodos que modificam o estado ou executam ações específicas.
+- **Policy (@decorators)**: Decorators que definem comportamentos e políticas específicas.
+- **Actor (events)**: Eventos que são disparados para comunicar mudanças ou ações.
 
 #### Exemplo de Uso
 
 Veja como é fácil criar um componente com o Element:
 
 ```javascript
-import { define, paint, on, repaint } from '@bake-js/element';
+import { define, html, on, paint, repaint } from '@bake-js/element';
 
 function component(self) {
-  return (`
+  return html`
     <button>Increment ${self.number}</button>
-  `);
+  `;
 }
 
 @define('element-counter')
@@ -90,6 +90,17 @@ class Counter extends HTMLElement {
     return this;
   }
 }
+```
+
+#### Criando um Projeto
+
+Inicie um novo projeto com o Element configurado:
+
+```bash
+bunx degit bake-js/element-template my-project
+cd my-project
+bun install
+bun dev
 ```
 
 ## Documentação
