@@ -73,6 +73,18 @@ export declare function disconnected(
 ): void;
 
 /**
+ * Função utilizada para construir strings HTML com interpolação.
+ *
+ * @param {TemplateStringsArray} strings - As partes literais da string template.
+ * @param {...any[]} values - Os valores interpolados na string template.
+ * @returns {string} - A string HTML interpolada e formatada.
+ */
+export declare function html(
+  strings: TemplateStringsArray,
+  ...values: any[]
+): string;
+
+/**
  * Decorator utilizado para agendar a execução de um método após o método decorado.
  *
  * @param {string | symbol} method - O nome do método a ser agendado para execução.
