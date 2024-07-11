@@ -6,7 +6,6 @@ export { default as define } from "./define";
 export { default as didPaint } from "./didPaint";
 export { default as disconnected } from "./disconnected";
 export { default as html } from "./html";
-export { default as joinCut } from "./joinCut";
 export { default as on } from "./on";
 export { default as paint } from "./paint";
 export { default as repaint } from "./repaint";

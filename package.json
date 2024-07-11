@@ -1,25 +1,31 @@
 {
-  "author": "Cleber de Moraes Goncalves (deMGoncalves)",
+  "author": "Cleber de M. Goncalves (deMGoncalves)",
   "bugs": {
     "url": "https://github.com/bake-js/element/issues"
   },
   "description": "Uma poderosa ferramenta para desenvolvedores que desejam criar componentes web personalizados de forma rápida e eficiente",
   "devDependencies": {
-    "@babel/plugin-proposal-decorators": "^7.24.7",
     "@biomejs/biome": "^1.8.3",
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.7",
-    "vite": "^5.3.1",
-    "vite-plugin-babel": "^1.2.0"
+    "vite": "^5.3.1"
+  },
+  "exports": {
+    ".": {
+      "import": "dist/element.js",
+      "require": "dis/element.cjs"
+    },
+    "./handy": {
+      "import": "dist/handy.js",
+      "require": "dis/handy.cjs"
+    }
   },
   "files": ["dist", "types.d.ts"],
   "homepage": "https://github.com/bake-js/element#readme",
   "license": "MIT",
-  "keywords": ["Web Components", "Javascript", "TypeScript"],
-  "main": "dist/element.cjs",
-  "module": "dist/element.js",
+  "keywords": ["Web Components", "Javascript", "TypeScript", "HTML", "CSS"],
   "name": "@bake-js/element",
   "repository": {
     "type": "git",
@@ -29,8 +35,7 @@
     "build": "vite build",
     "prepare": "husky"
   },
-  "source": "src/index.js",
   "type": "module",
   "types": "types.d.ts",
-  "version": "0.3.6"
+  "version": "0.4.0"
 }
