@@ -1,7 +1,7 @@
 import attributeChanged from "../attributeChanged";
 import trait from "../trait";
 
-function mqtt(target) {
+function eventConnect(target) {
   const attributeChangedCallback =
     target.prototype.attributeChangedCallback ?? (() => undefined);
 
@@ -37,4 +37,4 @@ function mqtt(target) {
   attributeChanged("on")(target.prototype, trait.broker);
 }
 
-export default mqtt;
+export default eventConnect;
