@@ -17,9 +17,9 @@
       "import": "dist/element.js",
       "require": "dis/element.cjs"
     },
-    "./handy": {
-      "import": "dist/handy.js",
-      "require": "dis/handy.cjs"
+    "./advice": {
+      "import": "dist/advice.js",
+      "require": "dis/advice.cjs"
     }
   },
   "files": ["dist", "types.d.ts"],
@@ -37,5 +37,5 @@
   },
   "type": "module",
   "types": "types.d.ts",
-  "version": "0.5.0"
+  "version": "0.6.0"
 }

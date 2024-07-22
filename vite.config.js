@@ -7,7 +7,7 @@ export default defineConfig({
     lib: {
       entry: {
         element: resolve(__dirname, "src/index.js"),
-        handy: resolve(__dirname, "src/handy.js"),
+        advice: resolve(__dirname, "src/advice.js"),
       },
       formats: ["cjs", "es"],
     },

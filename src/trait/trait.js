@@ -1,7 +1,7 @@
 const trait = new Proxy(
   {},
   {
-    get: (_, key) => Symbol.for(key),
+    get: (target, key) => (target[key] ??= Symbol(key)),
   },
 );
 
