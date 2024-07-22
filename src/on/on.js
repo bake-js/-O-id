@@ -4,20 +4,18 @@ const on = new Proxy(
     get(_, event) {
       return (query) => (target, propertyKey) => {
         const connectedCallback = target.connectedCallback ?? (() => undefined);
-
         const disconnectedCallback =
           target.disconnectedCallback ?? (() => undefined);
-
-        function listener(event) {
-          event.target.matches(query) && this[propertyKey](event);
-        }
+        const controller = new AbortController();
 
         Reflect.defineProperty(target, "connectedCallback", {
           async value() {
             await Reflect.apply(connectedCallback, this, arguments);
             (this.shadowRoot ?? this).addEventListener(
               event,
-              listener.bind(this),
+              (event) =>
+                event.target.matches(query) && this[propertyKey](event),
+              { signal: controller.signal },
             );
             return this;
           },
@@ -27,10 +25,7 @@ const on = new Proxy(
         Reflect.defineProperty(target, "disconnectedCallback", {
           async value() {
             await Reflect.apply(disconnectedCallback, this, arguments);
-            (this.shadowRoot ?? this).removeEventListener(
-              event,
-              listener.bind(this),
-            );
+            controller.abort();
             return this;
           },
           writable: true,
