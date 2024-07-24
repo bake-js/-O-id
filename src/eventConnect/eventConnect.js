@@ -1,9 +1,16 @@
-import attributeChanged from "../attributeChanged";
 import trait from "../trait";
 
 function eventConnect(target) {
   const dispatchEvent = target.prototype.dispatchEvent ?? (() => undefined);
-  let controller;
+  const attributeChangedCallback =
+    target.attributeChangedCallback ?? (() => undefined);
+  const disconnectedCallback = target.disconnectedCallback ?? (() => undefined);
+
+  const controller = new AbortController();
+
+  Object.assign(target, {
+    observedAttributes: ["on", ...(target.observedAttributes ?? [])],
+  });
 
   Reflect.defineProperty(target.prototype, "dispatchEvent", {
     value(event) {
@@ -17,11 +24,26 @@ function eventConnect(target) {
     },
   });
 
-  Reflect.defineProperty(target.prototype, trait.subscribe, {
-    value(value) {
-      controller?.abort();
-      controller = new AbortController();
+  Reflect.defineProperty(target.prototype, "disconnectedCallback", {
+    async value() {
+      await Reflect.apply(disconnectedCallback, this, arguments);
+      controller.abort();
+      return this;
+    },
+    writable: true,
+  });
 
+  Reflect.defineProperty(target.prototype, "attributeChangedCallback", {
+    async value(name, oldValue, newValue) {
+      await Reflect.apply(attributeChangedCallback, this, arguments);
+      name === "on" && (await this[trati.subscribe](newValue, oldValue));
+      return this;
+    },
+    writable: true,
+  });
+
+  Reflect.defineProperty(target.prototype, trait.subscribe, {
+    async value(value) {
       const [topic, map] = value.split(":");
       const [type, name] = map.split("/");
 
@@ -31,15 +53,15 @@ function eventConnect(target) {
           if (/^method$/.test(type)) this[name](event.detail);
           if (/^attribute$/.test(type)) this.setAttribute(name, event.detail);
           if (/^setter$/.test(type)) this[name] = event.detail;
+          return this;
         },
         { signal: controller.signal },
       );
 
       return this;
     },
+    writable: true,
   });
-
-  attributeChanged("on")(target.prototype, trait.subscribe);
 }
 
 export default eventConnect;
