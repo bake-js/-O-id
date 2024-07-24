@@ -1,8 +1,15 @@
 function html(strings, ...values) {
-  strings = strings.map((x) => x.replace(/\n */g, ""));
-  strings = strings.map((x) => x.replace(/ {2,}/g, " "));
+  values = values.map((value) =>
+    Array.isArray(value) ? value.join("") : value,
+  );
 
-  return String.raw({ raw: strings }, ...values);
+  let content = String.raw({ raw: strings }, ...values);
+
+  content = content.replace(/\n */g, "");
+  content = content.replace(/ {2,}/g, " ");
+  content = content.trim();
+
+  return content;
 }
 
 export default html;
