@@ -1,10 +1,8 @@
 function html(strings, ...values) {
-  let content = String.raw({ raw: strings }, ...values);
+  strings = strings.map((x) => x.replace(/\n */g, ""));
+  strings = strings.map((x) => x.replace(/ {2,}/g, " "));
 
-  content = content.replace(/\n */g, "");
-  content = content.replace(/ {2,}/g, " ");
-
-  return content;
+  return String.raw({ raw: strings }, ...values);
 }
 
 export default html;
