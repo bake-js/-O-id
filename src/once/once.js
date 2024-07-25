@@ -4,7 +4,7 @@ function once(_target, _propertyKey, descriptor) {
 
   Object.assign(descriptor, {
     value() {
-      if (executed) return this;
+      if (executed) return;
       executed = true;
       return Reflect.apply(value, this, arguments);
     },

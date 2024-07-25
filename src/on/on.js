@@ -1,7 +1,7 @@
 const on = new Proxy(
   {},
   {
-    get(_, event) {
+    get(_, eventName) {
       return (query) => (target, propertyKey) => {
         const connectedCallback = target.connectedCallback ?? (() => undefined);
         const disconnectedCallback =
@@ -12,7 +12,7 @@ const on = new Proxy(
           async value() {
             await Reflect.apply(connectedCallback, this, arguments);
             (this.shadowRoot ?? this).addEventListener(
-              event,
+              eventName,
               (event) =>
                 event.target.matches(query) && this[propertyKey](event),
               { signal: controller.signal },

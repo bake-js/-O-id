@@ -5,7 +5,6 @@ function eventConnect(target) {
   const attributeChangedCallback =
     target.attributeChangedCallback ?? (() => undefined);
   const disconnectedCallback = target.disconnectedCallback ?? (() => undefined);
-
   const controller = new AbortController();
 
   Object.assign(target, {

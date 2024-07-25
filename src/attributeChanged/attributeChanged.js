@@ -13,7 +13,9 @@ function attributeChanged(attributeName) {
     Reflect.defineProperty(target, "attributeChangedCallback", {
       async value(name, oldValue, newValue) {
         await Reflect.apply(attributeChangedCallback, this, arguments);
-        name === attributeName && (await this[propertyKey](newValue, oldValue));
+        name === attributeName &&
+          oldValue !== newValue &&
+          (await this[propertyKey](newValue, oldValue));
         return this;
       },
       writable: true,

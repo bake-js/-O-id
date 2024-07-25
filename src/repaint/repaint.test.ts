@@ -36,12 +36,12 @@ describe("repaint", () => {
       return this;
     }
 
-    [trait.didPaint]() {
+    [trait.didPaintCallback]() {
       lifecycle.push("didPaint");
       return this;
     }
 
-    [trait.willPaint]() {
+    [trait.willPaintCallback]() {
       lifecycle.push("willPaint");
       return this;
     }

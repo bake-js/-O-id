@@ -5,9 +5,9 @@ function paint(component, style) {
     const connectedCallback =
       target.prototype.connectedCallback ?? (() => undefined);
 
-    Reflect.defineProperty(target.prototype, trait.paint, {
+    Reflect.defineProperty(target.prototype, trait.paintCallback, {
       async value() {
-        await this[trait.willPaint]?.();
+        await this[trait.willPaintCallback]?.();
         await new Promise((resolve) => {
           requestAnimationFrame(() => {
             (this.shadowRoot ?? document).adoptedStyleSheets = style
@@ -17,7 +17,7 @@ function paint(component, style) {
             resolve();
           });
         });
-        await this[trait.didPaint]?.();
+        await this[trait.didPaintCallback]?.();
       },
       writable: true,
     });
@@ -25,7 +25,7 @@ function paint(component, style) {
     Reflect.defineProperty(target.prototype, "connectedCallback", {
       async value() {
         await Reflect.apply(connectedCallback, this, arguments);
-        await this[trait.paint]();
+        await this[trait.paintCallback]();
         return this;
       },
       writable: true,
