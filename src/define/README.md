@@ -47,7 +47,7 @@ class Counter extends HTMLElement {
 }
 ```
 
-## Comparação com Concorrentes
+## Comparação com concorrentes
 
 ### Lit
 
