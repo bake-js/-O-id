@@ -1,65 +1,30 @@
 # Define
 
-Bem-vindo à documentação do `define`, um decorator que permite registrar Custom Elements de maneira simples e declarativa. Este pacote é parte integrante da biblioteca Element, que visa simplificar o desenvolvimento de Web Components.
+O `define` é um decorator que simplifica o registro de Custom Elements de maneira declarativa, sendo parte da biblioteca Element.
 
-## Documentação do Código
+## Visão Geral
 
 ### Nome e Classificação
 
-**Nome:** Define
+- **Nome:** Define
+- **Classificação:** Decorators [ES Proposals](https://www.proposals.es/proposals/Decorators), [TypeScript](https://www.typescriptlang.org/docs/handbook/decorators.html)
 
-**Classificação:** Decorators [ES Proposals](https://www.proposals.es/proposals/Decorators), [TypeScript](https://www.typescriptlang.org/docs/handbook/decorators.html)
+### Objetivo
 
-### Interação e Objetivo
+Facilitar o registro de Custom Elements, eliminando a necessidade de chamadas manuais para `customElements.define` ([MDN](https://developer.mozilla.org/en-US/docs/Web/API/CustomElementRegistry/define)).
 
-**Interação:** Este decorator é aplicado a classes de Custom Elements para definir e registrar esses elementos com um nome de tag específico.
+## Motivação
 
-**Objetivo:** Facilitar o registro de Custom Elements, eliminando a necessidade de chamadas manuais para `customElements.define`, proporcionando uma abordagem mais declarativa e organizada.
+Usar o `define` traz as seguintes vantagens:
 
-### Também conhecido como
+1. **Simplificação:** Reduz chamadas repetitivas a `customElements.define`.
+2. **Legibilidade:** Melhora a leitura do código ao associar diretamente o nome da tag à definição da classe.
 
-- Registrar Elemento Personalizado
-- Definir Custom Element
-- Declarative Custom Element Registration
+## Aplicabilidade
 
-### Motivação
+Ideal para qualquer situação onde se deseja registrar Custom Elements de maneira mais organizada e declarativa, especialmente em projetos grandes.
 
-A motivação para usar o decorator `define` é simplificar e tornar mais declarativo o processo de registro de Custom Elements. Ao usar `define`, você pode:
-
-1. **Simplificação do Registro:** Reduzir a necessidade de chamadas repetitivas a `customElements.define` e manter o código mais limpo e organizado.
-2. **Facilidade de Leitura:** Melhorar a legibilidade do código ao associar o nome da tag diretamente à definição da classe.
-
-### Aplicabilidade
-
-O decorator `define` é aplicável em qualquer situação onde se deseja registrar Custom Elements de maneira mais organizada e declarativa. É especialmente útil em projetos grandes com muitos Custom Elements, onde a manutenção do código pode se tornar desafiadora.
-
-### Estrutura
-
-A estrutura do decorator `define` é simples, e ele funciona ao:
-
-- **Registrar o Custom Element:** Usar `customElements.define` para registrar a classe como um Custom Element com o nome de tag especificado.
-
-### Participantes
-
-1. **Função Decoradora (`define`)**:
-   - **Descrição:** Função que recebe o nome da tag e opções e retorna uma função decoradora.
-   - **Responsabilidade:** Registrar a classe como um Custom Element com o nome de tag especificado.
-
-2. **Elemento Alvo (`constructor`)**:
-   - **Descrição:** A classe que está sendo registrada como Custom Element.
-   - **Responsabilidade:** Definir a lógica e estrutura do Custom Element.
-
-### Colaborações
-
-O decorator `define` trabalha isoladamente, mas é frequentemente usado em conjunto com outros decorators e padrões de design que melhoram a modularidade e a reusabilidade dos componentes.
-
-### Consequências
-
-- **Facilidade de Uso:** Simplifica o processo de registro de Custom Elements.
-- **Código Mais Limpo:** Reduz a verbosidade no registro de elementos personalizados.
-- **Manutenção Facilitada:** Facilita a manutenção e a leitura do código, especialmente em projetos grandes.
-
-### Implementação
+## Implementação
 
 ```javascript
 function define(name, options) {
@@ -82,16 +47,45 @@ class Counter extends HTMLElement {
 }
 ```
 
-### Usos Conhecidos
+## Comparação com Concorrentes
 
-- **Componentes de Interface de Usuário:** Ideal para definir componentes reutilizáveis de interface de usuário.
-- **Elementos Personalizados:** Útil em aplicações que fazem uso extensivo de elementos personalizados para criar componentes altamente modularizados.
+### Lit
 
-### Padrões Relacionados
+- **Requer Extensão:** Necessário estender `LitElement`.
+- **Decorator:** `@customElement` altera a assinatura de `customElements.define`.
 
-- **Decorator Pattern:** Segue o padrão de design de decorators, permitindo a modificação do comportamento de classes de maneira declarativa.
-- **Custom Elements:** Integra-se com a API de Custom Elements, parte da especificação de Web Components.
+Para mais detalhes sobre o Lit, veja a [documentação oficial](https://lit.dev/docs/components/defining/).
 
-### Considerações Finais
+```typescript
+@customElement('simple-greeting')
+export class SimpleGreeting extends LitElement { /* ... */ }
+```
 
-O decorator `define` oferece uma maneira eficaz e declarativa de registrar Custom Elements, simplificando o processo de desenvolvimento e melhorando a legibilidade do código. Ele é uma ferramenta valiosa para qualquer desenvolvedor que trabalha com Web Components.
+### Stencil
+
+- **Configurável:** Utiliza `@Component` com metadados.
+
+Para mais detalhes sobre Stencil, veja a [documentação oficial](https://stenciljs.com/docs/getting-started).
+
+```typescript
+@Component({
+  tag: 'my-component',
+  styleUrl: 'my-component.css',
+  shadow: true,
+})
+export class MyComponent {
+  @Prop() first: string;
+  @Prop() middle: string;
+  @Prop() last: string;
+  /* ... */
+}
+```
+
+### Vantagens do `@define`
+
+- **Interface Nativa:** Respeita a assinatura do método nativo `customElements.define` ([MDN](https://developer.mozilla.org/en-US/docs/Web/API/CustomElementRegistry/define)).
+- **Flexibilidade:** Não obriga a extensão de uma classe específica, oferecendo maior flexibilidade.
+
+## Considerações Finais
+
+O `define` é uma ferramenta eficaz para registrar Custom Elements, simplificando o desenvolvimento e melhorando a legibilidade do código, oferecendo uma interface familiar e flexível.
