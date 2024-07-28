@@ -1,36 +1,29 @@
-import trait from "../trait";
+import intercept, { exec } from "../intercept";
+import {
+  connectedCallback,
+  didPaintCallback,
+  paintCallback,
+  willPaintCallback,
+} from "../interfaces";
 
-function paint(component, style) {
-  return (target) => {
-    const connectedCallback =
-      target.prototype.connectedCallback ?? (() => undefined);
-
-    Reflect.defineProperty(target.prototype, trait.paintCallback, {
-      async value() {
-        await this[trait.willPaintCallback]?.();
-        await new Promise((resolve) => {
-          requestAnimationFrame(() => {
-            (this.shadowRoot ?? document).adoptedStyleSheets = style
-              ? [style(this)]
-              : [];
-            (this.shadowRoot ?? this).innerHTML = component(this);
-            resolve();
-          });
+const paint = (component, style) => (target) => {
+  intercept(paintCallback)
+    .in(target.prototype)
+    .then(async function () {
+      await this[willPaintCallback]?.();
+      await new Promise((resolve) => {
+        requestAnimationFrame(() => {
+          (this.shadowRoot ?? document).adoptedStyleSheets = style
+            ? [style(this)]
+            : [];
+          (this.shadowRoot ?? this).innerHTML = component(this);
+          resolve();
         });
-        await this[trait.didPaintCallback]?.();
-      },
-      writable: true,
+      });
+      await this[didPaintCallback]?.();
     });
 
-    Reflect.defineProperty(target.prototype, "connectedCallback", {
-      async value() {
-        await Reflect.apply(connectedCallback, this, arguments);
-        await this[trait.paintCallback]();
-        return this;
-      },
-      writable: true,
-    });
-  };
-}
+  intercept(connectedCallback).in(target.prototype).then(exec(paintCallback));
+};
 
 export default paint;

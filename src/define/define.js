@@ -1,5 +1,4 @@
-function define(name, options) {
-  return (constructor) => customElements.define(name, constructor, options);
-}
+const define = (name, options) => (constructor) =>
+  customElements.define(name, constructor, options);
 
 export default define;

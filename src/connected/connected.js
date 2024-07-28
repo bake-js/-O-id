@@ -1,14 +1,7 @@
-function connected(target, propertyKey) {
-  const connectedCallback = target.connectedCallback ?? (() => undefined);
+import intercept, { exec } from "../intercept";
+import { connectedCallback } from "../interfaces";
 
-  Reflect.defineProperty(target, "connectedCallback", {
-    async value() {
-      await Reflect.apply(connectedCallback, this, arguments);
-      await this[propertyKey](...arguments);
-      return this;
-    },
-    writable: true,
-  });
-}
+const connected = (target, propertyKey) =>
+  intercept(connectedCallback).in(target).then(exec(propertyKey));
 
 export default connected;

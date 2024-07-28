@@ -5,7 +5,6 @@ export { default as css } from "./css";
 export { default as define } from "./define";
 export { default as didPaint } from "./didPaint";
 export { default as disconnected } from "./disconnected";
-export { default as eventConnect } from "./eventConnect";
 export { default as html } from "./html";
 export { default as on } from "./on";
 export { default as paint } from "./paint";

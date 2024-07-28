@@ -16,7 +16,8 @@
       "suspicious": {
         "noAssignInExpressions": "off",
         "noExplicitAny": "off",
-        "noShadowRestrictedNames": "off"
+        "noShadowRestrictedNames": "off",
+        "noThenProperty": "off"
       }
     }
   },

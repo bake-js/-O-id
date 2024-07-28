@@ -1,14 +1,7 @@
-function adopted(target, propertyKey) {
-  const adoptedCallback = target.adoptedCallback ?? (() => undefined);
+import intercept, { exec } from "../intercept";
+import { adoptedCallback } from "../interfaces";
 
-  Reflect.defineProperty(target, "adoptedCallback", {
-    async value() {
-      await Reflect.apply(adoptedCallback, this, arguments);
-      await this[propertyKey](...arguments);
-      return this;
-    },
-    writable: true,
-  });
-}
+const adopted = (target, propertyKey) =>
+  intercept(adoptedCallback).in(target).then(exec(propertyKey));
 
 export default adopted;

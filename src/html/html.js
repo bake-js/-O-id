@@ -1,4 +1,4 @@
-function html(strings, ...values) {
+const html = (strings, ...values) => {
   values = values.map((value) =>
     Array.isArray(value) ? value.join("") : value,
   );
@@ -10,6 +10,6 @@ function html(strings, ...values) {
   content = content.trim();
 
   return content;
-}
+};
 
 export default html;

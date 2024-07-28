@@ -1,26 +1,21 @@
-function attributeChanged(attributeName) {
-  return (target, propertyKey) => {
-    const attributeChangedCallback =
-      target.attributeChangedCallback ?? (() => undefined);
+import intercept from "../intercept";
+import { attributeChangedCallback, observedAttributes } from "../interfaces";
 
-    Object.assign(target.constructor, {
-      observedAttributes: [
-        attributeName,
-        ...(target.constructor.observedAttributes ?? []),
-      ],
-    });
+const attributeChanged = (attributeName) => (target, propertyKey) => {
+  Object.assign(target.constructor, {
+    [observedAttributes]: [
+      attributeName,
+      ...(target.constructor[observedAttributes] ?? []),
+    ],
+  });
 
-    Reflect.defineProperty(target, "attributeChangedCallback", {
-      async value(name, oldValue, newValue) {
-        await Reflect.apply(attributeChangedCallback, this, arguments);
-        name === attributeName &&
-          oldValue !== newValue &&
-          (await this[propertyKey](newValue, oldValue));
-        return this;
-      },
-      writable: true,
+  intercept(attributeChangedCallback)
+    .in(target)
+    .then(async function (name, oldValue, newValue) {
+      name === attributeName &&
+        oldValue !== newValue &&
+        (await this[propertyKey](newValue, oldValue));
     });
-  };
-}
+};
 
 export default attributeChanged;

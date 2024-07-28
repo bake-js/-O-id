@@ -1,16 +1,7 @@
-import trait from "../trait";
+import intercept, { exec } from "../intercept";
+import { willPaintCallback } from "../interfaces";
 
-function willPaint(target, propertyKey) {
-  const willPaintCallback = target[trait.willPaint] ?? (() => undefined);
-
-  Reflect.defineProperty(target, trait.willPaintCallback, {
-    async value() {
-      await Reflect.apply(willPaintCallback, this, arguments);
-      await this[propertyKey](...arguments);
-      return this;
-    },
-    writable: true,
-  });
-}
+const willPaint = (target, propertyKey) =>
+  intercept(willPaintCallback).in(target).then(exec(propertyKey));
 
 export default willPaint;

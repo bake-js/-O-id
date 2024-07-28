@@ -1,14 +1,7 @@
-function disconnected(target, propertyKey) {
-  const disconnectedCallback = target.disconnectedCallback ?? (() => undefined);
+import intercept, { exec } from "../intercept";
+import { disconnectedCallback } from "../interfaces";
 
-  Reflect.defineProperty(target, "disconnectedCallback", {
-    async value() {
-      await Reflect.apply(disconnectedCallback, this, arguments);
-      await this[propertyKey](...arguments);
-      return this;
-    },
-    writable: true,
-  });
-}
+const disconnected = (target, propertyKey) =>
+  intercept(disconnectedCallback).in(target).then(exec(propertyKey));
 
 export default disconnected;

@@ -17,9 +17,9 @@
       "import": "dist/element.js",
       "require": "dis/element.cjs"
     },
-    "./advice": {
-      "import": "dist/advice.js",
-      "require": "dis/advice.cjs"
+    "./event": {
+      "import": "dist/event.js",
+      "require": "dis/event.cjs"
     }
   },
   "files": ["dist", "types.d.ts"],
@@ -37,5 +37,5 @@
   },
   "type": "module",
   "types": "types.d.ts",
-  "version": "0.6.4"
+  "version": "0.7.0"
 }
