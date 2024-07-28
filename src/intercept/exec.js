@@ -1,6 +1,6 @@
 const exec = (propertyKey) =>
-  function (...args) {
-    this[propertyKey](...args);
+  async function (...args) {
+    await this[propertyKey](...args);
   };
 
 export default exec;

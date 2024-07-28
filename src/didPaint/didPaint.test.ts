@@ -3,7 +3,7 @@ import paint from "../paint";
 import trait from "../trait";
 import didPaint from "./didPaint";
 
-describe("paint", () => {
+describe("didPaint", () => {
   let element: Element;
   let lifecycle: string[];
 
@@ -21,7 +21,7 @@ describe("paint", () => {
 
     @didPaint
     onDidPaint() {
-      lifecycle.push("didPaint");
+      lifecycle.push("didPaintCallback");
       return this;
     }
   }
@@ -33,6 +33,10 @@ describe("paint", () => {
 
   it("Executa o ciclo de vida do component apos o evento connectedCallback", async () => {
     await element.connectedCallback();
-    expect(lifecycle).toEqual(["connectedCallback", "component", "didPaint"]);
+    expect(lifecycle).toEqual([
+      "connectedCallback",
+      "component",
+      "didPaintCallback",
+    ]);
   });
 });

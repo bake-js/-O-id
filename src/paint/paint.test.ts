@@ -1,30 +1,35 @@
 import { beforeEach, describe, expect, it } from "bun:test";
-import trait from "../trait";
+import { didPaintCallback, willPaintCallback } from "../interfaces";
 import paint from "./paint";
 
 describe("paint", () => {
   let element: Element;
   let lifecycle: string[];
 
+  function style() {
+    lifecycle.push("style");
+    return "div { color: red; }";
+  }
+
   function component() {
     lifecycle.push("component");
     return "<div />";
   }
 
-  @paint(component)
+  @paint(component, style)
   class Element {
     connectedCallback() {
       lifecycle.push("connectedCallback");
       return this;
     }
 
-    [trait.didPaintCallback]() {
-      lifecycle.push("didPaint");
+    [didPaintCallback]() {
+      lifecycle.push("didPaintCallback");
       return this;
     }
 
-    [trait.willPaintCallback]() {
-      lifecycle.push("willPaint");
+    [willPaintCallback]() {
+      lifecycle.push("willPaintCallback");
       return this;
     }
   }
@@ -41,9 +46,10 @@ describe("paint", () => {
 
     expect(lifecycle).toEqual([
       "connectedCallback",
-      "willPaint",
+      "willPaintCallback",
+      "style",
       "component",
-      "didPaint",
+      "didPaintCallback",
     ]);
 
     expect(element.innerHTML).toBe("<div />");

@@ -1,18 +1,23 @@
 import { beforeEach, describe, expect, it } from "bun:test";
+import { didPaintCallback, willPaintCallback } from "../interfaces";
 import paint from "../paint";
-import trait from "../trait";
 import repaint from "./repaint";
 
 describe("repaint", () => {
   let element: Element;
   let lifecycle: string[];
 
+  function style() {
+    lifecycle.push("style");
+    return "button { color: red; }";
+  }
+
   function component(self: any) {
     lifecycle.push("component");
     return `<button>Increment ${self.number}</button>`;
   }
 
-  @paint(component)
+  @paint(component, style)
   class Element {
     #number: number;
 
@@ -36,13 +41,13 @@ describe("repaint", () => {
       return this;
     }
 
-    [trait.didPaintCallback]() {
-      lifecycle.push("didPaint");
+    [didPaintCallback]() {
+      lifecycle.push("didPaintCallback");
       return this;
     }
 
-    [trait.willPaintCallback]() {
-      lifecycle.push("willPaint");
+    [willPaintCallback]() {
+      lifecycle.push("willPaintCallback");
       return this;
     }
   }
@@ -59,9 +64,10 @@ describe("repaint", () => {
 
     expect(lifecycle).toEqual([
       "connectedCallback",
-      "willPaint",
+      "willPaintCallback",
+      "style",
       "component",
-      "didPaint",
+      "didPaintCallback",
     ]);
 
     expect(element.innerHTML).toBe("<button>Increment 0</button>");
@@ -71,13 +77,15 @@ describe("repaint", () => {
 
     expect(lifecycle).toEqual([
       "connectedCallback",
-      "willPaint",
+      "willPaintCallback",
+      "style",
       "component",
-      "didPaint",
+      "didPaintCallback",
       "increment",
-      "willPaint",
+      "willPaintCallback",
+      "style",
       "component",
-      "didPaint",
+      "didPaintCallback",
     ]);
 
     expect(element.innerHTML).toBe("<button>Increment 1</button>");
