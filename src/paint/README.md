@@ -64,23 +64,31 @@ export default paint;
 component.ts:
 
 ```typescript
+import { html } from '@bake-js/element';
+
 export function component(self: any) {
-  return `<button>Increment ${self.number}</button>`;
+  return html`
+    <button>Increment ${self.number}</button>
+  `;
 }
 ```
 
 style.ts:
 
 ```typescript
+import { css } from '@bake-js/element';
+
 export function style(sel: any) {
-  return "button { color: red; }";
+  return css`
+    button { color: red; }
+  `;
 }
 ```
 
 counter.ts:
 
 ```javascript
-import paint from '@bake-js/element/paint';
+import { paint } from '@bake-js/element';
 import component from './component';
 import style from './style';
 
