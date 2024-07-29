@@ -61,24 +61,24 @@ export default paint;
 
 ### Exemplo de Uso
 
-component.ts:
+component.js:
 
-```typescript
+```javascript
 import { html } from '@bake-js/element';
 
-export function component(self: any) {
+export function component(self) {
   return html`
     <button>Increment ${self.number}</button>
   `;
 }
 ```
 
-style.ts:
+style.js:
 
-```typescript
+```javascript
 import { css } from '@bake-js/element';
 
-export function style(sel: any) {
+export function style(self) {
   return css`
     button { color: red; }
   `;
@@ -88,10 +88,11 @@ export function style(sel: any) {
 counter.ts:
 
 ```javascript
-import { paint } from '@bake-js/element';
+import { define, paint } from '@bake-js/element';
 import component from './component';
 import style from './style';
 
+@define('be-counter')
 @paint(component, style)
 class Counter extends HTMLElement {
   #number = 0;
@@ -122,6 +123,7 @@ Para mais detalhes sobre Lit, veja a [documentação oficial](https://lit.dev/do
 ```javascript
 import { LitElement, html, css } from 'lit';
 
+customElements('my-element');
 class MyElement extends LitElement {
   static styles = css`
     button { color: red; }
@@ -133,7 +135,6 @@ class MyElement extends LitElement {
     `;
   }
 }
-customElements.define('my-element', MyElement);
 ```
 
 ### Stencil
