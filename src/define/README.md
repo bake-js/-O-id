@@ -27,16 +27,15 @@ Ideal para qualquer situação onde se deseja registrar Custom Elements de manei
 ## Implementação
 
 ```javascript
-function define(name, options) {
-  return (constructor) => customElements.define(name, constructor, options);
-}
+const define = (name, options) => (constructor) =>
+  customElements.define(name, constructor, options);
 
 export default define;
 ```
 
 ### Exemplo de Uso
 
-```typescript
+```javascript
 import { define } from '@bake-js/element';
 
 @define('element-counter')
@@ -56,7 +55,7 @@ class Counter extends HTMLElement {
 
 Para mais detalhes sobre o Lit, veja a [documentação oficial](https://lit.dev/docs/components/defining/).
 
-```typescript
+```javascript
 @customElement('simple-greeting')
 export class SimpleGreeting extends LitElement { /* ... */ }
 ```
@@ -67,7 +66,7 @@ export class SimpleGreeting extends LitElement { /* ... */ }
 
 Para mais detalhes sobre Stencil, veja a [documentação oficial](https://stenciljs.com/docs/getting-started).
 
-```typescript
+```javascript
 @Component({
   tag: 'my-component',
   styleUrl: 'my-component.css',
