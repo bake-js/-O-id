@@ -34,8 +34,6 @@ const eventConnect = (target) => {
     .then(function (value) {
       const { name, topic, type } = protocol.from(value);
 
-      console.log(value);
-
       bus.addEventListener(
         topic,
         (event) => {
