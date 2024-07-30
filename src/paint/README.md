@@ -118,7 +118,7 @@ class Counter extends HTMLElement {
 - **Templates Integrados:** Utiliza tagged template literals para definir o HTML dentro da classe.
 - **Estilos Internos:** CSS também é definido dentro da classe.
 
-Para mais detalhes sobre Lit, veja a [documentação oficial](https://lit.dev/docs/components/defining/).
+Para mais detalhes sobre Lit, veja a [documentação oficial](https://lit.dev/docs/components/rendering).
 
 ```javascript
 import { LitElement, html, css } from 'lit';
