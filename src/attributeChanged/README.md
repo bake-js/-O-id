@@ -1,108 +1,61 @@
 # AttributeChanged
 
-Bem-vindo à documentação do `attributeChanged`, um decorator que permite adicionar um hook a métodos específicos de Custom Elements para execução quando um atributo definido é alterado. Este pacote é parte integrante da biblioteca Element, que visa simplificar o desenvolvimento de Web Components.
+O `attributeChanged` é um decorator que permite adicionar um hook a métodos específicos de Custom Elements para execução quando um atributo definido é alterado. É parte da biblioteca Element e oferece uma maneira declarativa para gerenciar mudanças de atributos.
 
-## Documentação do Código
+## Visão Geral
 
 ### Nome e Classificação
 
-**Nome:** AttributeChanged
+- **Nome:** AttributeChanged
+- **Classificação:** Decorators [ES Proposals](https://www.proposals.es/proposals/Decorators), [TypeScript](https://www.typescriptlang.org/docs/handbook/decorators.html)
 
-**Classificação:** Decorators [ES Proposals](https://www.proposals.es/proposals/Decorators), [Typescript](https://www.typescriptlang.org/docs/handbook/decorators.html)
+### Objetivo
 
-### Interação e Objetivo
+Proporcionar uma maneira eficiente de reagir a alterações de atributos em Custom Elements, simplificando a lógica de atualização de componentes.
 
-**Interação:** Este decorator é aplicado a métodos de classes de Custom Elements para executar o método decorado sempre que o atributo especificado for alterado.
+## Motivação
 
-**Objetivo:** Proporcionar uma maneira eficiente de responder a mudanças de atributos em Custom Elements, simplificando a lógica de atualização de componentes.
+Usar o `attributeChanged` traz as seguintes vantagens:
 
-### Também conhecido como
+1. **Reatividade a Alterações de Atributos:** Garante que o método decorado seja executado sempre que o atributo especificado for alterado.
+2. **Manutenção da Consistência:** Facilita a atualização de estados internos e a adaptação visual do componente em resposta a mudanças de atributos.
 
-- Alteração de Atributo
-- Mudança de Atributo
-- Atualização de Atributo
+## Aplicabilidade
 
-### Motivação
+Ideal para qualquer situação onde se deseja responder a alterações de atributos específicos em Custom Elements. É especialmente útil para:
 
-A motivação para usar o decorator `attributeChanged` é simplificar a resposta a mudanças de atributos em Custom Elements. Ele permite:
+- **Componentes Interativos:** Quando a atualização dinâmica com base em atributos é necessária.
+- **Sincronização de Estados Internos:** Para manter a consistência entre atributos e o estado interno do componente.
 
-1. **Reatividade a Alterações de Atributos:** Garante que o método decorado seja executado sempre que o atributo especificado for alterado, proporcionando uma maneira reativa de atualizar o componente.
-2. **Manutenção da Consistência:** Facilita a manutenção de estados internos e a atualização visual do componente em resposta a mudanças de atributos.
-
-### Aplicabilidade
-
-O decorator `attributeChanged` é aplicável em situações onde se deseja responder a alterações de atributos específicos em Custom Elements. É especialmente útil em cenários como:
-
-- **Interatividade Dinâmica:** Quando componentes precisam reagir dinamicamente a mudanças de atributos definidos pelo usuário ou por scripts.
-- **Atualização de Estados Internos:** Para manter a consistência entre os atributos e o estado interno do componente.
-
-### Estrutura
-
-A estrutura do decorator `attributeChanged` é simples, definindo o método `attributeChangedCallback` para responder a alterações de atributos.
-
-### Participantes
-
-1. **Função Decoradora (`attributeChanged`)**:
-   - **Descrição:** Modifica métodos de classes de Custom Elements para executar o método decorado quando o atributo especificado é alterado.
-   - **Responsabilidade:** Garantir que o método decorado seja chamado em resposta a alterações do atributo especificado.
-
-2. **Elemento Alvo (`target`)**:
-   - **Descrição:** A classe de Custom Element que contém o método decorado com `@attributeChanged`.
-   - **Responsabilidade:** Executar o método decorado quando o atributo especificado for alterado.
-
-3. **Método Decorado (`propertyKey`)**:
-   - **Descrição:** O método original da classe de Custom Element que é decorado com `@attributeChanged`.
-   - **Responsabilidade:** Realizar a lógica específica em resposta à alteração do atributo.
-
-### Colaborações
-
-O decorator `attributeChanged` colabora estreitamente com o método `attributeChangedCallback` do Custom Element para garantir que mudanças de atributos desencadeiem a execução do método decorado.
-
-### Consequências
-
-#### Impactos Positivos
-
-- **Reatividade Aprimorada:** Permite que componentes respondam rapidamente a mudanças de atributos, proporcionando uma experiência de usuário mais dinâmica.
-- **Simplicidade na Implementação:** Centraliza a lógica de resposta a mudanças de atributos, facilitando a manutenção e a extensão dos componentes.
-- **Consistência Visual:** Garante que as mudanças de atributos sejam refletidas visualmente no componente de maneira consistente.
-
-#### Impactos Negativos
-
-- **Complexidade Adicional:** Introduz complexidade na gestão de atributos, especialmente em componentes com muitos atributos observados.
-- **Possível Sobrecarga de Desempenho:** Mudanças frequentes de atributos podem impactar o desempenho da aplicação, necessitando de cuidados extras em cenários de uso intensivo.
-
-### Implementação
+## Implementação
 
 ```javascript
-function attributeChanged(attributeName) {
-  return (target, propertyKey) => {
-    const attributeChangedCallback =
-      target.attributeChangedCallback ?? (() => undefined);
+import intercept from "../intercept";
+import { attributeChangedCallback, observedAttributes } from "../interfaces";
 
-    Object.assign(target.constructor, {
-      observedAttributes: [
-        attributeName,
-        ...(target.constructor.observedAttributes ?? []),
-      ],
-    });
+const attributeChanged = (attributeName) => (target, propertyKey) => {
+  Object.assign(target.constructor, {
+    [observedAttributes]: [
+      attributeName,
+      ...(target.constructor[observedAttributes] ?? []),
+    ],
+  });
 
-    Reflect.defineProperty(target, "attributeChangedCallback", {
-      async value(name, oldValue, newValue) {
-        await Reflect.apply(attributeChangedCallback, this, arguments);
-        name === attributeName && (await this[propertyKey](newValue, oldValue));
-        return this;
-      },
-      writable: true,
+  intercept(attributeChangedCallback)
+    .in(target)
+    .then(async function (name, oldValue, newValue) {
+      if (name === attributeName && oldValue !== newValue) {
+        await this[propertyKey](newValue, oldValue);
+      }
     });
-  };
-}
+};
 
 export default attributeChanged;
 ```
 
 ### Exemplo de Uso
 
-```javascript
+```typescript
 import { attributeChanged } from '@bake-js/element';
 
 class MyElement extends HTMLElement {
@@ -120,16 +73,62 @@ class MyElement extends HTMLElement {
 customElements.define('my-element', MyElement);
 ```
 
-### Usos Conhecidos
+## Comparação com Concorrentes
 
-- **Componentes Interativos:** Ideal para componentes que precisam responder a mudanças de atributos de maneira dinâmica e eficiente.
-- **Formulários e Inputs:** Útil para elementos de formulário que necessitam atualizar seu estado interno em resposta a mudanças de atributos.
+### Lit
 
-### Padrões Relacionados
+- **Sincronização Automática:** Sincroniza mudanças de atributos com propriedades reativas. Lit configura automaticamente a matriz `observedAttributes` para refletir a lista de propriedades reativas do componente.
+- **Atributos e Propriedades:** O Lit utiliza o `attributeChangedCallback` para atualizar propriedades reativas com base nas alterações de atributos.
 
-- **Observer Pattern:** Pode ser integrado para notificar componentes sobre mudanças de atributos, desencadeando a lógica necessária em resposta.
-- **State Management Patterns:** Padrões como Flux ou Redux podem coordenar mudanças de atributos com atualizações de estado centralizadas, mantendo a sincronia entre dados e interface.
+Para mais detalhes sobre Lit, veja a [documentação oficial](https://lit.dev/docs/components/lifecycle/#attributechangedcallback()).
 
-### Considerações Finais
+```javascript
+import { LitElement, html } from 'lit';
 
-O decorator `attributeChanged` oferece uma solução eficaz para gerenciar respostas a mudanças de atributos em Custom Elements, simplificando a lógica de atualização e mantendo a consistência visual e funcional dos componentes.
+class MyElement extends LitElement {
+  static properties = {
+    value: {},
+  };
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (name === 'value') {
+      console.log(`Atributo 'value' alterado de ${oldValue} para ${newValue}`);
+    }
+  }
+
+  render() {
+    return html`<div>Value: ${this.value}</div>`;
+  }
+}
+
+customElements.define('my-element', MyElement);
+```
+
+### Stencil
+
+- **Propriedades e Atributos:** O Stencil usa o decorator `@Prop()` para mapear propriedades para atributos DOM, com opções para personalizar nomes e comportamento dos atributos.
+- **Configuração de Atributos:** Permite definir explicitamente o nome dos atributos e se eles são refletidos no DOM.
+
+Para mais detalhes sobre Stencil, veja a [documentação oficial](https://stenciljs.com/docs/props).
+
+```typescript
+import { Component, Prop, h } from '@stencil/core';
+
+@Component({
+  tag: 'todo-list-item',
+})
+export class ToDoListItem {
+  @Prop({ attribute: 'complete' }) isComplete: boolean;
+  @Prop({ attribute: 'thing' }) thingToDo: string;
+  @Prop({ attribute: 'my-service' }) httpService: MyHttpService;
+}
+```
+
+### Vantagens do `@attributeChanged`
+
+- **Simplicidade na Implementação:** Facilita a adição de lógica de resposta a mudanças de atributos, centralizando a implementação.
+- **Reatividade Aprimorada:** Permite que componentes respondam rapidamente a alterações de atributos, mantendo a experiência do usuário fluida.
+
+## Considerações Finais
+
+O `attributeChanged` oferece uma solução prática e eficiente para gerenciar respostas a mudanças de atributos em Custom Elements. Ele promove a reatividade e a facilidade de manutenção dos componentes, facilitando a atualização e a sincronização do estado interno com os atributos do DOM.
