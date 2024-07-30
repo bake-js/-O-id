@@ -1,118 +1,107 @@
 # Disconnected
 
-Bem-vindo à documentação do `disconnected`, um decorator que permite adicionar um hook a métodos específicos de Custom Elements para execução quando o elemento é desconectado do DOM. Este pacote é parte integrante da biblioteca Element, que visa simplificar o desenvolvimento de Web Components.
+O `disconnected` é um decorator que permite adicionar um hook a métodos específicos de Custom Elements para execução quando o elemento é desconectado do DOM. Este pacote é parte integrante da biblioteca Element.
 
-## Documentação do Código
+## Visão Geral
 
 ### Nome e Classificação
 
-**Nome:** Disconnected
+- **Nome:** Disconnected
+- **Classificação:** Decorators [ES Proposals](https://www.proposals.es/proposals/Decorators), [TypeScript](https://www.typescriptlang.org/docs/handbook/decorators.html)
 
-**Classificação:** Decorators [ES Proposals](https://www.proposals.es/proposals/Decorators), [Typescript](https://www.typescriptlang.org/docs/handbook/decorators.html)
+### Objetivo
 
-### Interação e Objetivo
+Facilitar a execução de lógica adicional quando o elemento for desconectado do DOM, sem a necessidade de sobrescrever manualmente o `disconnectedCallback`.
 
-**Interação:** Este decorator é aplicado a métodos de classes de Custom Elements para executar o método decorado sempre que o `disconnectedCallback` for chamado, ou seja, quando o elemento for removido do DOM.
+## Motivação
 
-**Objetivo:** Facilitar a execução de lógica adicional quando o elemento for desconectado do DOM, sem necessidade de sobrescrever manualmente o `disconnectedCallback`.
-
-### Também conhecido como
-
-- Callback de Desconexão
-- Hook de Desconexão
-
-### Motivação
-
-A motivação para usar o decorator `disconnected` é simplificar a gestão da lógica de desconexão de elementos customizados em aplicações web. Ele permite:
+Usar o `disconnected` traz as seguintes vantagens:
 
 1. **Execução Automática de Lógica Adicional:** Garante que a lógica adicional definida no método decorado seja executada sempre que o elemento for desconectado do DOM.
 2. **Manutenção da Simplicidade:** Evita a necessidade de sobrescrever manualmente o `disconnectedCallback` em cada Custom Element, facilitando a manutenção do código.
 
-### Aplicabilidade
+## Aplicabilidade
 
-O decorator `disconnected` é aplicável em situações onde se deseja executar automaticamente lógica adicional quando um elemento customizado é removido do DOM. É útil em cenários como:
+Ideal para qualquer situação onde se deseja executar automaticamente lógica adicional quando um elemento customizado é removido do DOM. É útil em cenários como:
 
 - **Limpeza de Recursos:** Quando é necessário liberar recursos ou listeners ao remover o componente do DOM.
 - **Desconexão de Listeners:** Para remover event listeners ou outras interações quando o elemento é removido do DOM.
 
-### Estrutura
-
-A estrutura do decorator `disconnected` é simples, modificando o `disconnectedCallback` do elemento para incluir a execução do método decorado.
-
-### Participantes
-
-1. **Função Decoradora (`disconnected`)**:
-   - **Descrição:** Modifica o `disconnectedCallback` de classes de Custom Elements para executar o método decorado quando o elemento é desconectado do DOM.
-   - **Responsabilidade:** Garantir a execução da lógica adicional ao desconectar o elemento do DOM.
-
-2. **Elemento Alvo (`target`)**:
-   - **Descrição:** A classe de Custom Element que contém o método decorado com `@disconnected`.
-   - **Responsabilidade:** Executar a lógica adicional definida no método decorado ao ser desconectado do DOM.
-
-3. **Método Decorado (`propertyKey`)**:
-   - **Descrição:** O método original da classe de Custom Element que é decorado com `@disconnected`.
-   - **Responsabilidade:** Realizar a lógica específica definida para ser executada quando o elemento é desconectado do DOM.
-
-### Colaborações
-
-O decorator `disconnected` funciona em conjunto com o `disconnectedCallback` do Custom Element para garantir que a lógica adicional seja executada sempre que o elemento é removido do DOM.
-
-### Consequências
-
-#### Impactos Positivos
-
-- **Simplificação da Lógica de Desconexão:** Centraliza a lógica de desconexão em métodos específicos, facilitando a manutenção e a extensão dos componentes.
-- **Automatização da Execução de Lógica:** Garante que a lógica definida seja executada sempre que o elemento for desconectado do DOM, sem necessidade de intervenção manual.
-
-#### Impactos Negativos
-
-- **Complexidade Adicional:** Pode introduzir complexidade na gestão do ciclo de vida de desconexão, especialmente em aplicações que exigem muitas interações ao desconectar elementos.
-- **Possível Sobrecarga de Desempenho:** Execuções frequentes ao desconectar elementos podem impactar o desempenho da aplicação, necessitando de cuidados extras em cenários de uso intensivo.
-
-### Implementação
+## Implementação
 
 ```javascript
-function disconnected(target, propertyKey) {
-  const disconnectedCallback = target.disconnectedCallback ?? (() => undefined);
+import intercept, { exec } from "../intercept";
+import { disconnectedCallback } from "../interfaces";
 
-  Reflect.defineProperty(target, "disconnectedCallback", {
-    async value() {
-      await Reflect.apply(disconnectedCallback, this, arguments);
-      await this[propertyKey](...arguments);
-      return this;
-    },
-    writable: true,
-  });
-}
+const disconnected = (target, propertyKey) =>
+  intercept(disconnectedCallback).in(target).then(exec(propertyKey));
 
 export default disconnected;
 ```
 
 ### Exemplo de Uso
 
-```javascript
+```typescript
 import { disconnected, define } from '@bake-js/element';
 
-@define("element-counter")
-class Counter extends HTMLElement {
+@define("element-cleanup")
+class CleanupElement extends HTMLElement {
   @disconnected
   onDisconnected() {
     console.log('Elemento desconectado do DOM');
+    window.removeEventListener('resize', this.handleResize);
+  }
+
+  connectedCallback() {
+    window.addEventListener('resize', this.handleResize);
+  }
+
+  handleResize = () => {
+    console.log('Redimensionamento detectado');
   }
 }
 ```
 
-### Usos Conhecidos
+## Comparação com concorrentes
 
-- **Limpeza de Recursos:** Ideal para liberar recursos ou remover listeners ao desconectar o componente do DOM.
-- **Desconexão de Interações:** Útil para remover event listeners ou outras interações ao desconectar o elemento do DOM.
+### Lit
 
-### Padrões Relacionados
+- **Requer Sobrescrição:** Necessário sobrescrever `disconnectedCallback` manualmente.
+- **Pausa Automática:** Pausa o ciclo de atualização reativa automaticamente quando o elemento é desconectado.
 
-- **Decorator `connected`:** Pode ser usado em conjunto para gerenciar a lógica de conexão e desconexão de elementos no DOM.
-- **Decorator `attributeChanged`:** Complementa o `disconnected`, gerenciando mudanças de atributos em elementos conectados e desconectados do DOM.
-- **Observer Pattern:** Pode ser integrado para notificar componentes sobre mudanças relevantes ao serem desconectados do DOM.
+Para mais detalhes sobre Lit, veja a [documentação oficial](https://lit.dev/docs/components/lifecycle/#disconnectedcallback).
 
-### Considerações Finais
+```typescript
+disconnectedCallback() {
+  super.disconnectedCallback();
+  window.removeEventListener('keydown', this._handleKeydown);
+}
+```
 
-O decorator `disconnected` oferece uma solução eficaz para gerenciar a execução de lógica adicional ao desconectar elementos customizados do DOM. Ao garantir que a lógica definida seja executada automaticamente, ele promove uma experiência de desenvolvimento mais simples e organizada.
+### Stencil
+
+- **Automático:** Implementa `disconnectedCallback` automaticamente para indicar que o componente foi removido do DOM. Chamado toda vez que o componente é desconectado do DOM, e pode ser disparado mais de uma vez. Não deve ser confundido com um evento de "destruição".
+
+Para mais detalhes sobre Stencil, veja a [documentação oficial](https://stenciljs.com/docs/component-lifecycle#disconnectedcallback).
+
+```typescript
+@Component({
+  tag: 'my-component',
+  styleUrl: 'my-component.css',
+  shadow: true,
+})
+export class MyComponent {
+  disconnectedCallback() {
+    // Lógica de limpeza aqui
+  }
+}
+```
+
+### Vantagens do `@disconnected`
+
+- **Interface Nativa:** Respeita a assinatura do método nativo `disconnectedCallback` ([MDN](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements#using_the_lifecycle_callbacks)).
+- **Flexibilidade:** Não obriga a extensão de uma classe específica, oferecendo maior flexibilidade.
+
+## Considerações Finais
+
+O decorator `disconnected` oferece uma solução eficaz para gerenciar a execução de lógica adicional ao desconectar elementos customizados do DOM. Ao garantir que a lógica definida seja executada automaticamente, ele promove uma experiência de desenvolvimento mais simples e organizada, facilitando a manutenção do código e assegurando uma limpeza eficiente de recursos e listeners.
