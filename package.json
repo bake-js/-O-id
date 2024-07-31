@@ -17,6 +17,10 @@
       "import": "dist/element.js",
       "require": "dis/element.cjs"
     },
+    "./dom": {
+      "import": "dist/dom.js",
+      "require": "dis/dom.cjs"
+    },
     "./event": {
       "import": "dist/event.js",
       "require": "dis/event.cjs"
@@ -37,5 +41,5 @@
   },
   "type": "module",
   "types": "types.d.ts",
-  "version": "0.8.0"
+  "version": "0.9.0"
 }

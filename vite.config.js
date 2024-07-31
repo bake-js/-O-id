@@ -6,6 +6,7 @@ export default defineConfig({
     lib: {
       entry: {
         element: resolve(__dirname, "src/index.js"),
+        dom: resolve(__dirname, "src/dom/index.js"),
         event: resolve(__dirname, "src/event/index.js"),
       },
       formats: ["cjs", "es"],
