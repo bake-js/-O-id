@@ -11,10 +11,10 @@ const attributeChanged = (attributeName) => (target, propertyKey) => {
 
   intercept(attributeChangedCallback)
     .in(target)
-    .then(async function (name, oldValue, newValue) {
+    .then(function (name, oldValue, newValue) {
       name === attributeName &&
         oldValue !== newValue &&
-        (await this[propertyKey](newValue, oldValue));
+        this[propertyKey](newValue, oldValue);
     });
 };
 
