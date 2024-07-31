@@ -1,137 +1,134 @@
-# Repaint
+## Repaint
 
-Bem-vindo à documentação do `repaint`, um decorator que permite adicionar um hook a métodos específicos de Custom Elements para forçar a execução do método `paint` sempre que o método decorado for chamado. Este pacote é parte integrante da biblioteca Element, que visa simplificar o desenvolvimento de Web Components.
+O `repaint` é um decorator que facilita a atualização de Custom Elements quando um método específico é chamado. Ele garante que o componente seja repintado após a execução de métodos decorados.
 
-## Documentação do Código
+### Visão Geral
 
 ### Nome e Classificação
 
-**Nome:** Repaint
+- **Nome:** Repaint
+- **Classificação:** Decorators [ES Proposals](https://www.proposals.es/proposals/Decorators), [TypeScript](https://www.typescriptlang.org/docs/handbook/decorators.html)
 
-**Classificação:** Decorators [ES Proposals](https://www.proposals.es/proposals/Decorators), [Typescript](https://www.typescriptlang.org/docs/handbook/decorators.html)
+### Objetivo
 
-### Interação e Objetivo
+O objetivo do `repaint` é garantir que o método de renderização do componente seja chamado após a execução de métodos específicos, mantendo a interface do usuário atualizada de acordo com as mudanças de estado.
 
-**Interação:** Este decorator é aplicado a métodos de classes de custom elements para forçar a execução do método `paint` sempre que o método decorado for chamado, garantindo a atualização da renderização do componente.
+## Motivação
 
-**Objetivo:** Integrar-se com o decorator `paint` para proporcionar uma maneira eficiente de atualizar a renderização de componentes customizados quando necessário, sem precisar reinventar a lógica de renderização.
+Usar o `repaint` traz as seguintes vantagens:
 
-### Também conhecido como
+1. **Atualização Automática:** Garante que o componente seja repintado automaticamente após a execução de métodos decorados.
+2. **Simplicidade:** Simplifica a lógica de atualização do componente.
+3. **Coesão:** Mantém a lógica de atualização encapsulada dentro do decorator.
 
-- Atualização de Renderização
-- Forçar Renderização
-- Re-render [React](https://legacy.reactjs.org/docs/rendering-elements.html#updating-the-rendered-element)
+## Aplicabilidade
 
-### Motivação
+Ideal para situações onde é necessário garantir que o componente seja atualizado após a execução de determinados métodos, especialmente em componentes que dependem de estados internos dinâmicos.
 
-A motivação para usar o decorator `repaint` é simplificar a gestão da atualização da renderização de componentes customizados em aplicações web. Ao trabalhar em conjunto com o `paint`, ele permite:
-
-1. **Atualização Forçada de Renderização:** Garante que a renderização do componente seja atualizada sempre que um método decorado com `@repaint` for executado, reexecutando o ciclo de vida de renderização definido pelo `paint`.
-2. **Manutenção da Consistência:** Mantém a consistência na atualização visual do componente, evitando renderizações desatualizadas ou inconsistentes.
-
-### Aplicabilidade
-
-O decorator `repaint` é aplicável em situações onde se deseja atualizar manualmente a renderização de componentes customizados em resposta a eventos ou mudanças de estado. É especialmente útil quando combinado com o decorator `paint` em cenários como:
-
-- **Atualização Dinâmica de Conteúdo:** Quando componentes precisam reagir a alterações de dados ou eventos e atualizar sua interface de usuário de forma eficiente.
-- **Interatividade em Tempo Real:** Para elementos que exigem uma resposta imediata a ações do usuário, garantindo que as mudanças visuais sejam refletidas instantaneamente.
-
-### Estrutura
-
-A estrutura do decorator `repaint` é simples, complementando o decorator `paint` ao:
-
-- **Modificar o Método Decorado:** Sobrescreve o método decorado para chamar o método `paint` após sua execução, se o componente já tiver sido previamente pintado (`trait.painted` é verdadeiro).
-
-### Participantes
-
-1. **Função Decoradora (`repaint`)**:
-   - **Descrição:** Modifica métodos de classes de custom elements para forçar a execução do método `paint` após a execução do método decorado.
-   - **Responsabilidade:** Garantir que a renderização do componente seja atualizada quando necessário, mantendo a consistência visual.
-
-2. **Elemento Alvo (`target`)**:
-   - **Descrição:** A classe de custom element que contém o método decorado com `@repaint`.
-   - **Responsabilidade:** Executar o método `paint` para atualizar a renderização do componente após a execução do método decorado.
-
-3. **Método Decorado (`descriptor.value`)**:
-   - **Descrição:** O método original da classe de custom element que é decorado com `@repaint`.
-   - **Responsabilidade:** Realizar a lógica específica do método, seguida pela atualização da renderização do componente.
-
-### Colaborações
-
-O decorator `repaint` colabora estreitamente com o decorator `paint` para garantir que a renderização do componente seja atualizada conforme necessário. Essas colaborações são essenciais para manter a consistência e a eficiência na gestão de atualizações visuais em componentes web customizados.
-
-### Consequências
-
-#### Impactos Positivos
-
-- **Melhoria na Responsividade:** Permite que componentes respondam rapidamente a mudanças de estado ou dados, proporcionando uma experiência de usuário mais fluida.
-- **Simplicação da Manutenção:** Centraliza a lógica de atualização visual em um método `paint`, facilitando a manutenção e a extensão dos componentes.
-- **Aumento da Reutilização:** Encoraja a criação de componentes mais reutilizáveis ao separar a lógica de renderização da lógica de negócio.
-
-#### Impactos Negativos
-
-- **Complexidade Adicional:** Introduz complexidade na gestão do ciclo de vida de renderização, especialmente em aplicações que exigem muitas atualizações.
-- **Possível Sobrecarga de Desempenho:** Repaints frequentes podem impactar o desempenho da aplicação, necessitando de cuidados extras em cenários de uso intensivo.
-
-### Implementação
+## Implementação
 
 ```javascript
-import trait from "../trait";
+import { paintCallback } from "../interfaces";
 
-function repaint(_target, _propertyKey, descriptor) {
+const repaint = (_target, _propertyKey, descriptor) => {
   const value = descriptor.value;
 
   Object.assign(descriptor, {
-    async value() {
-      await Reflect.apply(value, this, arguments);
-      this[trait.painted] && (await this[trait.paint]());
+    async value(...args) {
+      await Reflect.apply(value, this, args);
+      this.isConnected && (await this[paintCallback]());
       return this;
     },
   });
-}
+};
 
 export default repaint;
 ```
 
-### Exemplo de Uso
+## Exemplo de Uso
+
+counter.ts:
 
 ```javascript
-import { paint, repaint } from '@bake-js/element';
+import { define, paint, repaint } from '@bake-js/element';
+import component from './component';
+import style from './style';
 
-@paint((self) => {
-  return `<p>Hello, ${self.name}</p>`;
-})
-class GreetingElement extends HTMLElement {
-  #name;
+@define('be-counter')
+@paint(component, style)
+class Counter extends HTMLElement {
+  #number = 0;
 
-  get name() {
-    return (this.#name ??= 'World');
+  get number() {
+    return this.#number;
   }
 
-  constructor() {
-    super();
-    this.attachShadow({ mode: 'open' });
+  set number(value) {
+    this.#number = value;
   }
 
   @repaint
-  changeName(value) {
-    this.#name = value
-    return this
+  increment() {
+    this.number += 1;
   }
 }
 ```
 
-### Usos Conhecidos
+## Comparação com Concorrentes
 
-- **Atualização Dinâmica de Interfaces:** Ideal para interfaces que necessitam de atualizações em tempo real baseadas em eventos ou mudanças de dados.
-- **Aplicações Reativas:** Útil para componentes que precisam reagir dinamicamente a mudanças de estado, mantendo a consistência visual e funcional.
+### Lit
 
-### Padrões Relacionados
+Lit utiliza a função `updateWhenLocaleChanges` para re-renderizar o componente quando o idioma ativo é alterado. Para mais detalhes, veja a [documentação oficial](https://lit.dev/docs/localization/runtime-mode/#automatically-re-render).
 
-- **Decorator `paint`:** Complementa o `repaint`, definindo o ciclo de vida inicial de renderização e sendo invocado automaticamente após mudanças que exigem uma nova renderização.
-- **Observer Pattern:** Pode ser integrado para notificar componentes sobre mudanças relevantes, desencadeando repaints apenas quando necessário.
-- **State Management Patterns:** Padrões como Flux ou Redux podem coordenar repaints com atualizações de estado centralizadas, mantendo a sincronia entre dados e interface.
+```javascript
+import {LitElement, html} from 'lit';
+import {msg, updateWhenLocaleChanges} from '@lit/localize';
 
-### Considerações Finais
+class MyElement extends LitElement {
+  constructor() {
+    super();
+    updateWhenLocaleChanges(this);
+  }
 
-O decorator `repaint` oferece uma solução eficaz para gerenciar a atualização da renderização de componentes customizados em aplicações web, especialmente quando combinado com o decorator `paint`. Ao garantir que a renderização seja atualizada automaticamente após a execução de métodos específicos, ele promove uma experiência de usuário mais fluida e responsiva.
+  render() {
+    return msg(html`Hello <b>World!</b>`);
+  }
+}
+
+customElements.define('my-element', MyElement);
+```
+
+### Stencil
+
+O Stencil usa o decorator `@State` para monitorar mudanças de estado e repintar o componente quando esses estados são alterados. Para mais detalhes, veja a [documentação oficial](https://stenciljs.com/docs/state#the-state-decorator-state).
+
+```typescript
+import { Component, State, h } from '@stencil/core';
+
+@Component({
+  tag: 'current-time',
+})
+export class CurrentTime {
+  @State() currentTime: number = Date.now();
+
+  connectedCallback() {
+    setInterval(() => {
+      this.currentTime = Date.now();
+    }, 1000);
+  }
+
+  render() {
+    const time = new Date(this.currentTime).toLocaleTimeString();
+    return <span>{time}</span>;
+  }
+}
+```
+
+### Vantagens do `@repaint`
+
+- **Automatização:** Atualiza automaticamente o componente após a execução de métodos específicos.
+- **Simplicidade:** Simplifica a lógica de atualização do componente, mantendo a coesão da classe.
+
+## Considerações Finais
+
+O `repaint` é uma ferramenta eficaz para garantir que Custom Elements sejam atualizados corretamente após a execução de métodos específicos, simplificando a lógica de atualização e mantendo a coesão do componente.
