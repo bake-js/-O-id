@@ -1,16 +1,17 @@
-import { eventTarget } from "./eventTarget";
+import { echoTarget } from "./echoTarget";
 import {
   attributeChangedCallback,
   connectedCallback,
   disconnectedCallback,
   dispatchEvent,
-  eventConnectedCallback,
+  echoConnectedCallback,
+  echoDisconnectedCallback,
   id,
   observedAttributes,
   on,
 } from "./interfaces";
 
-const EventBus = (Klass) =>
+const Echo = (Klass) =>
   class extends Klass {
     #controllers = {};
 
@@ -18,28 +19,37 @@ const EventBus = (Klass) =>
       return [...(Klass[observedAttributes] ?? []), on];
     }
 
+    [attributeChangedCallback](name, oldValue, newValue) {
+      name === on &&
+        (this[echoDisconnectedCallback](oldValue),
+        this[echoConnectedCallback](newValue));
+      return this;
+    }
+
+    [disconnectedCallback]() {
+      Object.values(this.#controllers).forEach((controller) =>
+        controller.abort(),
+      );
+      return this;
+    }
+
     [dispatchEvent](event) {
       super[dispatchEvent](event);
-      eventTarget.dispatchEvent(
+      echoTarget.dispatchEvent(
         new CustomEvent(`${this.getAttribute(id)}/${event.type}`, {
           detail: event.detail,
         }),
       );
     }
 
-    [attributeChangedCallback](name, _oldValue, newValue) {
-      name === on && this[eventConnectedCallback](newValue);
-      return this;
-    }
-
-    [eventConnectedCallback](protocol) {
+    [echoConnectedCallback](protocol) {
       this.#controllers[protocol] = new AbortController();
 
       const [, topic, type, name] = protocol.match(
         /^([a-z]+\/[a-z]+):([a-z]+)\/([a-z]+)$/,
       );
 
-      eventTarget.addEventListener(
+      echoTarget.addEventListener(
         topic,
         (event) => {
           if (/^method$/.test(type)) this[name](event.detail);
@@ -52,12 +62,10 @@ const EventBus = (Klass) =>
       return this;
     }
 
-    [disconnectedCallback]() {
-      Object.values(this.#controllers).forEach((controller) =>
-        controller.abort(),
-      );
+    [echoDisconnectedCallback](protocol) {
+      this.#controllers[protocol]?.abort();
       return this;
     }
   };
 
-export default EventBus;
+export default Echo;
