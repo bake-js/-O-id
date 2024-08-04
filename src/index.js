@@ -10,5 +10,4 @@ export { default as formStateRestore } from "./formStateRestore";
 export { default as on } from "./on";
 export { default as paint } from "./paint";
 export { default as repaint } from "./repaint";
-export { default as trait } from "./trait";
 export { default as willPaint } from "./willPaint";
