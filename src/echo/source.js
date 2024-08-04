@@ -6,7 +6,7 @@ import {
   on,
 } from "./interfaces";
 
-class EchoSource extends HTMLElement {
+class Source extends HTMLElement {
   static get [observedAttributes]() {
     return [on];
   }
@@ -22,4 +22,4 @@ class EchoSource extends HTMLElement {
   }
 }
 
-customElements.define("be-echo-source", EchoSource);
+customElements.define("xyz-echo-source", Source);

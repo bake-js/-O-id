@@ -1,4 +1,3 @@
-import { echoTarget } from "./echoTarget";
 import {
   attributeChangedCallback,
   connectedCallback,
@@ -10,6 +9,7 @@ import {
   observedAttributes,
   on,
 } from "./interfaces";
+import { target } from "./target";
 
 const Echo = (Klass) =>
   class extends Klass {
@@ -35,7 +35,7 @@ const Echo = (Klass) =>
 
     [dispatchEvent](event) {
       super[dispatchEvent](event);
-      echoTarget.dispatchEvent(
+      target.dispatchEvent(
         new CustomEvent(`${this.getAttribute(id)}/${event.type}`, {
           detail: event.detail,
         }),
@@ -49,7 +49,7 @@ const Echo = (Klass) =>
         /^([a-z]+\/[a-z]+):([a-z]+)\/([a-z]+)$/,
       );
 
-      echoTarget.addEventListener(
+      target.addEventListener(
         topic,
         (event) => {
           if (/^method$/.test(type)) this[name](event.detail);

@@ -1,2 +1,2 @@
-import "./echoSource";
+import "./source";
 export { default } from "./echo";
