@@ -1,5 +1,7 @@
 # Element
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4dde8b4952684a35affc3a4116db149a)](https://app.codacy.com/gh/bake-js/element?utm_source=github.com&utm_medium=referral&utm_content=bake-js/element&utm_campaign=Badge_Grade)
+
 Element é uma biblioteca leve e poderosa para criar Web Components personalizados com eficiência e simplicidade. Utilizando Vanilla JavaScript, o Element é otimizado para desempenho, garantindo que seus componentes sejam rápidos e leves. Com uma arquitetura intuitiva e o uso de decorators inovadores, como paint e repaint, o desenvolvimento de componentes reativos e modulares se torna simples e direto.
 
 ## Instalação
