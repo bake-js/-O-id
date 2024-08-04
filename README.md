@@ -68,7 +68,6 @@ Explore a documentação detalhada de cada parte do projeto:
 - [define](https://github.com/bake-js/element/blob/main/src/define/README.md)
 - [didPaint](https://github.com/bake-js/element/blob/main/src/didPaint/README.md)
 - [disconnected](https://github.com/bake-js/element/blob/main/src/disconnected/README.md)
-- [on](https://github.com/bake-js/element/blob/main/src/on/README.md)
 - [paint](https://github.com/bake-js/element/blob/main/src/paint/README.md)
 - [repaint](https://github.com/bake-js/element/blob/main/src/repaint/README.md)
 - [willPaint](https://github.com/bake-js/element/blob/main/src/willPaint/README.md)

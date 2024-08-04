@@ -24,6 +24,10 @@
     "./echo": {
       "import": "dist/echo.js",
       "require": "dis/echo.cjs"
+    },
+    "./on": {
+      "import": "dist/on.js",
+      "require": "dis/on.cjs"
     }
   },
   "files": ["dist", "types.d.ts"],
@@ -41,5 +45,5 @@
   },
   "type": "module",
   "types": "types.d.ts",
-  "version": "0.11.2"
+  "version": "0.12.0"
 }

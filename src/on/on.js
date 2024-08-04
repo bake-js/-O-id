@@ -1,5 +1,5 @@
-import intercept from "../intercept";
-import { connectedCallback, disconnectedCallback } from "../interfaces";
+import intercept from "./intercept";
+import { connectedCallback, disconnectedCallback } from "./interfaces";
 
 const on = new Proxy(
   {},
