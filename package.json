@@ -25,9 +25,9 @@
       "import": "dist/echo.js",
       "require": "dis/echo.cjs"
     },
-    "./on": {
-      "import": "dist/on.js",
-      "require": "dis/on.cjs"
+    "./event": {
+      "import": "dist/event.js",
+      "require": "dis/event.cjs"
     }
   },
   "files": ["dist", "types.d.ts"],
@@ -45,5 +45,5 @@
   },
   "type": "module",
   "types": "types.d.ts",
-  "version": "0.13.0"
+  "version": "0.14.0"
 }

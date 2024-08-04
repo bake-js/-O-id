@@ -1,7 +1,7 @@
 import intercept from "./intercept";
 import { connectedCallback, disconnectedCallback } from "./interfaces";
 
-const on = new Proxy(
+const event = new Proxy(
   {},
   {
     get: (_, type) => (query) => (target, propertyKey) => {
@@ -25,4 +25,4 @@ const on = new Proxy(
   },
 );
 
-export default on;
+export default event;

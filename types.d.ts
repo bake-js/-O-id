@@ -103,7 +103,7 @@ export declare function joinCut(
  *
  * @param {string} event - O nome do evento a ser observado.
  */
-export declare const on: {
+export declare const event: {
   [event: string]: (
     query: string,
   ) => (target: any, propertyKey: PropertyKey) => void;
