@@ -1,6 +1,8 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/f93c1b61157f460f8fd9fd86eda78df0)](https://app.codacy.com/gh/bake-js/element/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+
 # Element
 
-Element é uma biblioteca leve e poderosa para criar Web Components personalizados com eficiência e simplicidade. Utilizando Vanilla JavaScript, o Element é otimizado para desempenho, garantindo que seus componentes sejam rápidos e leves. Com uma arquitetura intuitiva e o uso de decorators inovadores, como paint e repaint, o desenvolvimento de componentes reativos e modulares se torna simples e direto.
+Element é uma biblioteca leve e poderosa para criar Web Components personalizados com eficiência e simplicidade. Utilizando apenas JavaScript, o Element é otimizado para desempenho, garantindo que seus componentes sejam rápidos e leves. Com uma arquitetura intuitiva e o uso de decorators inovadores, como `paint` e `repaint`, o desenvolvimento de componentes reativos e modulares se torna simples e direto.
 
 ## Instalação
 
