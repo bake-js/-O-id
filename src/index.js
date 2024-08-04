@@ -6,6 +6,7 @@ export { default as didPaint } from "./didPaint";
 export { default as disconnected } from "./disconnected";
 export { default as formAssociated } from "./formAssociated";
 export { default as formDisabled } from "./formDisabled";
+export { default as formReset } from "./formReset";
 export { default as formStateRestore } from "./formStateRestore";
 export { default as on } from "./on";
 export { default as paint } from "./paint";
