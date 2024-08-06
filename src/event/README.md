@@ -1,6 +1,6 @@
 ### Event
 
-# Event Modules
+# Event modules
 
 Os módulos Event permitem a fácil manipulação e resposta a eventos dentro dos seus Web Components. Eles fornecem decorators para associar eventos a métodos específicos.
 

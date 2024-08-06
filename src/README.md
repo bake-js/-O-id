@@ -1,6 +1,6 @@
 ### Standard
 
-# Core Modules
+# Standard modules
 
 Os módulos standard são essenciais para a criação e gerenciamento de Web Components no Element. Eles fornecem a funcionalidade básica necessária para definir, conectar, desconectar e gerenciar o ciclo de vida dos componentes.
 

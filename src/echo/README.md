@@ -1,6 +1,6 @@
 ### Echo
 
-# Echo Module
+# Echo module
 
 O módulo Echo facilita a comunicação entre componentes através de um Event Bus, permitindo que eventos sejam transmitidos e recebidos por múltiplos componentes de maneira eficiente.
 

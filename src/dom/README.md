@@ -1,6 +1,6 @@
-### Dom
+### DOM
 
-# DOM Modules
+# DOM modules
 
 Os módulos DOM são responsáveis pela manipulação direta do DOM e pela renderização dos componentes. Eles permitem que você crie e atualize a interface do usuário de maneira eficiente e reativa.
 
