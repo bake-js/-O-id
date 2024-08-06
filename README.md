@@ -60,19 +60,22 @@ bun dev
 
 ## Documentação
 
-### Standard
+### [Standard](https://github.com/bake-js/element/blob/main/src/README.md)
+
+Os módulos standard são essenciais para a criação e gerenciamento de Web Components no Element. Eles fornecem a funcionalidade básica necessária para definir, conectar, desconectar e gerenciar o ciclo de vida dos componentes. Inclui:
 
 - [adopted](https://github.com/bake-js/element/blob/main/src/adopted/README.md)
 - [attributeChanged](https://github.com/bake-js/element/blob/main/src/attributeChanged/README.md)
 - [connected](https://github.com/bake-js/element/blob/main/src/connected/README.md)
-- [define](https://github.com/bake-js/element/blob/main/src/define/README.md)
 - [disconnected](https://github.com/bake-js/element/blob/main/src/disconnected/README.md)
 - [formAssociated](https://github.com/bake-js/element/blob/main/src/formAssociated/README.md)
 - [formDisabled](https://github.com/bake-js/element/blob/main/src/formDisabled/README.md)
 - [formReset](https://github.com/bake-js/element/blob/main/src/formReset/README.md)
 - [formStateRestore](https://github.com/bake-js/element/blob/main/src/formStateRestore/README.md)
 
-### Dom
+### [DOM](https://github.com/bake-js/element/blob/main/src/dom/README.md)
+
+Os módulos DOM são responsáveis pela manipulação direta do DOM e pela renderização dos componentes. Eles permitem que você crie e atualize a interface do usuário de maneira eficiente e reativa. Inclui:
 
 - [paint](https://github.com/bake-js/element/blob/main/src/dom/paint/README.md)
 - [repaint](https://github.com/bake-js/element/blob/main/src/dom/repaint/README.md)
@@ -81,13 +84,17 @@ bun dev
 - [html](https://github.com/bake-js/element/blob/main/src/dom/html/README.md)
 - [css](https://github.com/bake-js/element/blob/main/src/dom/css/README.md)
 
-### Event
+### [Event](https://github.com/bake-js/element/blob/main/src/event/README.md)
+
+Os módulos Event permitem a fácil manipulação e resposta a eventos dentro dos seus Web Components. Eles fornecem decorators para associar eventos a métodos específicos. Inclui:
 
 - [on](https://github.com/bake-js/element/blob/main/src/event/on/README.md)
 - [stop](https://github.com/bake-js/element/blob/main/src/event/stop/README.md)
 - [prevent](https://github.com/bake-js/element/blob/main/src/event/prevent/README.md)
 
-### Echo
+### [Echo](https://github.com/bake-js/element/blob/main/src/echo/README.md)
+
+O módulo Echo facilita a comunicação entre componentes através de um Event Bus, permitindo que eventos sejam transmitidos e recebidos por múltiplos componentes de maneira eficiente. Inclui:
 
 - [Echo](https://github.com/bake-js/element/blob/main/src/echo/README.md)
 
