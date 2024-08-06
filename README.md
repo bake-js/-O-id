@@ -1,8 +1,6 @@
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/f93c1b61157f460f8fd9fd86eda78df0)](https://app.codacy.com/gh/bake-js/element/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
-
 # Element
 
-Element é uma biblioteca leve e poderosa para criar Web Components personalizados com eficiência e simplicidade. Utilizando apenas JavaScript, o Element é otimizado para desempenho, garantindo que seus componentes sejam rápidos e leves. Com uma arquitetura intuitiva e o uso de decorators inovadores, como `paint` e `repaint`, o desenvolvimento de componentes reativos e modulares se torna simples e direto.
+Element é uma biblioteca leve e poderosa para criar Web Components personalizados com eficiência e simplicidade. Utilizando apenas JavaScript, o Element é otimizado para desempenho, garantindo que seus componentes sejam rápidos e leves. Com uma arquitetura intuitiva e o uso de decorators, como `paint` e `repaint`, o desenvolvimento de componentes reativos e modulares se torna simples e direto.
 
 ## Instalação
 
@@ -12,12 +10,14 @@ Instale o Element com npm:
 npm install @bake-js/element
 ```
 
-> **Nota:** Também funciona com `yarn` e `bun`.
+> **Nota:** Também funciona com yarn e bun.
 
 ## Exemplo de Uso
 
 ```javascript
-import { define, html, on, paint, repaint } from '@bake-js/element';
+import { define } from '@bake-js/element';
+import { html, paint, repaint } from '@bake-js/element/dom';
+import on from '@bake-js/element/event';
 
 function component(self) {
   return html`
@@ -60,17 +60,36 @@ bun dev
 
 ## Documentação
 
-Explore a documentação detalhada de cada parte do projeto:
+### Standard
 
 - [adopted](https://github.com/bake-js/element/blob/main/src/adopted/README.md)
 - [attributeChanged](https://github.com/bake-js/element/blob/main/src/attributeChanged/README.md)
 - [connected](https://github.com/bake-js/element/blob/main/src/connected/README.md)
 - [define](https://github.com/bake-js/element/blob/main/src/define/README.md)
-- [didPaint](https://github.com/bake-js/element/blob/main/src/didPaint/README.md)
 - [disconnected](https://github.com/bake-js/element/blob/main/src/disconnected/README.md)
-- [paint](https://github.com/bake-js/element/blob/main/src/paint/README.md)
-- [repaint](https://github.com/bake-js/element/blob/main/src/repaint/README.md)
-- [willPaint](https://github.com/bake-js/element/blob/main/src/willPaint/README.md)
+- [formAssociated](https://github.com/bake-js/element/blob/main/src/formAssociated/README.md)
+- [formDisabled](https://github.com/bake-js/element/blob/main/src/formDisabled/README.md)
+- [formReset](https://github.com/bake-js/element/blob/main/src/formReset/README.md)
+- [formStateRestore](https://github.com/bake-js/element/blob/main/src/formStateRestore/README.md)
+
+### Dom
+
+- [paint](https://github.com/bake-js/element/blob/main/src/dom/paint/README.md)
+- [repaint](https://github.com/bake-js/element/blob/main/src/dom/repaint/README.md)
+- [didPaint](https://github.com/bake-js/element/blob/main/src/dom/didPaint/README.md)
+- [willPaint](https://github.com/bake-js/element/blob/main/src/dom/willPaint/README.md)
+- [html](https://github.com/bake-js/element/blob/main/src/dom/html/README.md)
+- [css](https://github.com/bake-js/element/blob/main/src/dom/css/README.md)
+
+### Event
+
+- [on](https://github.com/bake-js/element/blob/main/src/event/on/README.md)
+- [stop](https://github.com/bake-js/element/blob/main/src/event/stop/README.md)
+- [prevent](https://github.com/bake-js/element/blob/main/src/event/prevent/README.md)
+
+### Echo
+
+- [Echo](https://github.com/bake-js/element/blob/main/src/echo/README.md)
 
 ## Contribua
 
@@ -78,7 +97,7 @@ Ajude a melhorar o Element reportando problemas, sugerindo funcionalidades ou en
 
 ## Suporte
 
-Entre em contato pelo e-mail cleber.demgoncalves@gmail.com ou junte-se ao nosso canal no Discord.
+Entre em contato pelo e-mail cleber.demgoncalves@gmail.com ou junte-se ao nosso canal no Slack.
 
 ## Licença
 
