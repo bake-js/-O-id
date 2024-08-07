@@ -58,45 +58,36 @@ bun install
 bun dev
 ```
 
-## Documentação
+## Workflows
 
-### [Standard](https://github.com/bake-js/element/blob/main/src/README.md)
+### Processo base
 
-Os módulos standard são essenciais para a criação e gerenciamento de Web Components no Element. Eles fornecem a funcionalidade básica necessária para definir, conectar, desconectar e gerenciar o ciclo de vida dos componentes. Inclui:
+1. **[@define](https://github.com/bake-js/element/blob/main/src/define/README.md)** Define o componente personalizado.
+2. **[@attributeChanged](https://github.com/bake-js/element/blob/main/src/attributeChanged/README.md)** Disparado para todos os atributos mapeados quando alterados.
+3. **[@connected](https://github.com/bake-js/element/blob/main/src/connected/README.md)** Executado para todos os métodos decorados quando o componente é conectado ao DOM.
+4. **[@willPaint](https://github.com/bake-js/element/blob/main/src/dom/willPaint/README.md)** Executado antes da renderização, permitindo preparação.
+5. **[@paint](https://github.com/bake-js/element/blob/main/src/dom/paint/README.md)** Executa a renderização do componente.
+6. **[@didPaint](https://github.com/bake-js/element/blob/main/src/dom/didPaint/README.md)** Executado após a renderização, permitindo ações posteriores.
+7. **[@disconnected](https://github.com/bake-js/element/blob/main/src/disconnected/README.md)** Executado quando o componente é desconectado do DOM.
 
-- [adopted](https://github.com/bake-js/element/blob/main/src/adopted/README.md)
-- [attributeChanged](https://github.com/bake-js/element/blob/main/src/attributeChanged/README.md)
-- [connected](https://github.com/bake-js/element/blob/main/src/connected/README.md)
-- [disconnected](https://github.com/bake-js/element/blob/main/src/disconnected/README.md)
-- [formAssociated](https://github.com/bake-js/element/blob/main/src/formAssociated/README.md)
-- [formDisabled](https://github.com/bake-js/element/blob/main/src/formDisabled/README.md)
-- [formReset](https://github.com/bake-js/element/blob/main/src/formReset/README.md)
-- [formStateRestore](https://github.com/bake-js/element/blob/main/src/formStateRestore/README.md)
+### Processo de repaint
 
-### [DOM](https://github.com/bake-js/element/blob/main/src/dom/README.md)
+1. **[@repaint](https://github.com/bake-js/element/blob/main/src/dom/repaint/README.md)** Disparado para iniciar o processo de repintura.
+2. **[@willPaint](https://github.com/bake-js/element/blob/main/src/dom/willPaint/README.md)** Executado antes da repintura, permitindo preparação.
+3. **[@paint](https://github.com/bake-js/element/blob/main/src/dom/paint/README.md)** Executa a repintura do componente.
+4. **[@didPaint](https://github.com/bake-js/element/blob/main/src/dom/didPaint/README.md)** Executado após a repintura, permitindo ações posteriores.
 
-Os módulos DOM são responsáveis pela manipulação direta do DOM e pela renderização dos componentes. Eles permitem que você crie e atualize a interface do usuário de maneira eficiente e reativa. Inclui:
+### Processo de eventos
 
-- [paint](https://github.com/bake-js/element/blob/main/src/dom/paint/README.md)
-- [repaint](https://github.com/bake-js/element/blob/main/src/dom/repaint/README.md)
-- [didPaint](https://github.com/bake-js/element/blob/main/src/dom/didPaint/README.md)
-- [willPaint](https://github.com/bake-js/element/blob/main/src/dom/willPaint/README.md)
-- [html](https://github.com/bake-js/element/blob/main/src/dom/html/README.md)
-- [css](https://github.com/bake-js/element/blob/main/src/dom/css/README.md)
+1. **[@on](https://github.com/bake-js/element/blob/main/src/event/on/README.md)** Associa um evento a um método específico.
+2. **[@stop](https://github.com/bake-js/element/blob/main/src/event/stop/README.md)** Previne a propagação do evento.
+3. **[@prevent](https://github.com/bake-js/element/blob/main/src/event/prevent/README.md)** Previne o comportamento padrão do evento.
 
-### [Event](https://github.com/bake-js/element/blob/main/src/event/README.md)
-
-Os módulos Event permitem a fácil manipulação e resposta a eventos dentro dos seus Web Components. Eles fornecem decorators para associar eventos a métodos específicos. Inclui:
-
-- [on](https://github.com/bake-js/element/blob/main/src/event/on/README.md)
-- [stop](https://github.com/bake-js/element/blob/main/src/event/stop/README.md)
-- [prevent](https://github.com/bake-js/element/blob/main/src/event/prevent/README.md)
+## Módulos
 
 ### [Echo](https://github.com/bake-js/element/blob/main/src/echo/README.md)
 
-O módulo Echo facilita a comunicação entre componentes através de um Event Bus, permitindo que eventos sejam transmitidos e recebidos por múltiplos componentes de maneira eficiente. Inclui:
-
-- [Echo](https://github.com/bake-js/element/blob/main/src/echo/README.md)
+O módulo Echo facilita a comunicação entre componentes através de um Event Bus, permitindo que eventos sejam transmitidos e recebidos por múltiplos componentes de maneira eficiente.
 
 ## Contribua
 
