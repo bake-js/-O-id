@@ -46,7 +46,7 @@ const Echo = (Klass) =>
       this.#controllers[protocol] = new AbortController();
 
       const [, topic, type, name] = protocol.match(
-        /^([a-z]+\/[a-z]+):([a-z]+)\/([a-z]+)$/,
+        /^([a-z0-9-_]+\/[a-z0-9-_]+):([a-z]+)\/([a-z0-9-_]+)$/i,
       );
 
       target.addEventListener(
