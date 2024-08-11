@@ -35,8 +35,9 @@ const Echo = (Klass) =>
 
     [dispatchEvent](event) {
       super[dispatchEvent](event);
+      const element = this.getAttribute(id) ?? this.localName;
       target.dispatchEvent(
-        new CustomEvent(`${this.getAttribute(id)}/${event.type}`, {
+        new CustomEvent(`${element}/${event.type}`, {
           detail: event.detail,
         }),
       );
