@@ -1,16 +1,19 @@
 import intercept from "./intercept";
-import { connectedCallback, disconnectedCallback } from "./interfaces";
+import {
+  abortController,
+  connectedCallback,
+  disconnectedCallback,
+} from "./interfaces";
 
 const event = new Proxy(
   {},
   {
     get: (_, type) => (query) => (target, propertyKey) => {
-      const controller = new AbortController();
-      const options = { signal: controller.signal };
-
       intercept(connectedCallback)
         .in(target)
         .then(function () {
+          const controller = (this[abortController] ??= new AbortController());
+          const options = { signal: controller.signal };
           const listener = (event) =>
             event.target.matches(query) && this[propertyKey](event);
 
@@ -20,7 +23,9 @@ const event = new Proxy(
 
       intercept(disconnectedCallback)
         .in(target)
-        .then(() => controller.abort());
+        .then(function () {
+          this[abortController].abort();
+        });
     },
   },
 );
