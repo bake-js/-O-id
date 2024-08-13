@@ -11,15 +11,12 @@ class Source extends HTMLElement {
     return [on];
   }
 
-  [attributeChangedCallback](_name, oldValue, newValue) {
-    setTimeout(
-      () => (
-        this.parentElement?.[echoDisconnectedCallback]?.(oldValue),
-        this.parentElement?.[echoConnectedCallback]?.(newValue)
-      ),
-    );
+  async [attributeChangedCallback](_name, oldValue, newValue) {
+    await customElements.whenDefined(this.parentElement.localName);
+    this.parentElement?.[echoDisconnectedCallback]?.(oldValue);
+    this.parentElement?.[echoConnectedCallback]?.(newValue);
     return this;
   }
 }
 
-customElements.define("xyz-echo-source", Source);
+customElements.define("o-id-echo-source", Source);

@@ -15,9 +15,7 @@ const Echo = (Klass) =>
   class extends Klass {
     #controllers = {};
 
-    static get [observedAttributes]() {
-      return [...(Klass[observedAttributes] ?? []), on];
-    }
+    static [observedAttributes] = [...(Klass[observedAttributes] ?? []), on];
 
     [attributeChangedCallback](name, oldValue, newValue) {
       name === on &&
