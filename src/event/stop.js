@@ -1,5 +1,5 @@
 function stop(event) {
-  event instanceof Event && event.stopPropagation();
+  event.stopPropagation();
   return event;
 }
 

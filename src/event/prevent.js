@@ -1,5 +1,5 @@
 function prevent(event) {
-  event instanceof Event && event.preventDefault();
+  event.preventDefault();
   return event;
 }
 
