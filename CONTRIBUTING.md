@@ -1,10 +1,10 @@
-# Guia de Contribuição para **-o-id**
+# Guia de Contribuição para **-O-id**
 
-Estamos animados por você estar interessado em contribuir para o **-o-id**! Sua ajuda é essencial para continuar melhorando esta biblioteca e garantir que ela atenda às necessidades da comunidade de desenvolvedores. Este documento tem como objetivo orientar você sobre como contribuir de maneira eficaz.
+Estamos animados por você estar interessado em contribuir para o **-O-id**! Sua ajuda é essencial para continuar melhorando esta biblioteca e garantir que ela atenda às necessidades da comunidade de desenvolvedores. Este documento tem como objetivo orientar você sobre como contribuir de maneira eficaz.
 
 ## Como Contribuir
 
-Existem várias maneiras de contribuir para o projeto **-o-id**:
+Existem várias maneiras de contribuir para o projeto **-O-id**:
 
 1. **Reportar Problemas**: Se encontrar algum bug ou comportamento inesperado, abra uma issue para que possamos investigar e corrigir.
 2. **Sugerir Funcionalidades**: Se tiver ideias para novas funcionalidades ou melhorias, ficaremos felizes em recebê-las.
@@ -14,14 +14,14 @@ Existem várias maneiras de contribuir para o projeto **-o-id**:
 
 ### 1. Fork o Repositório
 
-Primeiro, crie um fork do repositório **-o-id** para a sua conta do GitHub. Você pode fazer isso clicando no botão "Fork" no canto superior direito da página do repositório.
+Primeiro, crie um fork do repositório **-O-id** para a sua conta do GitHub. Você pode fazer isso clicando no botão "Fork" no canto superior direito da página do repositório.
 
 ### 2. Clone o Repositório
 
 Depois de fazer o fork, clone o repositório na sua máquina local:
 
 ```bash
-git clone https://github.com/bake-js/-o-id.git
+git clone https://github.com/bake-js/-O-id.git
 cd element
 ```
 
@@ -92,8 +92,8 @@ Por fim, volte ao repositório original no GitHub e abra um pull request para a 
 
 ## Código de Conduta
 
-Esperamos que todos os colaboradores respeitem nosso [Código de Conduta](https://github.com/bake-js/-o-id/blob/main/CODE_OF_CONDUCT.md), mantendo um ambiente acolhedor e respeitoso para todos.
+Esperamos que todos os colaboradores respeitem nosso [Código de Conduta](https://github.com/bake-js/-O-id/blob/main/CODE_OF_CONDUCT.md), mantendo um ambiente acolhedor e respeitoso para todos.
 
 ## Agradecimentos
 
-Obrigado por considerar contribuir para o **-o-id**! Sua participação é fundamental para o crescimento e sucesso do projeto.
+Obrigado por considerar contribuir para o **-O-id**! Sua participação é fundamental para o crescimento e sucesso do projeto.

@@ -33,9 +33,9 @@ function component(self) {
   `;
 }
 
-@define('-o-id-counter')
+@define('o-id-counter')
 @paint(component)
-class Counter extends HTML-o-id {
+class Counter extends HTMLElement {
   #number;
 
   get number() {
