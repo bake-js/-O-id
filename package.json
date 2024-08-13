@@ -3,7 +3,7 @@
   "bugs": {
     "url": "https://github.com/bake-js/-o-id/issues"
   },
-  "description": "-O-id é uma biblioteca inovadora e leve para a criação de Web Components personalizados. Projetada com foco em simplicidade e eficiência",
+  "description": "-O-id é uma biblioteca leve e fácil de usar para criar Web Components personalizados, com foco em simplicidade e desempenho",
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
     "@commitlint/cli": "^19.3.0",
@@ -53,5 +53,5 @@
   },
   "type": "module",
   "types": "types.d.ts",
-  "version": "0.0.2"
+  "version": "0.0.3"
 }
