@@ -72,7 +72,7 @@ Por fim, volte ao repositório original no GitHub e abra um pull request para a 
 ### Estilo de Código
 
 - Siga as convenções de código JavaScript usadas no projeto.
-- Utilize `Prettier` para garantir a consistência de formatação.
+- Utilize `Biome` para garantir a consistência de formatação.
 - Nomeie suas variáveis e funções de forma descritiva e clara.
 
 ### Testes
@@ -92,7 +92,7 @@ Por fim, volte ao repositório original no GitHub e abra um pull request para a 
 
 ## Código de Conduta
 
-Esperamos que todos os colaboradores respeitem nosso [Código de Conduta](#), mantendo um ambiente acolhedor e respeitoso para todos.
+Esperamos que todos os colaboradores respeitem nosso [Código de Conduta](https://github.com/bake-js/-o-id/blob/main/CODE_OF_CONDUCT.md), mantendo um ambiente acolhedor e respeitoso para todos.
 
 ## Agradecimentos
 

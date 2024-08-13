@@ -4,7 +4,7 @@
 
 ## Por que -O-id?
 
-O nome **-O-id** foi inspirado na teoria psicanalítica de Sigmund Freud. O "id" representa a parte mais básica e primitiva da personalidade humana, que impulsiona nossos instintos fundamentais. Da mesma forma, a biblioteca **-O-id** serve como a base essencial para a construção de interfaces web. O sufixo "-o" simboliza a transformação de ideias em resultados tangíveis — componentes funcionais e eficientes.
+O nome **-O-id** foi inspirado na teoria psicanalítica de Sigmund Freud. O "id" representa a parte mais básica e primitiva da personalidade humana, que impulsiona nossos instintos fundamentais. Da mesma forma, a biblioteca **-O-id** serve como a base essencial para a construção de interfaces web. O sufixo "-O" simboliza a transformação de ideias em resultados tangíveis — componentes funcionais e eficientes.
 
 **-O-id** não é apenas uma ferramenta, mas uma força que impulsiona a criação de interfaces, permitindo que desenvolvedores transformem conceitos em realidade de maneira ágil e intuitiva. Escolhemos este nome para destacar a importância de começar com uma base sólida, assim como o "id" é o ponto de partida na formação da personalidade.
 
