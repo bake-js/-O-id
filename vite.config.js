@@ -5,7 +5,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: {
-        element: resolve(__dirname, "src/index.js"),
+        "-o-id": resolve(__dirname, "src/index.js"),
         dom: resolve(__dirname, "src/dom/index.js"),
         echo: resolve(__dirname, "src/echo/index.js"),
         event: resolve(__dirname, "src/event/index.js"),

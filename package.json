@@ -1,7 +1,7 @@
 {
   "author": "Cleber de M. Goncalves (deMGoncalves)",
   "bugs": {
-    "url": "https://github.com/bake-js/element/issues"
+    "url": "https://github.com/bake-js/-o-id/issues"
   },
   "description": "Uma poderosa ferramenta para desenvolvedores que desejam criar componentes web personalizados de forma rápida e eficiente",
   "devDependencies": {
@@ -14,8 +14,8 @@
   },
   "exports": {
     ".": {
-      "import": "dist/element.js",
-      "require": "dis/element.cjs"
+      "import": "dist/-o-id.js",
+      "require": "dis/-o-id.cjs"
     },
     "./dom": {
       "import": "dist/dom.js",
@@ -31,13 +31,13 @@
     }
   },
   "files": ["dist", "types.d.ts"],
-  "homepage": "https://github.com/bake-js/element#readme",
+  "homepage": "https://github.com/bake-js/-o-id#readme",
   "license": "MIT",
   "keywords": ["Web Components", "Javascript", "TypeScript", "HTML", "CSS"],
-  "name": "@bake-js/element",
+  "name": "@bake-js/-o-id",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bake-js/element.git"
+    "url": "git+https://github.com/bake-js/-o-id.git"
   },
   "scripts": {
     "build": "vite build",
@@ -45,5 +45,5 @@
   },
   "type": "module",
   "types": "types.d.ts",
-  "version": "0.16.0"
+  "version": "0.0.1"
 }
