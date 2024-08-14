@@ -57,45 +57,19 @@ class Counter extends HTMLElement {
 
 Este exemplo mostra como **-O-id** facilita a criação de componentes interativos com uma sintaxe clara e eficiente.
 
+Claro! Aqui está a seção de documentação atualizada com links para os quatro principais guias:
+
 ## Documentação
 
-### Eventos de Ciclo de Vida
+A seguir, você encontrará a documentação detalhada para os principais módulos do **-O-id**. Cada link leva à página correspondente onde você pode aprender mais sobre como usar e implementar as funcionalidades oferecidas.
 
-O **-O-id** oferece uma série de eventos de ciclo de vida que facilitam o controle dos componentes em diferentes estados:
+- **[Guia Rápido dos Módulos e Decorators](https://github.com/bake-js/-o-id/blob/main/src/README.md)**: Um guia completo para entender e aplicar os principais módulos e decorators do **-O-id**.
 
-1. **[@define](https://github.com/bake-js/-o-id/blob/main/src/define/README.md)** - Define um componente personalizado.
-2. **[@adopted](https://github.com/bake-js/-o-id/blob/main/src/adopted/README.md)** - Executado quando o componente é movido para um novo documento.
-3. **[@attributeChanged](https://github.com/bake-js/-o-id/blob/main/src/attributeChanged/README.md)** - Disparado quando atributos mapeados são alterados.
-4. **[@connected](https://github.com/bake-js/-o-id/blob/main/src/connected/README.md)** - Executado ao conectar o componente ao DOM.
-5. **[@disconnected](https://github.com/bake-js/-o-id/blob/main/src/disconnected/README.md)** - Executado ao desconectar o componente do DOM.
-6. **[@formAssociated](https://github.com/bake-js/-o-id/blob/main/src/dom/formAssociated/README.md)** - Manipula estados de formulário associados ao componente.
-7. **[@formDisabled](https://github.com/bake-js/-o-id/blob/main/src/dom/formDisabled/README.md)** - Garante que o componente responda ao estado de desabilitação do formulário.
-8. **[@formReset](https://github.com/bake-js/-o-id/blob/main/src/dom/formReset/README.md)** - Reage ao reset de um formulário.
-9. **[@formStateRestore](https://github.com/bake-js/-o-id/blob/main/src/dom/formStateRestore/README.md)** - Restaura o estado do formulário.
+- **[Módulo DOM](https://github.com/bake-js/-o-id/blob/main/src/dom/README.md)**: Documentação sobre a manipulação do DOM e renderização de componentes com o módulo DOM.
 
-### Paint & Repaint
+- **[Módulo Event](https://github.com/bake-js/-o-id/blob/main/src/event/README.md)**: Guia para manipulação e resposta a eventos dentro dos Web Components, incluindo o uso de filtros.
 
-Para controle visual e eficiência no processo de renderização, o **-O-id** disponibiliza decorators que permitem a manipulação de ciclos de pintura:
-
-1. **[@willPaint](https://github.com/bake-js/-o-id/blob/main/src/dom/willPaint/README.md)** - Executado antes da repintura, permitindo a preparação do componente.
-2. **[@paint](https://github.com/bake-js/-o-id/blob/main/src/dom/paint/README.md)** - Realiza a pintura inicial do componente.
-3. **[@didPaint](https://github.com/bake-js/-o-id/blob/main/src/dom/didPaint/README.md)** - Executado após a pintura, permitindo ações subsequentes, como animações.
-4. **[@repaint](https://github.com/bake-js/-o-id/blob/main/src/dom/repaint/README.md)** - Disparado para iniciar o processo de repintura, mantendo a UI responsiva.
-
-### Eventos & Filtros
-
-A manipulação de eventos e a aplicação de filtros são facilitadas por uma série de decorators prontos para uso:
-
-1. **[@on](https://github.com/bake-js/-o-id/blob/main/src/event/on/README.md)** - Associa um evento a um método específico, simplificando o gerenciamento de eventos.
-2. **[formData](https://github.com/bake-js/-o-id/blob/main/src/formData/stop/README.md)** - Manipula os dados de formulário, integrando componentes com formulários HTML nativos.
-3. **[stop](https://github.com/bake-js/-o-id/blob/main/src/event/stop/README.md)** - Previne a propagação de eventos, útil para controle fino sobre a interação do usuário.
-4. **[prevent](https://github.com/bake-js/-o-id/blob/main/src/event/prevent/README.md)** - Previne o comportamento padrão de eventos, permitindo customizações de interação.
-
-### Barramento de Eventos
-
-Para comunicação eficiente entre componentes, o **-O-id** inclui um Event Bus:
-
-1. **[Echo](https://github.com/bake-js/-o-id/blob/main/src/echo/README.md)** - Facilita a comunicação entre componentes através de um barramento de eventos, permitindo que compartilhem estados e eventos de forma coesa.
+- **[Módulo Echo](https://github.com/bake-js/-o-id/blob/main/src/echo/README.md)**: Documentação sobre o barramento de eventos Echo, para comunicação entre componentes. **Nota:** Este módulo está em fase beta e pode estar sujeito a mudanças.
 
 ## Contribua
 
