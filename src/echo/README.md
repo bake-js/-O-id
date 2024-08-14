@@ -65,3 +65,5 @@ Utilizar o decorator `@on` oferece várias vantagens:
 ## Conclusão
 
 Adotar o decorator `@on` proporciona uma abordagem mais limpa e organizada para gerenciar eventos em seus Web Components, resultando em uma implementação mais eficiente e menos propensa a erros.
+
+Experimente o -O-id e veja como ele pode simplificar e aprimorar seu desenvolvimento de Web Components!

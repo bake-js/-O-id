@@ -69,3 +69,5 @@ O uso do decorator `@on` no **-O-id** oferece várias vantagens que tornam o des
 ### Conclusão
 
 O decorator `@on` não só simplifica a manipulação de eventos, como também oferece uma abordagem mais estruturada e flexível para o desenvolvimento de Web Components. Com ele, você ganha clareza no código, modularidade nas funções e controle total sobre o fluxo de eventos, tudo isso enquanto mantém a simplicidade e eficiência que são a marca do **-O-id**. É uma solução elegante que equilibra facilidade de uso com poder de customização, facilitando a criação de aplicações modernas e robustas.
+
+Experimente o -O-id e veja como ele pode simplificar e aprimorar seu desenvolvimento de Web Components!
