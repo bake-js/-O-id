@@ -62,8 +62,6 @@ Utilizar o decorator `@on` oferece várias vantagens:
 - **Reusabilidade:** Permite o uso de múltiplos decorators no mesmo método, simplificando a configuração e evitando a necessidade de chamar métodos manualmente.
 - **Eficiência:** Facilita a escrita e manutenção do código, pois o decorator gerencia automaticamente a associação e desassociação de eventos.
 
-Adotar o decorator `@on` proporciona uma abordagem mais limpa e organizada para gerenciar eventos em seus Web Components, resultando em uma implementação mais eficiente e menos propensa a erros.
-
 ## Conclusão
 
-O módulo Echo oferece uma maneira eficiente de gerenciar e propagar eventos entre Web Components. Utilizando o atributo `on`, você pode facilmente conectar eventos emitidos por um componente a métodos em outro componente, simplificando a comunicação e integração entre diferentes partes de sua aplicação.
+Adotar o decorator `@on` proporciona uma abordagem mais limpa e organizada para gerenciar eventos em seus Web Components, resultando em uma implementação mais eficiente e menos propensa a erros.
