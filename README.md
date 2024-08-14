@@ -63,7 +63,7 @@ Claro! Aqui está a seção de documentação atualizada com links para os quatr
 
 A seguir, você encontrará a documentação detalhada para os principais módulos do **-O-id**. Cada link leva à página correspondente onde você pode aprender mais sobre como usar e implementar as funcionalidades oferecidas.
 
-- **[Guia Rápido dos Módulos e Decorators](https://github.com/bake-js/-o-id/blob/main/src/README.md)**: Um guia completo para entender e aplicar os principais módulos e decorators do **-O-id**.
+- **[Guia Rápido](https://github.com/bake-js/-o-id/blob/main/src/README.md)**: Um guia completo para entender e aplicar os principais módulos e decorators do **-O-id**.
 
 - **[Módulo DOM](https://github.com/bake-js/-o-id/blob/main/src/dom/README.md)**: Documentação sobre a manipulação do DOM e renderização de componentes com o módulo DOM.
 
@@ -73,7 +73,7 @@ A seguir, você encontrará a documentação detalhada para os principais módul
 
 ## Demo
 
-Confira um exemplo prático de como o **-O-id** pode ser utilizado em nosso [demo em construção](https://github.com/bake-js/-o-id-demo).
+Confira um exemplo prático de como o **-O-id** pode ser utilizado em nosso [demo](https://github.com/bake-js/-o-id-demo).
 
 ## Contribua
 
