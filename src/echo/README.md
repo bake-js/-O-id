@@ -2,10 +2,6 @@
 
 > **Em fase beta**: O módulo Echo está em fase beta, o que significa que pode haver alterações na API e no comportamento antes da versão final. Fique atento às atualizações para garantir a compatibilidade.
 
-## Nota Importante
-
-O módulo Echo do **-O-id** está atualmente em fase beta e deve ser considerado experimental. Ele serve como um barramento de eventos, facilitando a comunicação entre componentes de maneira eficiente. Use-o com cautela e esteja ciente de que o comportamento pode mudar em versões futuras.
-
 ## Introdução
 
 O módulo Echo do **-O-id** oferece uma solução poderosa para gerenciar eventos entre Web Components. Ele permite que você defina e escute eventos entre componentes de maneira fácil e eficiente. A seguir, apresentamos como utilizar o Echo para criar um sistema de eventos interconectados.
