@@ -71,6 +71,10 @@ A seguir, você encontrará a documentação detalhada para os principais módul
 
 - **[Módulo Echo](https://github.com/bake-js/-o-id/blob/main/src/echo/README.md)**: Documentação sobre o barramento de eventos Echo, para comunicação entre componentes. **Nota:** Este módulo está em fase beta e pode estar sujeito a mudanças.
 
+## Demo
+
+Confira um exemplo prático de como o **-O-id** pode ser utilizado em nosso [demo em construção](https://github.com/bake-js/-o-id-demo).
+
 ## Contribua
 
 Estamos sempre buscando maneiras de melhorar o **-O-id**. Você pode ajudar reportando problemas, sugerindo novas funcionalidades ou enviando pull requests. Acesse a [página de issues](https://github.com/bake-js/-o-id/issues) para mais informações.
