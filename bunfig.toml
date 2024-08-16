@@ -2,7 +2,6 @@
 preload = ["./polyfill.js"]
 coverage = true
 coverageIgnoreSourcemaps = true
-coverageDir = "./coverage"
-coverageReporter = "lcov"
+coverageReporter = ["lcov"]
 coverageSkipTestFiles = true
-coverageThreshold = 0.8
+coverageThreshold = 0.9
