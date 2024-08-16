@@ -18,9 +18,10 @@ const Echo = (Klass) =>
     static [observedAttributes] = [...(Klass[observedAttributes] ?? []), on];
 
     [attributeChangedCallback](name, oldValue, newValue) {
-      name === on &&
-        (this[echoDisconnectedCallback](oldValue),
-        this[echoConnectedCallback](newValue));
+      if (name === on) {
+        this[echoDisconnectedCallback](oldValue);
+        this[echoConnectedCallback](newValue);
+      }
       return this;
     }
 
