@@ -1,6 +1,6 @@
 ### Adopted
 
-O `adopted` é um decorator que simplifica a execução de lógica específica quando um Custom Element é movido no DOM, sendo parte da biblioteca Element.
+O `adopted` é um decorator que simplifica a execução de lógica específica quando um Custom Element é movido no DOM, sendo parte da biblioteca `@bake-js/-o-id`.
 
 ## Visão Geral
 
@@ -25,6 +25,14 @@ Usar o `adopted` traz as seguintes vantagens:
 
 Ideal para qualquer situação onde se deseja executar lógica personalizada sempre que um Custom Element é movido para um novo documento ou Shadow DOM, especialmente em componentes que mantêm estado ou precisam reagir a mudanças de contexto.
 
+## Importação
+
+Para utilizar o decorator `adopted`, importe-o da seguinte maneira:
+
+```javascript
+import { adopted } from '@bake-js/-o-id';
+```
+
 ## Implementação
 
 ```javascript
@@ -40,7 +48,7 @@ export default adopted;
 ### Exemplo de Uso
 
 ```typescript
-import { adopted } from '@bake-js/element';
+import { adopted } from '@bake-js/-o-id';
 
 class MyElement extends HTMLElement {
   @adopted
@@ -101,3 +109,7 @@ export class MyComponent {
 ## Considerações Finais
 
 O decorator `adopted` oferece uma maneira eficaz e declarativa de adicionar lógica ao método `adoptedCallback`, simplificando o desenvolvimento e melhorando a legibilidade do código.
+
+---
+
+Se precisar de mais ajustes ou de informações adicionais, é só me avisar!
