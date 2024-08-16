@@ -39,9 +39,11 @@ describe("paint", () => {
     lifecycle = [];
   });
 
-  it("Executa o ciclo de vida do component apos o evento connectedCallback", async () => {
+  it("Executa corretamente o ciclo de vida ao chamar connectedCallback", async () => {
+    // Certifique-se de que o innerHTML ainda não foi definido
     expect(element.innerHTML).toBeUndefined();
 
+    // Chama o connectedCallback e verifica o ciclo de vida
     await element.connectedCallback();
 
     expect(lifecycle).toEqual([
@@ -52,6 +54,7 @@ describe("paint", () => {
       "didPaintCallback",
     ]);
 
+    // O conteúdo do componente deve estar correto após o ciclo de vida
     expect(element.innerHTML).toBe("<div />");
   });
 });
