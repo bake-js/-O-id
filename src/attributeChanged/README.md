@@ -1,6 +1,6 @@
-# AttributeChanged
+### AttributeChanged
 
-O `attributeChanged` é um decorator que permite adicionar um hook a métodos específicos de Custom Elements para execução quando um atributo definido é alterado. É parte da biblioteca Element e oferece uma maneira declarativa para gerenciar mudanças de atributos.
+O `attributeChanged` é um decorator que permite adicionar lógica personalizada a métodos específicos de Custom Elements para execução quando um atributo definido é alterado. Ele é parte da biblioteca `@bake-js/-o-id` e fornece uma abordagem declarativa para gerenciar mudanças de atributos.
 
 ## Visão Geral
 
@@ -15,7 +15,7 @@ Proporcionar uma maneira eficiente de reagir a alterações de atributos em Cust
 
 ## Motivação
 
-Usar o `attributeChanged` traz as seguintes vantagens:
+O uso do `attributeChanged` oferece as seguintes vantagens:
 
 1. **Reatividade a Alterações de Atributos:** Garante que o método decorado seja executado sempre que o atributo especificado for alterado.
 2. **Manutenção da Consistência:** Facilita a atualização de estados internos e a adaptação visual do componente em resposta a mudanças de atributos.
@@ -27,13 +27,29 @@ Ideal para qualquer situação onde se deseja responder a alterações de atribu
 - **Componentes Interativos:** Quando a atualização dinâmica com base em atributos é necessária.
 - **Sincronização de Estados Internos:** Para manter a consistência entre atributos e o estado interno do componente.
 
+## Importação
+
+Para utilizar o decorator `attributeChanged`, importe-o da seguinte maneira:
+
+```javascript
+import { attributeChanged } from '@bake-js/-o-id';
+```
+
 ## Implementação
 
 ```javascript
 import intercept from "../intercept";
 import { attributeChangedCallback, observedAttributes } from "../interfaces";
 
+/**
+ * Decorator para adicionar lógica ao método `attributeChangedCallback` de um Custom Element.
+ * Permite que um método seja executado quando um atributo específico é alterado.
+ *
+ * @param attributeName - O nome do atributo a ser monitorado.
+ * @returns Um decorator que intercepta a chamada do `attributeChangedCallback`.
+ */
 const attributeChanged = (attributeName) => (target, propertyKey) => {
+  // Adiciona o atributo à lista de atributos observados.
   Object.assign(target.constructor, {
     [observedAttributes]: [
       attributeName,
@@ -41,6 +57,7 @@ const attributeChanged = (attributeName) => (target, propertyKey) => {
     ],
   });
 
+  // Configura o interceptor para o método `attributeChangedCallback`.
   intercept(attributeChangedCallback)
     .in(target)
     .then(async function (name, oldValue, newValue) {
@@ -56,7 +73,7 @@ export default attributeChanged;
 ### Exemplo de Uso
 
 ```typescript
-import { attributeChanged } from '@bake-js/element';
+import { attributeChanged } from '@bake-js/-o-id';
 
 class MyElement extends HTMLElement {
   @attributeChanged('value')
@@ -80,7 +97,7 @@ customElements.define('my-element', MyElement);
 - **Sincronização Automática:** Sincroniza mudanças de atributos com propriedades reativas. Lit configura automaticamente a matriz `observedAttributes` para refletir a lista de propriedades reativas do componente.
 - **Atributos e Propriedades:** O Lit utiliza o `attributeChangedCallback` para atualizar propriedades reativas com base nas alterações de atributos.
 
-Para mais detalhes sobre Lit, veja a [documentação oficial](https://lit.dev/docs/components/lifecycle/#attributechangedcallback()).
+Para mais detalhes sobre Lit, veja a [documentação oficial](https://lit.dev/docs/components/lifecycle/#attributechangedcallback).
 
 ```javascript
 import { LitElement, html } from 'lit';
