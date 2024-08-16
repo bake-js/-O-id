@@ -1,6 +1,5 @@
 import {
   attributeChangedCallback,
-  connectedCallback,
   disconnectedCallback,
   dispatchEvent,
   echoConnectedCallback,
