@@ -53,5 +53,5 @@
   },
   "type": "module",
   "types": "types.d.ts",
-  "version": "0.0.15"
+  "version": "0.0.16"
 }
