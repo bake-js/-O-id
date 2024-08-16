@@ -42,27 +42,27 @@ import intercept from "../intercept";
 import { attributeChangedCallback, observedAttributes } from "../interfaces";
 
 /**
- * Decorator para adicionar lógica ao método `attributeChangedCallback` de um Custom Element.
+ * Decorator que adiciona lógica ao método `attributeChangedCallback` de um Custom Element.
  * Permite que um método seja executado quando um atributo específico é alterado.
  *
  * @param attributeName - O nome do atributo a ser monitorado.
  * @returns Um decorator que intercepta a chamada do `attributeChangedCallback`.
  */
 const attributeChanged = (attributeName) => (target, propertyKey) => {
-  // Adiciona o atributo à lista de atributos observados.
+  // Atualiza a lista de atributos observados do Custom Element.
+  const observedAttrs = target.constructor[observedAttributes] ?? [];
+
   Object.assign(target.constructor, {
-    [observedAttributes]: [
-      attributeName,
-      ...(target.constructor[observedAttributes] ?? []),
-    ],
+    [observedAttributes]: [...observedAttrs, attributeName],
   });
 
   // Configura o interceptor para o método `attributeChangedCallback`.
   intercept(attributeChangedCallback)
     .in(target)
-    .then(async function (name, oldValue, newValue) {
+    .then(function (name, oldValue, newValue) {
       if (name === attributeName && oldValue !== newValue) {
-        await this[propertyKey](newValue, oldValue);
+        // Executa o método decorado com os novos e antigos valores do atributo.
+        this[propertyKey](newValue, oldValue);
       }
     });
 };
