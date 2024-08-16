@@ -7,13 +7,13 @@ describe("formAssociated", () => {
   let lifecycle: string[];
 
   class Element {
+    form: any = null;
+
     @formAssociated
     handleFormAssociation(form) {
       lifecycle.push("handleFormAssociation");
       this.form = form;
     }
-
-    form: any = null;
 
     // Simulando a chamada do método quando o componente é associado a um formulário
     formAssociatedCallback(form: any) {
