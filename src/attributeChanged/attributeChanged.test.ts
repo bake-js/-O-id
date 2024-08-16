@@ -78,6 +78,7 @@ describe("attributeChanged", () => {
   });
 
   it("Não executa o método decorado se o attributeChangedCallback não for chamado", () => {
+    // Não chamamos attributeChangedCallback
     expect(lifecycle).toEqual([]);
   });
 });
