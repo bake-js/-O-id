@@ -18,11 +18,13 @@ const event = new Proxy(
             const controller = (this[abortController] ??=
               new AbortController());
             const options = { signal: controller.signal };
-            const listener = (event) =>
-              event.target.matches(query) &&
-              this[propertyKey](
-                filters.reduce((target, filter) => filter(target), event),
-              );
+            const listener = (event) => {
+              if (event.target.matches(query)) {
+                this[propertyKey](
+                  filters.reduce((target, filter) => filter(target), event),
+                );
+              }
+            };
 
             this.addEventListener(type, listener, options);
             this.shadowRoot?.addEventListener(type, listener, options);
