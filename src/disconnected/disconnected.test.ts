@@ -12,8 +12,8 @@ describe("disconnected", () => {
     }
 
     @disconnected
-    teardown(value, oldValue) {
-      lifecycle.push("teardown");
+    cleanup(value, oldValue) {
+      lifecycle.push("cleanup");
       return this;
     }
   }
@@ -25,7 +25,7 @@ describe("disconnected", () => {
 
   it("Deve executar o método decorado @disconnected após a chamada de disconnectedCallback", async () => {
     await element.disconnectedCallback();
-    expect(lifecycle).toEqual(["disconnectedCallback", "teardown"]);
+    expect(lifecycle).toEqual(["disconnectedCallback", "cleanup"]);
   });
 
   it("Não deve executar o método decorado se disconnectedCallback não for chamado", () => {
@@ -38,9 +38,9 @@ describe("disconnected", () => {
 
     expect(lifecycle).toEqual([
       "disconnectedCallback",
-      "teardown",
+      "cleanup",
       "disconnectedCallback",
-      "teardown",
+      "cleanup",
     ]);
   });
 
@@ -49,17 +49,17 @@ describe("disconnected", () => {
     lifecycle = []; // Resetando o ciclo de vida para a segunda verificação
 
     // Simulando uma mudança de estado
-    element.teardown("newValue", "oldValue");
+    element.cleanup("newValue", "oldValue");
     await element.disconnectedCallback();
 
-    expect(lifecycle).toEqual(["teardown", "disconnectedCallback", "teardown"]);
+    expect(lifecycle).toEqual(["cleanup", "disconnectedCallback", "cleanup"]);
   });
 
-  it("Não deve adicionar duplicatas no ciclo de vida ao chamar teardown diretamente", async () => {
-    await element.teardown("newValue", "oldValue");
-    expect(lifecycle).toEqual(["teardown"]);
+  it("Não deve adicionar duplicatas no ciclo de vida ao chamar cleanup diretamente", async () => {
+    await element.cleanup("newValue", "oldValue");
+    expect(lifecycle).toEqual(["cleanup"]);
 
     await element.disconnectedCallback();
-    expect(lifecycle).toEqual(["teardown", "disconnectedCallback", "teardown"]);
+    expect(lifecycle).toEqual(["cleanup", "disconnectedCallback", "cleanup"]);
   });
 });
