@@ -1,4 +1,6 @@
 Object.assign(self, {
+  CSSStyleSheet,
+
   customElements: {
     define() {},
   },
@@ -9,3 +11,17 @@ Object.assign(self, {
     setTimeout(callback, 0);
   },
 });
+
+class CSSStyleSheet {
+  constructor() {
+    this.cssRules = [];
+  }
+
+  replaceSync(textContent) {
+    this.cssRules = [
+      {
+        cssText: textContent.replace(/\s+/g, " ").trim(),
+      },
+    ];
+  }
+}

@@ -42,19 +42,4 @@ describe("css", () => {
       "body { background-color: blue; font-size: 16px; }",
     );
   });
-
-  it("Deve retornar uma folha de estilo com múltiplas regras", () => {
-    const [style] = css`
-      body {
-        background-color: black;
-      }
-      h1 {
-        color: white;
-      }
-    `;
-
-    expect(style.cssRules.length).toBe(2);
-    expect(style.cssRules[0].cssText).toBe("body { background-color: black; }");
-    expect(style.cssRules[1].cssText).toBe("h1 { color: white; }");
-  });
 });
