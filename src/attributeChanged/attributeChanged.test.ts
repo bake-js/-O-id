@@ -14,7 +14,7 @@ describe("attributeChanged", () => {
     }
 
     @attributeChanged("value")
-    changeValue(value, oldValue) {
+    updateOnAttributeChange(value, oldValue) {
       lifecycle.push(`attributeChanged -> ${value}, ${oldValue}`);
       return this;
     }
@@ -25,7 +25,7 @@ describe("attributeChanged", () => {
     lifecycle = [];
   });
 
-  it("Executa o metodo decorado somente quando o atributo for o mesmo mencionado", async () => {
+  it("Executa o método decorado somente quando o atributo for o mesmo mencionado", async () => {
     await element.attributeChangedCallback("name", "a", "b");
     await element.attributeChangedCallback("value", "0", "1");
 
@@ -34,5 +34,50 @@ describe("attributeChanged", () => {
       "attributeChangedCallback -> value, 0, 1",
       "attributeChanged -> 1, 0",
     ]);
+  });
+
+  it("Não executa o método decorado se o atributo não for mencionado", async () => {
+    await element.attributeChangedCallback("name", "a", "b");
+    await element.attributeChangedCallback("anotherAttribute", "old", "new");
+
+    expect(lifecycle).toEqual([
+      "attributeChangedCallback -> name, a, b",
+      "attributeChangedCallback -> anotherAttribute, old, new",
+    ]);
+  });
+
+  it("Executa o método decorado mesmo quando o valor antigo é undefined", async () => {
+    await element.attributeChangedCallback("value", undefined, "new");
+
+    expect(lifecycle).toEqual([
+      "attributeChangedCallback -> value, undefined, new",
+      "attributeChanged -> new, undefined",
+    ]);
+  });
+
+  it("Mantém a ordem de execução quando múltiplos atributos são alterados", async () => {
+    await element.attributeChangedCallback("value", "0", "1");
+    await element.attributeChangedCallback("anotherAttribute", "old", "new");
+    await element.attributeChangedCallback("value", "1", "2");
+
+    expect(lifecycle).toEqual([
+      "attributeChangedCallback -> value, 0, 1",
+      "attributeChanged -> 1, 0",
+      "attributeChangedCallback -> anotherAttribute, old, new",
+      "attributeChangedCallback -> value, 1, 2",
+      "attributeChanged -> 2, 1",
+    ]);
+  });
+
+  it("Não executa o método decorado se o novo valor for o mesmo que o antigo", async () => {
+    await element.attributeChangedCallback("value", "same", "same");
+
+    expect(lifecycle).toEqual([
+      "attributeChangedCallback -> value, same, same",
+    ]);
+  });
+
+  it("Não executa o método decorado se o attributeChangedCallback não for chamado", () => {
+    expect(lifecycle).toEqual([]);
   });
 });
