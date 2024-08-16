@@ -18,7 +18,10 @@ jobs:
         with:
           bun-version: latest
       - run: bun install
-      - run: bun test 
+      - run: bun test --coverage
+        uses: SonarSource/sonarcloud-github-action@main
+        env:
+          SONAR_TOKEN: ${{secrets.SONARCLOUD_TOKEN}}
       - run: bun run build
       - run: npm publish --access public
         env:
