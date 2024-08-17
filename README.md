@@ -77,6 +77,35 @@ A seguir, você encontrará a documentação detalhada para os principais módul
 
 - **[Módulo Echo](https://github.com/bake-js/-o-id/blob/main/src/echo/README.md)**: Documentação sobre o barramento de eventos Echo, para comunicação entre componentes. **Nota:** Este módulo está em fase beta e pode estar sujeito a mudanças.
 
+## Índice de Referência
+
+### Ciclo de Vida do Custom Element
+- [adopted](https://github.com/bake-js/-o-id/blob/main/src/adopted/README.md)
+- [attributeChanged](https://github.com/bake-js/-o-id/blob/main/src/attributeChanged/README.md)
+- [connected](https://github.com/bake-js/-o-id/blob/main/src/connected/README.md)
+- [disconnected](https://github.com/bake-js/-o-id/blob/main/src/disconnected/README.md)
+- [define](https://github.com/bake-js/-o-id/blob/main/src/define/README.md)
+
+### Associados a Formulários
+- [formAssociated](https://github.com/bake-js/-o-id/blob/main/src/formAssociated/README.md)
+- [formDisabled](https://github.com/bake-js/-o-id/blob/main/src/formDisabled/README.md)
+- [formReset](https://github.com/bake-js/-o-id/blob/main/src/formReset/README.md)
+- [formStateRestore](https://github.com/bake-js/-o-id/blob/main/src/formStateRestore/README.md)
+
+### DOM
+- [css](https://github.com/bake-js/-o-id/blob/main/src/dom/css/README.md)
+- [didPaint](https://github.com/bake-js/-o-id/blob/main/src/dom/didPaint/README.md)
+- [html](https://github.com/bake-js/-o-id/blob/main/src/dom/html/README.md)
+- [paint](https://github.com/bake-js/-o-id/blob/main/src/dom/paint/README.md)
+- [repaint](https://github.com/bake-js/-o-id/blob/main/src/dom/repaint/README.md)
+- [willPaint](https://github.com/bake-js/-o-id/blob/main/src/dom/willPaint/README.md)
+
+### Event
+- [event](https://github.com/bake-js/-o-id/blob/main/src/event/README.md)
+
+### Echo
+- [echo](https://github.com/bake-js/-o-id/blob/main/src/echo/README.md)
+
 ## Demo
 
 Confira um exemplo prático de como o **-O-id** pode ser utilizado em nosso [demo](https://github.com/bake-js/-o-id-demo).

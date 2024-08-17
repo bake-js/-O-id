@@ -1,13 +1,13 @@
 # Interfaces
 
-O módulo `interfaces` define constantes usadas como identificadores de callbacks e estados em Custom Elements. Estas constantes permitem a padronização de métodos e atributos nos componentes, facilitando a implementação de ciclo de vida e lógica personalizada.
+O módulo `interfaces` define constantes usadas como identificadores de callbacks e estados em Custom Elements. Estas constantes permitem a padronização de métodos e atributos nos componentes, facilitando a implementação do ciclo de vida e lógica personalizada.
 
 ## Visão Geral
 
 ### Nome e Classificação
 
 - **Nome:** Interfaces
-- **Classificação:** Modulo Interno
+- **Classificação:** Módulo Interno do -O-id
 
 ### Objetivo
 
@@ -16,57 +16,74 @@ Prover identificadores padronizados para callbacks e estados em Custom Elements,
 ## Implementação
 
 ```javascript
+// Nomes dos callbacks para o ciclo de vida dos Custom Elements
 export const adoptedCallback = "adoptedCallback";
 export const attributeChangedCallback = "attributeChangedCallback";
 export const connectedCallback = "connectedCallback";
-export const didPaintCallback = Symbol("didPaintCallback");
 export const disconnectedCallback = "disconnectedCallback";
+
+// Nomes dos callbacks específicos para a interação com formulários
+export const formAssociatedCallback = "formAssociatedCallback";
+export const formDisabledCallback = "formDisabledCallback";
+export const formResetCallback = "formResetCallback";
+export const formStateRestoreCallback = "formStateRestoreCallback";
+
+// Nome do atributo para observação de atributos no Custom Element
 export const observedAttributes = "observedAttributes";
-export const paintCallback = Symbol("paintCallback");
-export const willPaintCallback = Symbol("willPaintCallback");
 ```
 
 ## Constantes
 
-### `adoptedCallback`
+### Callbacks do Ciclo de Vida de Custom Elements
+
+#### `adoptedCallback`
 
 - **Tipo:** `string`
-- **Descrição:** Identificador para o callback `adoptedCallback`, executado quando um elemento é movido para um novo documento.
+- **Descrição:** Identificador para o callback `adoptedCallback`, que é executado quando um elemento é movido para um novo documento.
 
-### `attributeChangedCallback`
-
-- **Tipo:** `string`
-- **Descrição:** Identificador para o callback `attributeChangedCallback`, executado quando um atributo do elemento é adicionado, removido ou alterado.
-
-### `connectedCallback`
+#### `attributeChangedCallback`
 
 - **Tipo:** `string`
-- **Descrição:** Identificador para o callback `connectedCallback`, executado quando um elemento é conectado ao DOM.
+- **Descrição:** Identificador para o callback `attributeChangedCallback`, que é executado quando um atributo do elemento é adicionado, removido ou alterado.
 
-### `didPaintCallback`
-
-- **Tipo:** `symbol`
-- **Descrição:** Identificador simbólico para o callback `didPaintCallback`, executado após o ciclo de pintura do elemento.
-
-### `disconnectedCallback`
+#### `connectedCallback`
 
 - **Tipo:** `string`
-- **Descrição:** Identificador para o callback `disconnectedCallback`, executado quando um elemento é desconectado do DOM.
+- **Descrição:** Identificador para o callback `connectedCallback`, que é executado quando um elemento é conectado ao DOM.
 
-### `observedAttributes`
+#### `disconnectedCallback`
+
+- **Tipo:** `string`
+- **Descrição:** Identificador para o callback `disconnectedCallback`, que é executado quando um elemento é desconectado do DOM.
+
+### Callbacks Específicos para Interação com Formulários
+
+#### `formAssociatedCallback`
+
+- **Tipo:** `string`
+- **Descrição:** Identificador para o callback `formAssociatedCallback`, que é executado quando um elemento é associado a um formulário.
+
+#### `formDisabledCallback`
+
+- **Tipo:** `string`
+- **Descrição:** Identificador para o callback `formDisabledCallback`, que é executado quando um elemento é desativado dentro de um formulário.
+
+#### `formResetCallback`
+
+- **Tipo:** `string`
+- **Descrição:** Identificador para o callback `formResetCallback`, que é executado quando um formulário associado é resetado.
+
+#### `formStateRestoreCallback`
+
+- **Tipo:** `string`
+- **Descrição:** Identificador para o callback `formStateRestoreCallback`, que é executado quando o estado de um elemento é restaurado dentro de um formulário.
+
+### Observação de Atributos
+
+#### `observedAttributes`
 
 - **Tipo:** `string`
 - **Descrição:** Identificador para o array `observedAttributes`, que especifica quais atributos observar para mudanças.
-
-### `paintCallback`
-
-- **Tipo:** `symbol`
-- **Descrição:** Identificador simbólico para o callback `paintCallback`, executado durante o ciclo de pintura do elemento.
-
-### `willPaintCallback`
-
-- **Tipo:** `symbol`
-- **Descrição:** Identificador simbólico para o callback `willPaintCallback`, executado antes do ciclo de pintura do elemento.
 
 ## Aplicabilidade
 
