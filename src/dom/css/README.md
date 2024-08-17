@@ -1,84 +1,72 @@
 # CSS
 
-Bem-vindo à documentação do `css`, um helper que facilita a criação e gerenciamento de estilos CSS utilizando `CSSStyleSheet` e tagged template literals. Este pacote é parte integrante da biblioteca Element, que visa simplificar o desenvolvimento de Web Components.
+O `css` é um helper que facilita a criação e gerenciamento de estilos CSS utilizando `CSSStyleSheet` e tagged template literals. Este pacote faz parte da biblioteca Element, que visa simplificar o desenvolvimento de Web Components.
 
-## Documentação do Código
+## Visão Geral
 
 ### Nome e Classificação
 
-**Nome:** CSS
+- **Nome:** CSS
+- **Classificação:** Helpers [Tagged Template Literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
 
-**Classificação:** Helpers [Tagged Template Literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
+### Objetivo
 
-### Interação e Objetivo
+Facilitar a definição e aplicação de estilos encapsulados em componentes customizados, utilizando uma API moderna e eficiente.
 
-**Interação:** Este helper é usado para criar uma instância de `CSSStyleSheet` a partir de um template literal, permitindo a fácil aplicação de estilos a componentes Web.
+## Motivação
 
-**Objetivo:** Facilitar a definição e aplicação de estilos encapsulados em componentes customizados, mantendo a modularidade e reusabilidade.
+Utilizar o `css` proporciona as seguintes vantagens:
 
-### Também conhecido como
-
-- Helper de Estilos
-- Gerenciador de CSS
-
-### Motivação
-
-A motivação para usar o helper `css` é simplificar a definição de estilos CSS dentro de Web Components. Ele permite:
-
-1. **Encapsulamento de Estilos:** Facilita a definição de estilos específicos para componentes, evitando conflitos de CSS global.
-2. **Reutilização de Estilos:** Promove a reutilização de estilos entre diferentes componentes.
+1. **Encapsulamento de Estilos:** Permite a definição de estilos específicos para componentes, evitando conflitos com CSS global.
+2. **Reutilização e Modularidade:** Promove a reutilização de estilos entre diferentes componentes e mantém o código organizado e modular.
 3. **Performance:** Aproveita as capacidades do `CSSStyleSheet` para aplicar estilos de forma eficiente e dinâmica.
 
-### Aplicabilidade
+## Aplicabilidade
 
-O helper `css` é aplicável em situações onde é necessário definir estilos CSS para componentes customizados. É especialmente útil em cenários como:
+O helper `css` é ideal para situações onde é necessário definir estilos CSS para componentes customizados, como:
 
-- **Desenvolvimento de Web Components:** Onde cada componente pode ter seus próprios estilos encapsulados.
-- **Aplicações Moduladas:** Onde a separação de estilos é essencial para a manutenção e escalabilidade do código.
+- **Desenvolvimento de Web Components:** Aplicando estilos encapsulados para cada componente.
+- **Aplicações Moduladas:** Manter a separação de estilos para uma melhor manutenção e escalabilidade.
 
-### Estrutura
+## Importação
 
-A estrutura do helper `css` é simples, transformando um template literal em uma instância de `CSSStyleSheet`.
-
-### Participantes
-
-1. **Função Helper (`css`)**:
-   - **Descrição:** Cria uma instância de `CSSStyleSheet` a partir de um template literal.
-   - **Responsabilidade:** Facilitar a definição e aplicação de estilos CSS encapsulados para Web Components.
-
-### Colaborações
-
-O helper `css` funciona em conjunto com a API `CSSStyleSheet` para permitir a aplicação de estilos encapsulados em componentes web.
-
-### Consequências
-
-#### Impactos Positivos
-
-- **Encapsulamento de Estilos:** Facilita a definição de estilos específicos para componentes, evitando conflitos de CSS global.
-- **Reutilização de Estilos:** Promove a reutilização de estilos entre diferentes componentes, melhorando a modularidade do código.
-
-#### Impactos Negativos
-
-- **Complexidade Adicional:** A introdução de estilos encapsulados pode adicionar complexidade ao gerenciamento de estilos em projetos maiores.
-- **Compatibilidade do Navegador:** A utilização de `CSSStyleSheet` pode ser limitada em navegadores que não suportam essa API.
-
-### Implementação
+Para utilizar o helper `css`, importe-o da seguinte forma:
 
 ```javascript
-function css(strings, ...values) {
-  const styles = new CSSStyleSheet();
-  const textContent = String.raw({ raw: strings }, ...values);
-  styles.replaceSync(textContent);
-  return styles;
-}
+import { css } from '@bake-js/-o-id/dom';
+```
+
+## Implementação
+
+```javascript
+/**
+ * Cria uma folha de estilos CSS a partir de template literals.
+ *
+ * @param {TemplateStringsArray} strings - As partes literais da string do template.
+ * @param {...any} values - Os valores interpolados na string do template.
+ * @returns {CSSStyleSheet[]} Um array contendo a folha de estilos gerada.
+ */
+const css = (strings, ...values) => {
+  // Cria uma nova instância de CSSStyleSheet.
+  const styleSheet = new CSSStyleSheet();
+
+  // Concatena as partes literais e os valores interpolados para formar o conteúdo CSS.
+  const cssText = String.raw({ raw: strings }, ...values);
+
+  // Substitui o conteúdo da folha de estilos com o texto CSS gerado.
+  styleSheet.replaceSync(cssText);
+
+  // Retorna um array com a folha de estilos criada.
+  return [styleSheet];
+};
 
 export default css;
 ```
 
-### Exemplo de Uso
+## Exemplo de Uso
 
 ```javascript
-import css from '@bake-js/element/css';
+import { css } from '@bake-js/-o-id/dom';
 
 const styles = css`
   :host {
@@ -110,17 +98,50 @@ class MyElement extends HTMLElement {
 customElements.define('my-element', MyElement);
 ```
 
-### Usos Conhecidos
+## Comparação com Concorrentes
 
-- **Estilização de Componentes Customizados:** Ideal para definir estilos específicos para Web Components.
-- **Encapsulamento de Estilos:** Útil para evitar conflitos de estilos globais em aplicações grandes e complexas.
+### Lit
 
-### Padrões Relacionados
+- **CSS Literal:** Utiliza o `css` para definir estilos, mas integra-se com o `LitElement` para aplicar esses estilos.
+- **Exemplo:** O `css` é usado para criar um template literal que é integrado ao `LitElement`.
 
-- **Decorator `paint`:** Pode ser usado em conjunto para definir estilos durante o ciclo de vida do componente.
-- **Decorator `define`:** Complementa o helper `css` ao definir Web Components e aplicar estilos encapsulados.
-- **Shadow DOM:** Utilizado para encapsular o CSS e evitar conflitos globais de estilo.
+Para mais detalhes sobre Lit, veja a [documentação oficial](https://lit.dev/docs/components/styles/).
 
-### Considerações Finais
+```typescript
+import { css, LitElement } from 'lit';
 
-O helper `css` oferece uma solução moderna e eficiente para definir estilos CSS dentro de Web Components, promovendo o encapsulamento e reutilização de estilos. Ele integra-se perfeitamente com a biblioteca Element, facilitando o desenvolvimento de componentes web estilizados e modulares.
+const styles = css`
+  :host {
+    display: block;
+    background-color: #f0f0f0;
+  }
+`;
+
+class MyElement extends LitElement {
+  static styles = styles;
+}
+```
+
+### Stencil
+
+- **CSS Encapsulado:** Utiliza o `@Component` para definir estilos encapsulados, mas não oferece uma API diretamente comparável ao `css`.
+
+Para mais detalhes sobre Stencil, veja a [documentação oficial](https://stenciljs.com/docs/style).
+
+```typescript
+@Component({
+  tag: 'my-component',
+  styleUrl: 'my-component.css',
+  shadow: true,
+})
+export class MyComponent {}
+```
+
+## Vantagens do `@css`
+
+- **Encapsulamento de Estilos:** Permite a definição de estilos específicos para Web Components, evitando conflitos globais.
+- **Flexibilidade:** Facilita a aplicação de estilos dinâmicos e modulares, utilizando a API moderna `CSSStyleSheet`.
+
+## Considerações Finais
+
+O helper `css` oferece uma solução moderna e eficiente para definir estilos CSS dentro de Web Components. Ao utilizar `CSSStyleSheet` e tagged template literals, ele promove o encapsulamento e reutilização de estilos, facilitando o desenvolvimento de componentes estilizados e modulares.

@@ -1,5 +1,13 @@
+/**
+ * Helper para criar strings HTML limpas a partir de template literals.
+ * Remove quebras de linha, espaços múltiplos e espaços entre tags.
+ *
+ * @param {TemplateStringsArray} strings - Strings do template literal.
+ * @param {...any} values - Valores interpolados no template literal.
+ * @returns {string} - String HTML formatada e limpa.
+ */
 const html = (strings, ...values) => {
-  // Combina valores interpolados, unindo arrays e convertendo para strings
+  // Combina os valores interpolados, unindo arrays e convertendo-os para strings
   const combinedValues = values.map((value) =>
     Array.isArray(value) ? value.join("") : value,
   );
@@ -7,10 +15,11 @@ const html = (strings, ...values) => {
   // Cria o conteúdo final do template literal com valores interpolados
   let content = String.raw({ raw: strings }, ...combinedValues);
 
-  // Remove todas as quebras de linha e espaços ao redor
-  content = content.replace(/[\n\r]+/g, " "); // Remove quebras de linha
-  content = content.replace(/\s+/g, " "); // Substitui múltiplos espaços por um único espaço
-  content = content.replace(/>\s+</g, "><"); // Remove espaços entre tags
+  // Remove quebras de linha, múltiplos espaços e espaços entre tags
+  content = content
+    .replace(/[\n\r]+/g, " ") // Remove quebras de linha
+    .replace(/\s+/g, " ") // Substitui múltiplos espaços por um único espaço
+    .replace(/>\s+</g, "><"); // Remove espaços entre tags
 
   // Retorna o conteúdo final, garantindo que espaços ao redor sejam removidos
   return content.trim();

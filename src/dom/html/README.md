@@ -1,70 +1,68 @@
 # HTML
 
-Bem-vindo à documentação do `html`, uma função template que facilita a criação de strings HTML em JavaScript. Este pacote é parte integrante da biblioteca Element, que visa simplificar o desenvolvimento de Web Components.
+O `html` é uma função template que simplifica a criação de strings HTML formatadas em JavaScript. Este helper faz parte da biblioteca Element, projetada para facilitar o desenvolvimento de Web Components.
 
-## Documentação do Código
+## Visão Geral
 
 ### Nome e Classificação
 
-**Nome:** HTML
+- **Nome:** HTML
+- **Classificação:** Template Literal
 
-**Classificação:** Template Literal
+### Objetivo
 
-### Interação e Objetivo
+Facilitar a criação de strings HTML a partir de templates literais, proporcionando uma forma limpa e organizada de escrever HTML dentro do JavaScript.
 
-**Interação:** Esta função template é utilizada para criar strings HTML formatadas de maneira limpa e legível a partir de templates literais.
+## Motivação
 
-**Objetivo:** Facilitar a criação de strings HTML dentro de código JavaScript, mantendo o código legível e organizado.
+A função `html` oferece as seguintes vantagens:
 
-### Também conhecido como
+1. **Leitura Facilitada:** Permite escrever HTML de maneira clara e legível dentro do código JavaScript.
+2. **Interpolação de Valores:** Suporta a inserção de variáveis e expressões dentro das strings HTML.
 
-- Template de HTML
-- Literal de HTML
+## Aplicabilidade
 
-### Motivação
+Utilize a função `html` em situações onde é necessário gerar HTML dinâmico. Exemplos incluem:
 
-A motivação para usar a função `html` é simplificar a construção de strings HTML em código JavaScript, permitindo:
+- **Componentes Web Dinâmicos:** Para gerar markup HTML dentro de componentes personalizados.
+- **Templates Dinâmicos:** Quando for necessário criar templates HTML que dependem de dados em tempo real.
 
-1. **Leitura Facilitada:** Permite escrever HTML dentro de JavaScript de forma mais limpa e legível.
-2. **Interpolação de Valores:** Suporta a interpolação de valores dentro da string HTML.
+## Importação
 
-### Aplicabilidade
-
-A função `html` é aplicável em situações onde é necessário gerar HTML dinâmico dentro de código JavaScript. É útil em cenários como:
-
-- **Componentes Web Dinâmicos:** Para gerar markup HTML dentro de componentes web.
-- **Templates Dinâmicos:** Quando é necessário criar templates HTML dinâmicos baseados em dados de runtime.
-
-### Estrutura
-
-A estrutura da função `html` é simples, utilizando template literals para construir e retornar a string HTML.
-
-### Participantes
-
-1. **Função Template (`html`)**:
-   - **Descrição:** Gera strings HTML a partir de template literals.
-   - **Responsabilidade:** Facilitar a criação de HTML dinâmico e legível em código JavaScript.
-
-### Colaborações
-
-A função `html` pode ser usada em conjunto com outras funções e decorators da biblioteca Element para criar componentes web dinâmicos e interativos.
-
-### Consequências
-
-#### Impactos Positivos
-
-- **Legibilidade do Código:** Permite escrever HTML de forma legível e organizada dentro de JavaScript.
-- **Facilidade de Interpolação:** Suporta interpolação de variáveis, tornando fácil a criação de HTML dinâmico.
-
-#### Impactos Negativos
-
-- **Complexidade em HTML Complexo:** Para HTML muito complexo, a string resultante pode se tornar difícil de gerenciar.
-
-### Implementação
+Para utilizar a função `html`, importe-a da seguinte forma:
 
 ```javascript
+import { html } from '@bake-js/-o-id/dom';
+```
+
+## Estrutura
+
+A função `html` usa template literals para criar e formatar strings HTML, removendo quebras de linha e espaços extras para manter o conteúdo limpo e organizado.
+
+## Implementação
+
+```javascript
+/**
+ * Gera uma string HTML formatada a partir de template literals.
+ * Remove quebras de linha e espaços extras para garantir uma saída limpa.
+ *
+ * @param {TemplateStringsArray} strings - Strings do template literal.
+ * @param {...any} values - Valores interpolados no template literal.
+ * @returns {string} - String HTML formatada e limpa.
+ */
 function html(strings, ...values) {
-  return String.raw({ raw: strings }, ...values).trim();
+  // Combina valores interpolados e remove quebras de linha e espaços extras
+  const combinedValues = values.map(value =>
+    Array.isArray(value) ? value.join("") : value
+  );
+
+  let content = String.raw({ raw: strings }, ...combinedValues);
+  content = content
+    .replace(/[\n\r]+/g, " ") // Remove quebras de linha
+    .replace(/\s+/g, " ") // Substitui múltiplos espaços por um único espaço
+    .replace(/>\s+</g, "><"); // Remove espaços entre tags
+
+  return content.trim();
 }
 
 export default html;
@@ -73,8 +71,9 @@ export default html;
 ### Exemplo de Uso
 
 ```javascript
-import html from '@bake-js/element';
+import { html } from '@bake-js/-o-id/dom';
 
+// Criação de um template HTML dinâmico
 const template = html`
   <div class="container">
     <h1>${title}</h1>
@@ -83,22 +82,19 @@ const template = html`
 `;
 
 console.log(template);
-// <div class="container">
-//   <h1>Title Goes Here</h1>
-//   <p>Description goes here.</p>
-// </div>
+// <div class="container"><h1>Title Goes Here</h1><p>Description goes here.</p></div>
 ```
 
-### Usos Conhecidos
+## Usos Conhecidos
 
-- **Componentes Web Dinâmicos:** Ideal para gerar markup HTML dinâmico dentro de componentes web.
-- **Templates HTML Dinâmicos:** Útil para criar templates HTML dinâmicos baseados em dados de runtime.
+- **Componentes Web Dinâmicos:** Ideal para gerar markup HTML dentro de Web Components.
+- **Templates HTML Dinâmicos:** Útil para criar templates HTML com base em dados dinâmicos.
 
-### Padrões Relacionados
+## Padrões Relacionados
 
 - **Template Literals:** Utiliza a funcionalidade de template literals do JavaScript para interpolação de valores.
-- **Tagged Template Literals:** A função `html` é um exemplo de tagged template literal, permitindo manipulação de templates literais.
+- **Tagged Template Literals:** A função `html` é um exemplo de tagged template literal, permitindo a manipulação de strings de template.
 
-### Considerações Finais
+## Considerações Finais
 
-A função `html` oferece uma solução eficaz para criar strings HTML de maneira legível e organizada dentro de código JavaScript. Ao permitir a interpolação de valores e a criação de HTML dinâmico, ela promove uma experiência de desenvolvimento mais simples e eficiente.
+A função `html` oferece uma maneira eficiente e organizada de criar strings HTML dentro de JavaScript. Ao facilitar a interpolação de valores e a limpeza do conteúdo HTML, ela melhora a legibilidade do código e a experiência de desenvolvimento.

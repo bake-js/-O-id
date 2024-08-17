@@ -1,6 +1,6 @@
 # Define
 
-O `define` é um decorator que simplifica o registro de Custom Elements de maneira declarativa, sendo parte da biblioteca Element.
+O `define` é um decorator que simplifica o registro de Custom Elements de maneira declarativa, sendo parte da biblioteca `@bake-js/-o-id`.
 
 ## Visão Geral
 
@@ -24,6 +24,14 @@ Usar o `define` traz as seguintes vantagens:
 
 Ideal para qualquer situação onde se deseja registrar Custom Elements de maneira mais organizada e declarativa, especialmente em projetos grandes.
 
+## Importação
+
+Para utilizar o decorator `define`, importe-o da seguinte maneira:
+
+```javascript
+import { define } from '@bake-js/-o-id';
+```
+
 ## Implementação
 
 ```javascript
@@ -36,7 +44,7 @@ export default define;
 ### Exemplo de Uso
 
 ```javascript
-import { define } from '@bake-js/element';
+import { define } from '@bake-js/-o-id';
 
 @define('element-counter')
 class Counter extends HTMLElement {
@@ -46,7 +54,7 @@ class Counter extends HTMLElement {
 }
 ```
 
-## Comparação com concorrentes
+## Comparação com Concorrentes
 
 ### Lit
 
@@ -66,7 +74,7 @@ export class SimpleGreeting extends LitElement { /* ... */ }
 
 Para mais detalhes sobre Stencil, veja a [documentação oficial](https://stenciljs.com/docs/getting-started).
 
-```javascript
+```typescript
 @Component({
   tag: 'my-component',
   styleUrl: 'my-component.css',

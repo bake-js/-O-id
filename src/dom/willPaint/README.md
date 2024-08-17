@@ -25,12 +25,27 @@ Usar o `willPaint` traz as seguintes vantagens:
 
 Ideal para situações onde é necessário executar lógica preparatória antes da renderização do componente, especialmente em componentes que requerem configurações dinâmicas.
 
+## Importação
+
+Para usar o decorator `willPaint`, importe-o da seguinte forma:
+
+```javascript
+import { willPaint } from '@bake-js/-o-id/dom';
+```
+
 ## Implementação
 
 ```javascript
 import intercept, { exec } from "../intercept";
 import { willPaintCallback } from "../interfaces";
 
+/**
+ * Cria um decorator para adicionar lógica ao método `willPaintCallback` de um Custom Element.
+ *
+ * @param target - O alvo do decorator, geralmente a classe do Custom Element.
+ * @param propertyKey - O nome do método decorado.
+ * @returns Um decorator que intercepta a chamada do `willPaintCallback`.
+ */
 const willPaint = (target, propertyKey) =>
   intercept(willPaintCallback).in(target).then(exec(propertyKey));
 
@@ -42,7 +57,7 @@ export default willPaint;
 counter.ts:
 
 ```javascript
-import { define, paint, willPaint } from '@bake-js/element';
+import { define, paint, willPaint } from '@bake-js/-o-id/dom';
 import component from './component';
 import style from './style';
 

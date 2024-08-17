@@ -1,4 +1,4 @@
-## Repaint
+# Repaint
 
 O `repaint` é um decorator que facilita a atualização de Custom Elements quando um método específico é chamado. Ele garante que o componente seja repintado após a execução de métodos decorados.
 
@@ -25,6 +25,14 @@ Usar o `repaint` traz as seguintes vantagens:
 
 Ideal para situações onde é necessário garantir que o componente seja atualizado após a execução de determinados métodos, especialmente em componentes que dependem de estados internos dinâmicos.
 
+## Importação
+
+Para utilizar o `repaint`, importe o decorator da seguinte forma:
+
+```javascript
+import { repaint } from '@bake-js/-o-id/dom';
+```
+
 ## Implementação
 
 ```javascript
@@ -47,10 +55,10 @@ export default repaint;
 
 ## Exemplo de Uso
 
-counter.ts:
+**counter.ts:**
 
 ```javascript
-import { define, paint, repaint } from '@bake-js/element';
+import { define, paint, repaint } from '@bake-js/-o-id/dom';
 import component from './component';
 import style from './style';
 

@@ -1,4 +1,4 @@
-### Adopted
+# Adopted
 
 O `adopted` é um decorator que simplifica a execução de lógica específica quando um Custom Element é movido no DOM, sendo parte da biblioteca `@bake-js/-o-id`.
 

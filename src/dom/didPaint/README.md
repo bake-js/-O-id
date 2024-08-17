@@ -6,26 +6,34 @@ O `didPaint` é um decorator que adiciona um hook a métodos específicos de Cus
 
 ### Nome e Classificação
 
-- **Nome:** didPaint
+- **Nome:** `didPaint`
 - **Classificação:** Decorators [ES Proposals](https://www.proposals.es/proposals/Decorators), [TypeScript](https://www.typescriptlang.org/docs/handbook/decorators.html)
 
 ### Objetivo
 
-Facilitar a execução de lógica personalizada após o método `paint` de um Custom Element, sem a necessidade de sobrescrever manualmente o método `paint`.
+Facilitar a execução de lógica personalizada após a execução do método `paint` de um Custom Element, sem a necessidade de sobrescrever manualmente o método `paint`.
 
 ## Motivação
 
-Usar o `didPaint` traz as seguintes vantagens:
+Utilizar o `didPaint` oferece as seguintes vantagens:
 
-1. **Pós-Renderização:** Permite a execução de lógica adicional após a renderização do componente.
-2. **Organização do Código:** Melhora a clareza e a manutenção do ciclo de vida do componente ao centralizar a lógica pós-renderização.
+1. **Execução Pós-Renderização:** Permite adicionar lógica adicional a ser executada imediatamente após o método `paint`.
+2. **Clareza e Organização:** Melhora a organização do ciclo de vida do componente ao centralizar a lógica pós-renderização.
 
 ## Aplicabilidade
 
-Ideal para situações onde é necessário realizar ações específicas após a renderização de componentes customizados, como:
+Ideal para situações onde é necessário realizar ações específicas após a renderização inicial do componente, como:
 
-- **Atualizações Dinâmicas:** Ajustes ou atualizações no DOM após a renderização inicial.
-- **Integração com Outras Lógicas:** Sincronização do componente com outras partes da aplicação após a renderização.
+- **Atualizações Dinâmicas:** Aplicar ajustes ou atualizações no DOM após a renderização.
+- **Integração com Outras Lógicas:** Sincronizar o componente com outras partes da aplicação após o `paint`.
+
+## Importação
+
+Para utilizar o decorator `didPaint`, importe-o da seguinte forma:
+
+```javascript
+import { didPaint } from '@bake-js/-o-id/dom';
+```
 
 ## Implementação
 
@@ -33,8 +41,22 @@ Ideal para situações onde é necessário realizar ações específicas após a
 import intercept, { exec } from "../intercept";
 import { didPaintCallback } from "../interfaces";
 
-const didPaint = (target, propertyKey) =>
-  intercept(didPaintCallback).in(target).then(exec(propertyKey));
+/**
+ * Cria um decorator para adicionar lógica ao método `didPaintCallback` de um Custom Element.
+ *
+ * @param target - O alvo do decorator, geralmente a classe do Custom Element.
+ * @param propertyKey - O nome do método decorado.
+ * @returns Um decorator que intercepta a chamada do `didPaintCallback`.
+ */
+const didPaint = (target, propertyKey) => {
+  // Cria uma instância do interceptor para o método `didPaintCallback`.
+  const interceptor = intercept(didPaintCallback);
+  
+  // Adiciona o método decorado à lista de callbacks a serem executados.
+  return interceptor
+    .in(target)        // Define o alvo do interceptor.
+    .then(exec(propertyKey)); // Define o método a ser executado pelo interceptor.
+};
 
 export default didPaint;
 ```
@@ -42,7 +64,7 @@ export default didPaint;
 ### Exemplo de Uso
 
 ```typescript
-import { paint, didPaint } from '@bake-js/element';
+import { paint, didPaint } from '@bake-js/-o-id/dom';
 
 @paint((self) => {
   return `<p>Hello, ${self.name}</p>`;
@@ -72,7 +94,7 @@ customElements.define('greeting-element', GreetingElement);
 
 ### Lit
 
-- **Pós-Renderização:** O Lit oferece o método `updated` que é chamado após a renderização, mas não é um decorator específico para isso.
+- **Pós-Renderização:** O Lit oferece o método `updated`, que é chamado após a renderização, mas não é um decorator específico para isso.
   
 Para mais detalhes sobre o Lit, veja a [documentação oficial](https://lit.dev/docs/components/lifecycle/#updated).
 

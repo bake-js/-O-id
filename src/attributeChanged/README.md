@@ -1,4 +1,4 @@
-### AttributeChanged
+# AttributeChanged
 
 O `attributeChanged` é um decorator que permite adicionar lógica personalizada a métodos específicos de Custom Elements para execução quando um atributo definido é alterado. Ele é parte da biblioteca `@bake-js/-o-id` e fornece uma abordagem declarativa para gerenciar mudanças de atributos.
 
