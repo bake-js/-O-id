@@ -105,7 +105,8 @@ A seguir, você encontrará a documentação detalhada para os principais módul
 - [value](https://github.com/bake-js/-o-id/blob/main/src/event/value/README.md)
 
 ### Echo
-- [echo](https://github.com/bake-js/-o-id/blob/main/src/echo/README.md)
+- [Echo](https://github.com/bake-js/-o-id/blob/main/src/echo/echo/README.md)
+- [<-o-id-echo-source />](https://github.com/bake-js/-o-id/blob/main/src/echo/source/README.md)
 
 ## Demo
 

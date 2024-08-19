@@ -7,15 +7,23 @@ import {
   id,
   observedAttributes,
   on,
-} from "./interfaces";
-import { target } from "./target";
+} from "../interfaces";
+import { target } from "../target";
 
+/**
+ * Event Bus para comunicação entre componentes.
+ *
+ * @param Klass - A classe do Custom Element a ser estendida.
+ * @returns A classe estendida com suporte ao Event Bus.
+ */
 const Echo = (Klass) =>
   class extends Klass {
     #controllers = {};
 
+    // Observa os atributos definidos, incluindo o atributo `on`.
     static [observedAttributes] = [...(Klass[observedAttributes] ?? []), on];
 
+    // Manipula as mudanças nos atributos observados.
     [attributeChangedCallback](name, oldValue, newValue) {
       if (name === on) {
         this[echoDisconnectedCallback](oldValue);
@@ -24,6 +32,7 @@ const Echo = (Klass) =>
       return this;
     }
 
+    // Intercepta o momento em que o elemento é desconectado do DOM.
     [disconnectedCallback]() {
       Object.values(this.#controllers).forEach((controller) =>
         controller.abort(),
@@ -31,6 +40,7 @@ const Echo = (Klass) =>
       return this;
     }
 
+    // Despacha eventos personalizados.
     [dispatchEvent](event) {
       super[dispatchEvent](event);
       const element = this.getAttribute(id) ?? this.localName;
@@ -41,6 +51,7 @@ const Echo = (Klass) =>
       );
     }
 
+    // Conecta o protocolo de eventos, registrando os listeners.
     [echoConnectedCallback](protocol) {
       this.#controllers[protocol] = new AbortController();
 
@@ -61,6 +72,7 @@ const Echo = (Klass) =>
       return this;
     }
 
+    // Desconecta o protocolo de eventos, abortando os listeners.
     [echoDisconnectedCallback](protocol) {
       this.#controllers[protocol]?.abort();
       return this;
