@@ -1,4 +1,4 @@
-import intercept from "../intercept";
+import intercept from "../../intercept";
 import {
   abortController,
   connectedCallback,
