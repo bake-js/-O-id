@@ -102,6 +102,7 @@ A seguir, você encontrará a documentação detalhada para os principais módul
 - [formData](https://github.com/bake-js/-o-id/blob/main/src/event/formData/README.md)
 - [prevent](https://github.com/bake-js/-o-id/blob/main/src/event/prevent/README.md)
 - [stop](https://github.com/bake-js/-o-id/blob/main/src/event/stop/README.md)
+- [value](https://github.com/bake-js/-o-id/blob/main/src/event/value/README.md)
 
 ### Echo
 - [echo](https://github.com/bake-js/-o-id/blob/main/src/echo/README.md)
