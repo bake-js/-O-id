@@ -70,12 +70,9 @@ Claro! Aqui está a seção de documentação atualizada com links para os quatr
 A seguir, você encontrará a documentação detalhada para os principais módulos do **-O-id**. Cada link leva à página correspondente onde você pode aprender mais sobre como usar e implementar as funcionalidades oferecidas.
 
 - **[Guia Rápido](https://github.com/bake-js/-o-id/blob/main/src/README.md)**: Um guia completo para entender e aplicar os principais módulos e decorators do **-O-id**.
-
-- **[Módulo DOM](https://github.com/bake-js/-o-id/blob/main/src/dom/README.md)**: Documentação sobre a manipulação do DOM e renderização de componentes com o módulo DOM.
-
-- **[Módulo Event](https://github.com/bake-js/-o-id/blob/main/src/event/README.md)**: Guia para manipulação e resposta a eventos dentro dos Web Components, incluindo o uso de filtros.
-
-- **[Módulo Echo](https://github.com/bake-js/-o-id/blob/main/src/echo/README.md)**: Documentação sobre o barramento de eventos Echo, para comunicação entre componentes. **Nota:** Este módulo está em fase beta e pode estar sujeito a mudanças.
+- **[DOM](https://github.com/bake-js/-o-id/blob/main/src/dom/README.md)**: Documentação sobre a manipulação do DOM e renderização de componentes com o módulo DOM.
+- **[Event](https://github.com/bake-js/-o-id/blob/main/src/event/README.md)**: Guia para manipulação e resposta a eventos dentro dos Web Components, incluindo o uso de filtros.
+- **[Echo](https://github.com/bake-js/-o-id/blob/main/src/echo/README.md)**: Documentação sobre o barramento de eventos Echo, para comunicação entre componentes. **Nota:** Este módulo está em fase beta e pode estar sujeito a mudanças.
 
 ## Índice de Referência
 
@@ -102,6 +99,7 @@ A seguir, você encontrará a documentação detalhada para os principais módul
 
 ### Event
 - [on](https://github.com/bake-js/-o-id/blob/main/src/event/on/README.md)
+- [stop](https://github.com/bake-js/-o-id/blob/main/src/event/stop/README.md)
 
 ### Echo
 - [echo](https://github.com/bake-js/-o-id/blob/main/src/echo/README.md)
