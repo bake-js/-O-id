@@ -4,7 +4,7 @@
  *
  * @param {string} event - O nome do evento a ser observado.
  */
-export declare const event: {
+export declare const on: {
   [event: string]: (
     query: string,
   ) => (target: any, propertyKey: PropertyKey) => void;

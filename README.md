@@ -101,7 +101,7 @@ A seguir, você encontrará a documentação detalhada para os principais módul
 - [willPaint](https://github.com/bake-js/-o-id/blob/main/src/dom/willPaint/README.md)
 
 ### Event
-- [event](https://github.com/bake-js/-o-id/blob/main/src/event/README.md)
+- [on](https://github.com/bake-js/-o-id/blob/main/src/event/on/README.md)
 
 ### Echo
 - [echo](https://github.com/bake-js/-o-id/blob/main/src/echo/README.md)

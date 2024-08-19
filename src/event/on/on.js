@@ -1,9 +1,9 @@
-import intercept from "./intercept";
+import intercept from "../intercept";
 import {
   abortController,
   connectedCallback,
   disconnectedCallback,
-} from "./interfaces";
+} from "../interfaces";
 
 /**
  * Configura um event listener e o aplica como um decorator ao método alvo.
@@ -41,7 +41,7 @@ const attachEventListener =
   };
 
 // Proxy para gerar os decorators dinamicamente com base no tipo de evento
-const event = new Proxy(
+const on = new Proxy(
   {},
   {
     get:
@@ -51,4 +51,4 @@ const event = new Proxy(
   },
 );
 
-export default event;
+export default on;
