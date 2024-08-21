@@ -106,7 +106,7 @@ A seguir, você encontrará a documentação detalhada para os principais módul
 
 ### Echo
 - [Echo](https://github.com/bake-js/-o-id/blob/main/src/echo/echo/README.md)
-- [<-o-id-echo-source />](https://github.com/bake-js/-o-id/blob/main/src/echo/source/README.md)
+- [<o-id-echo-source />](https://github.com/bake-js/-o-id/blob/main/src/echo/source/README.md)
 
 ## Demo
 

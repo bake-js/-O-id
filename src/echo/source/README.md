@@ -1,4 +1,4 @@
-# `-o-id-echo-source`
+# `<o-id-echo-source />`
 
 O `<o-id-echo-source>` é um componente que permite a associação de múltiplos eventos a um único elemento que utiliza o mixin `Echo`, facilitando o gerenciamento dinâmico de eventos em Custom Elements.
 
