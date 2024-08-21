@@ -76,14 +76,14 @@ A seguir, você encontrará a documentação detalhada para os principais módul
 
 ## Índice de Referência
 
-### Ciclo de Vida do Custom Element
+### Ciclo de Vida
 - [adopted](https://github.com/bake-js/-o-id/blob/main/src/adopted/README.md)
 - [attributeChanged](https://github.com/bake-js/-o-id/blob/main/src/attributeChanged/README.md)
 - [connected](https://github.com/bake-js/-o-id/blob/main/src/connected/README.md)
 - [disconnected](https://github.com/bake-js/-o-id/blob/main/src/disconnected/README.md)
 - [define](https://github.com/bake-js/-o-id/blob/main/src/define/README.md)
 
-### Associados a Formulários
+### Cidlo de Vida Associados a Formulários
 - [formAssociated](https://github.com/bake-js/-o-id/blob/main/src/formAssociated/README.md)
 - [formDisabled](https://github.com/bake-js/-o-id/blob/main/src/formDisabled/README.md)
 - [formReset](https://github.com/bake-js/-o-id/blob/main/src/formReset/README.md)
