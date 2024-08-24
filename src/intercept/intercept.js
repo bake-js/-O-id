@@ -3,6 +3,14 @@
  *
  * @param {string} propertyKey - O nome do método que será interceptado.
  * @returns {Object} - Um objeto com métodos para definir o alvo e adicionar lógica.
+ *
+ * @example
+ * const interceptor = intercept('myMethod');
+ * interceptor
+ *   .in(myObject)
+ *   .then(function() {
+ *     console.log('Lógica adicional executada.');
+ *   });
  */
 const intercept = (propertyKey) => ({
   /**
@@ -10,12 +18,20 @@ const intercept = (propertyKey) => ({
    *
    * @param {Object} target - O alvo do interceptor, geralmente a classe ou objeto.
    * @returns {Object} - Um objeto com o método `then` para adicionar lógica ao método interceptado.
+   *
+   * @example
+   * interceptor.in(myObject);
    */
   in: (target) => ({
     /**
      * Adiciona a lógica a ser executada após o método original.
      *
      * @param {Function} substituent - A função que será executada após o método original.
+     *
+     * @example
+     * interceptor.then(function() {
+     *   console.log('Lógica adicional executada.');
+     * });
      */
     then: (substituent) => {
       // Recupera o método original ou define um método padrão vazio

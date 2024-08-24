@@ -1,6 +1,3 @@
-import intercept from "../intercept";
-import { formResetCallback } from "../interfaces";
-
 /**
  * Cria um decorator para adicionar lógica ao método `formResetCallback` de um Custom Element.
  *
@@ -20,14 +17,4 @@ import { formResetCallback } from "../interfaces";
  *   console.log('O formulário foi redefinido.');
  * }
  */
-const formReset = (target, propertyKey) => {
-  // Cria uma instância do interceptor para o método `formResetCallback`.
-  const interceptor = intercept(formResetCallback);
-
-  // Adiciona o método decorado à lista de callbacks a serem executados.
-  return interceptor
-    .in(target) // Define o alvo do interceptor.
-    .then(exec(propertyKey)); // Define o método a ser executado pelo interceptor.
-};
-
-export default formReset;
+export declare function formReset(target: any, propertyKey: PropertyKey): void;

@@ -1,6 +1,3 @@
-import intercept from "../intercept";
-import { formAssociatedCallback } from "../interfaces";
-
 /**
  * Cria um decorator para adicionar lógica ao método `formAssociatedCallback` de um Custom Element.
  *
@@ -20,14 +17,7 @@ import { formAssociatedCallback } from "../interfaces";
  *   console.log('O elemento foi associado a um formulário.');
  * }
  */
-const formAssociated = (target, propertyKey) => {
-  // Cria uma instância do interceptor para o método `formAssociatedCallback`.
-  const interceptor = intercept(formAssociatedCallback);
-
-  // Adiciona o método decorado à lista de callbacks a serem executados.
-  return interceptor
-    .in(target) // Define o alvo do interceptor.
-    .then(exec(propertyKey)); // Define o método a ser executado pelo interceptor.
-};
-
-export default formAssociated;
+export declare function formAssociated(
+  target: any,
+  propertyKey: PropertyKey,
+): void;

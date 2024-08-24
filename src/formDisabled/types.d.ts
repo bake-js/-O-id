@@ -1,6 +1,3 @@
-import intercept from "../intercept";
-import { formDisabledCallback } from "../interfaces";
-
 /**
  * Cria um decorator para adicionar lógica ao método `formDisabledCallback` de um Custom Element.
  *
@@ -20,14 +17,7 @@ import { formDisabledCallback } from "../interfaces";
  *   console.log('O elemento foi desativado no formulário.');
  * }
  */
-const formDisabled = (target, propertyKey) => {
-  // Cria uma instância do interceptor para o método `formDisabledCallback`.
-  const interceptor = intercept(formDisabledCallback);
-
-  // Adiciona o método decorado à lista de callbacks a serem executados.
-  return interceptor
-    .in(target) // Define o alvo do interceptor.
-    .then(exec(propertyKey)); // Define o método a ser executado pelo interceptor.
-};
-
-export default formDisabled;
+export declare function formDisabled(
+  target: any,
+  propertyKey: PropertyKey,
+): void;
