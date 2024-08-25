@@ -1,4 +1,4 @@
-import intercept, { exec } from "../intercept";
+import intercept, { exec } from "../../intercept";
 import { willPaintCallback } from "../interfaces";
 
 /**

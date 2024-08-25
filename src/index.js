@@ -1,13 +1,4 @@
 /**
- * Exporta decorators para gerenciamento de Custom Elements e suas interações.
- *
- * Estes decorators adicionam lógica a métodos específicos dos Custom Elements e
- * facilitam a integração com formulários e o ciclo de vida dos elementos.
- *
- * @module
- */
-
-/**
  * Exporta o decorator `adopted` para adicionar lógica ao método `adoptedCallback`.
  *
  * @type {Function}

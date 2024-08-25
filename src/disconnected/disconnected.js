@@ -1,4 +1,4 @@
-import intercept from "../intercept";
+import intercept, { exec } from "../intercept";
 import { disconnectedCallback } from "../interfaces";
 
 /**
