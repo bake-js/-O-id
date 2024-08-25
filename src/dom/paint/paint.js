@@ -8,10 +8,24 @@ import {
 
 /**
  * Decorator que adiciona suporte para renderização e estilização de um componente.
+ * Este decorator permite definir o HTML e os estilos de um Custom Element de forma
+ * declarativa, garantindo que os ciclos de vida de renderização sejam respeitados.
  *
  * @param {Function} component - Função que retorna o HTML a ser renderizado.
  * @param {Function} [style] - Função opcional que retorna as folhas de estilo a serem aplicadas.
  * @returns {Function} - O decorator para ser aplicado à classe do componente.
+ *
+ * @example
+ * // Exemplo de uso do decorator
+ * @paint(
+ *   (element) => `<div>${element.someProperty}</div>`,
+ *   (element) => [new CSSStyleSheet()]
+ * )
+ * class MyComponent extends HTMLElement {
+ *   connectedCallback() {
+ *     console.log('MyComponent conectado');
+ *   }
+ * }
  */
 const paint =
   (component, style = () => []) =>
