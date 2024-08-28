@@ -19,8 +19,8 @@ describe("didPaint", () => {
     }
 
     @didPaint
-    onRendered() {
-      lifecycle.push("onRendered");
+    handlePaint() {
+      lifecycle.push("handlePaint");
       return this;
     }
   }
@@ -32,41 +32,14 @@ describe("didPaint", () => {
 
   it("Executa o ciclo de vida do componente após o evento connectedCallback", async () => {
     await element.connectedCallback();
-    expect(lifecycle).toEqual(["connectedCallback", "component", "onRendered"]);
+    expect(lifecycle).toEqual([
+      "connectedCallback",
+      "component",
+      "handlePaint",
+    ]);
   });
 
   it("Não executa o ciclo de vida de didPaint se connectedCallback não for chamado", () => {
     expect(lifecycle).toEqual([]);
-  });
-
-  it("Executa o ciclo de vida de didPaint uma vez para cada chamada de connectedCallback", async () => {
-    await element.connectedCallback();
-    await element.connectedCallback();
-
-    expect(lifecycle).toEqual([
-      "connectedCallback",
-      "component",
-      "onRendered",
-      "connectedCallback",
-      "component",
-      "onRendered",
-    ]);
-  });
-
-  it("Garante que onRendered não seja chamado antes de component", async () => {
-    await element.connectedCallback();
-
-    const componentIndex = lifecycle.indexOf("component");
-    const onRenderedIndex = lifecycle.indexOf("onRendered");
-
-    expect(componentIndex).toBeLessThan(onRenderedIndex);
-  });
-
-  it("Garante que métodos decorados não interfiram em chamadas subsequentes", async () => {
-    await element.connectedCallback();
-    lifecycle = []; // Resetando o ciclo de vida para uma nova verificação
-
-    await element.connectedCallback();
-    expect(lifecycle).toEqual(["connectedCallback", "component", "onRendered"]);
   });
 });

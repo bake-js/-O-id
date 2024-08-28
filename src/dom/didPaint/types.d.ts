@@ -1,17 +1,18 @@
 /**
- * Decorator utilizado para definir um método como manipulador de pintura.
- * O método decorado será chamado após o método decorado com `@paint`.
+ * Cria um decorator que intercepta e adiciona lógica ao método `didPaintCallback` de um Custom Element.
  *
- * @function
- * @param {any} target - O alvo do decorator, geralmente a classe ou protótipo do Custom Element.
- * @param {PropertyKey} propertyKey - A chave da propriedade, normalmente o nome do método.
- * @returns {void}
- * @description O decorator `didPaint` permite que métodos específicos sejam executados como parte do ciclo de vida de um Custom Element, logo após a renderização.
+ * @param {Object} target - O alvo do decorator, geralmente a classe do Custom Element.
+ * @param {string} propertyKey - O nome do método decorado.
+ * @returns {void} Um decorator que intercepta a chamada do `didPaintCallback`.
+ *
+ * @description
+ * O decorator `didPaint` permite que desenvolvedores de Custom Elements adicionem
+ * lógica adicional ao ciclo de vida do componente, especificamente após a renderização.
+ *
  * @example
- * // Exemplo de uso do decorator didPaint
  * class MyComponent extends HTMLElement {
  *   @didPaint
- *   didPaintCallback() {
+ *   handleDidPaint() {
  *     console.log('O componente foi pintado!');
  *   }
  * }
