@@ -19,8 +19,8 @@ describe("willPaint", () => {
     }
 
     @willPaint
-    prepareRender() {
-      lifecycle.push("prepareRender");
+    handleWillPaint() {
+      lifecycle.push("handleWillPaint");
       return this;
     }
   }
@@ -30,11 +30,6 @@ describe("willPaint", () => {
     lifecycle = []; // Inicializa o lifecycle como uma lista vazia
   });
 
-  it("Inicializa o lifecycle como uma lista vazia", () => {
-    // Verifica que o lifecycle está vazio após a inicialização
-    expect(lifecycle).toEqual([]);
-  });
-
   it("Preenche o lifecycle corretamente durante o ciclo de vida do componente", async () => {
     // Executa o connectedCallback, que deve acionar o ciclo de vida completo
     await element.connectedCallback();
@@ -42,8 +37,13 @@ describe("willPaint", () => {
     // Verifica se o lifecycle foi preenchido corretamente
     expect(lifecycle).toEqual([
       "connectedCallback", // O connectedCallback é chamado primeiro
-      "prepareRender", // Em seguida, o método decorado por @willPaint é chamado
+      "handleWillPaint", // Em seguida, o método decorado por @willPaint é chamado
       "component", // Finalmente, o componente é renderizado
     ]);
+  });
+
+  it("Inicializa o lifecycle como uma lista vazia", () => {
+    // Verifica que o lifecycle está vazio após a inicialização
+    expect(lifecycle).toEqual([]);
   });
 });

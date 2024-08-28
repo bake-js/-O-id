@@ -12,11 +12,19 @@ import { willPaintCallback } from "../interfaces";
  * @param {string} propertyKey - O nome do método decorado.
  * @returns {Function} - O decorator que intercepta a chamada do `willPaintCallback`.
  *
+ * @description
+ * O decorator `willPaint` é utilizado para adicionar lógica personalizada ao ciclo de vida
+ * de um componente, interceptando o `willPaintCallback`. Isso permite que o método decorado
+ * seja executado antes do componente ser pintado, garantindo que qualquer lógica necessária
+ * seja processada no momento adequado. É útil para preparar o componente ou modificar seu estado
+ * antes que a renderização ocorra, assegurando que todas as condições necessárias estejam atendidas
+ * antes da pintura.
+ *
  * @example
  * // Exemplo de uso do decorator `willPaint`
  * class MeuComponente extends HTMLElement {
  *   @willPaint
- *   async minhaLogica() {
+ *   handleWillPaint() {
  *     // Lógica a ser executada antes do componente ser pintado
  *   }
  * }

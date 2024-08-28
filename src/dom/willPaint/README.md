@@ -39,15 +39,12 @@ import { willPaint } from '@bake-js/-o-id/dom';
 import intercept, { exec } from "../intercept";
 import { willPaintCallback } from "../interfaces";
 
-/**
- * Cria um decorator para adicionar lógica ao método `willPaintCallback` de um Custom Element.
- *
- * @param target - O alvo do decorator, geralmente a classe do Custom Element.
- * @param propertyKey - O nome do método decorado.
- * @returns Um decorator que intercepta a chamada do `willPaintCallback`.
- */
 const willPaint = (target, propertyKey) =>
-  intercept(willPaintCallback).in(target).then(exec(propertyKey));
+  const interceptor = intercept(willPaintCallback);
+
+  return interceptor
+    .in(target)
+    .then(exec(propertyKey));
 
 export default willPaint;
 ```
