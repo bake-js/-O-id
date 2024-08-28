@@ -108,10 +108,10 @@ A seguir, você encontrará a documentação detalhada para os principais módul
 - [Echo](https://github.com/bake-js/-o-id/blob/main/src/echo/echo/README.md)
 - [o-id-echo-source](https://github.com/bake-js/-o-id/blob/main/src/echo/source/README.md)
 
-
 ### Interfaces
 - [Global](https://github.com/bake-js/-o-id/blob/main/src/interfaces/README.md)
 - [DOM](https://github.com/bake-js/-o-id/blob/main/src/dom/interfaces/README.md)
+- [Event](https://github.com/bake-js/-o-id/blob/main/src/event/interfaces/README.md)
 
 ## Demo
 

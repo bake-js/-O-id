@@ -1,13 +1,22 @@
-// Define um símbolo para identificar e armazenar a instância de um AbortController.
-// Usado para gerenciar a adição e remoção de event listeners de forma controlada.
-export const abortController = Symbol("abortController");
-
-// Identificador para o método `connectedCallback`, que é chamado automaticamente
-// quando um Custom Element é conectado ao DOM. Usado para associar lógica específica
-// ao evento de conexão com o DOM.
+/**
+ * Nomes dos callbacks para o ciclo de vida dos Custom Elements.
+ *
+ * Esses são os nomes padrão utilizados para os callbacks do ciclo de vida dos Custom Elements,
+ * facilitando a padronização e a implementação consistente dos métodos relacionados ao ciclo de vida.
+ *
+ * @constant {string} connectedCallback - Nome do callback chamado quando um Custom Element é inserido no DOM.
+ * @constant {string} disconnectedCallback - Nome do callback chamado quando um Custom Element é removido do DOM.
+ */
 export const connectedCallback = "connectedCallback";
-
-// Identificador para o método `disconnectedCallback`, que é chamado automaticamente
-// quando um Custom Element é desconectado do DOM. Usado para limpar listeners e
-// realizar outras tarefas relacionadas à desconexão do DOM.
 export const disconnectedCallback = "disconnectedCallback";
+
+/**
+ * Símbolo utilizado para controlar e abortar eventos associados a um Custom Element.
+ *
+ * Este símbolo é usado para associar um `AbortController` a um Custom Element, permitindo o gerenciamento e
+ * a interrupção de eventos quando o elemento é removido do DOM. É útil para evitar vazamentos de memória e
+ * garantir que os eventos não sejam processados após o elemento ser desconectado.
+ *
+ * @constant {Symbol} abortController - Símbolo usado para armazenar e acessar o AbortController associado.
+ */
+export const abortController = Symbol("abortController");

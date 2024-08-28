@@ -38,12 +38,6 @@ import on, { stop } from '@bake-js/-o-id/event';
 Aqui está a implementação do filtro `stop`:
 
 ```javascript
-/**
- * Filtro que interrompe a propagação de um evento.
- *
- * @param event - O evento a ser filtrado.
- * @returns O próprio evento, após interromper a propagação.
- */
 function stop(event) {
   event.stopPropagation();
   return event;
