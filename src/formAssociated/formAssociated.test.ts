@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from "bun:test";
 import formAssociated from "./formAssociated";
 
-describe("formAssociated", () => {
+describe("formAssociatedCallback", () => {
   let element: Element;
   let lifecycle: string[];
 

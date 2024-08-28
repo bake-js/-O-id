@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from "bun:test";
 import formDisabled from "./formDisabled";
 
-describe("formDisabled", () => {
+describe("formDisabledCallback", () => {
   let element: Element;
   let lifecycle: string[];
 

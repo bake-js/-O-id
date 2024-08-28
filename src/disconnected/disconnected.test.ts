@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from "bun:test";
 import disconnected from "./disconnected";
 
-describe("Disconnected callback", () => {
+describe("disconnectedCallback", () => {
   let element: Element;
   let lifecycle: string[];
 

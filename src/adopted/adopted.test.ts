@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from "bun:test";
 import adopted from "./adopted";
 
-describe("Adopted callback", () => {
+describe("adoptedCallback", () => {
   let element: Element;
   let lifeCycle: string[];
 

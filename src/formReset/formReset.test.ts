@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from "bun:test";
 import formReset from "./formReset";
 
-describe("formReset", () => {
+describe("formResetCallback", () => {
   let element: Element;
   let lifecycle: string[];
 
