@@ -10,15 +10,24 @@
  * @param {Object} descriptor - O descritor de propriedade/método.
  * @returns {void}
  *
+ * @description
+ * O decorator `repaint` é utilizado para assegurar que, após a execução de um método decorado,
+ * o callback `paintCallback` seja chamado se o elemento estiver conectado ao DOM. Isso permite
+ * que a lógica de pintura do componente seja invocada de forma automática e no momento certo,
+ * garantindo a consistência visual e comportamental do Custom Element.
+ *
+ * Esse decorator é especialmente útil em cenários onde o componente precisa atualizar sua interface
+ * visual ou realizar outras ações relacionadas à pintura, sempre que um método específico for executado.
+ *
  * @example
  * class MyComponent extends HTMLElement {
- *   @repaint
- *   async someMethod() {
- *     console.log('Método original executado');
+ *   paintCallback() {
+ *     console.log('Callback de pintura chamado');
  *   }
  *
- *   async paintCallback() {
- *     console.log('Callback de pintura chamado');
+ *   @repaint
+ *   handlePaint() {
+ *     console.log('Método original executado');
  *   }
  * }
  */

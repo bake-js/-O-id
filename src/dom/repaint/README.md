@@ -39,12 +39,16 @@ import { repaint } from '@bake-js/-o-id/dom';
 import { paintCallback } from "../interfaces";
 
 const repaint = (_target, _propertyKey, descriptor) => {
-  const value = descriptor.value;
+  const originalMethod = descriptor.value ?? (() => undefined);
 
   Object.assign(descriptor, {
     async value(...args) {
-      await Reflect.apply(value, this, args);
-      this.isConnected && (await this[paintCallback]());
+      await Reflect.apply(originalMethod, this, args);
+
+      if (this.isConnected) {
+        await this[paintCallback]();
+      }
+
       return this;
     },
   });
