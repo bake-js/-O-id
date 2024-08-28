@@ -12,12 +12,11 @@
  * seja adicionado à lista de atributos observados do Custom Element.
  *
  * @example
- * // Exemplo de uso do decorator `attributeChanged`
  * import { attributeChanged } from '@bake-js/-o-id';
  *
  * class MyElement extends HTMLElement {
  *   @attributeChanged('my-attribute')
- *   handleAttributeChange(newValue: string, oldValue: string) {
+ *   handleAttributeChange(newValue, oldValue) {
  *     console.log(`Atributo alterado de ${oldValue} para ${newValue}`);
  *   }
  * }

@@ -12,7 +12,6 @@
  * do Custom Element.
  *
  * @example
- * // Exemplo de uso do decorator `define`
  * import { define } from '@bake-js/-o-id';
  *
  * @define('my-element', { extends: 'div' })

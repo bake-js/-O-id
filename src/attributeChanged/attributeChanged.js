@@ -15,7 +15,6 @@ import { attributeChangedCallback, observedAttributes } from "../interfaces";
  * seja adicionado à lista de atributos observados do Custom Element.
  *
  * @example
- * // Exemplo de uso do decorator `attributeChanged`
  * import { attributeChanged } from '@bake-js/-o-id';
  *
  * class MyElement extends HTMLElement {

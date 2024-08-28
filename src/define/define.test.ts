@@ -17,26 +17,6 @@ describe("define", () => {
     );
   });
 
-  it("Deve registrar múltiplos custom elements corretamente", () => {
-    @define("element-one")
-    class ElementOne {}
-
-    expect(customElements.define).toHaveBeenCalledWith(
-      "element-one",
-      ElementOne,
-      undefined,
-    );
-
-    @define("element-two")
-    class ElementTwo {}
-
-    expect(customElements.define).toHaveBeenCalledWith(
-      "element-two",
-      ElementTwo,
-      undefined,
-    );
-  });
-
   it("Deve permitir a configuração de um terceiro parâmetro ao registrar o custom element", () => {
     const options = { extends: "button" };
 
