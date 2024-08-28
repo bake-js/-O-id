@@ -4,7 +4,6 @@ import { adoptedCallback } from "../interfaces";
 /**
  * Decorator que adiciona lógica ao método `adoptedCallback` de um Custom Element.
  *
- * @function
  * @param {Function} target - O alvo do decorator, geralmente a classe do Custom Element.
  * @param {string} propertyKey - O nome do método decorado.
  * @returns {Function} Um decorator que intercepta a chamada do `adoptedCallback`.
