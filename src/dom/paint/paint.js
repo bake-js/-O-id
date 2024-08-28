@@ -15,8 +15,17 @@ import {
  * @param {Function} [style] - Função opcional que retorna as folhas de estilo a serem aplicadas.
  * @returns {Function} - O decorator para ser aplicado à classe do componente.
  *
+ * @description
+ * O decorator `paint` facilita a criação de componentes personalizados,
+ * permitindo que a lógica de renderização e aplicação de estilos seja centralizada.
+ * Ele intercepta os callbacks de ciclo de vida (`paintCallback`, `willPaintCallback`,
+ * `didPaintCallback` e `connectedCallback`) para garantir que o componente seja renderizado
+ * de forma correta, utilizando `requestAnimationFrame` para otimizar a atualização visual.
+ *
+ * Este decorator é particularmente útil para componentes que precisam de uma renderização
+ * controlada e eficiente, com suporte a estilos encapsulados via `adoptedStyleSheets`.
+ *
  * @example
- * // Exemplo de uso do decorator
  * @paint(
  *   (element) => `<div>${element.someProperty}</div>`,
  *   (element) => [new CSSStyleSheet()]
@@ -26,6 +35,8 @@ import {
  *     console.log('MyComponent conectado');
  *   }
  * }
+ *
+ * customElements.define('my-component', MyComponent);
  */
 const paint =
   (component, style = () => []) =>
@@ -50,7 +61,9 @@ const paint =
       });
 
     // Intercepta o método connectedCallback para garantir que paintCallback seja chamado
-    intercept(connectedCallback).in(target.prototype).then(exec(paintCallback));
+    intercept(connectedCallback)
+      .in(target.prototype) // Define o alvo do interceptor.
+      .then(exec(paintCallback)); // Define o método a ser executado pelo interceptor.
   };
 
 export default paint;
