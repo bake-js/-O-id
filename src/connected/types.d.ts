@@ -11,7 +11,6 @@
  * para que o método decorado seja executado quando o `connectedCallback` do Custom Element é invocado.
  *
  * @example
- * // Exemplo de uso do decorator `connected`
  * import { connected } from '@bake-js/-o-id';
  *
  * class MyElement extends HTMLElement {

@@ -8,16 +8,15 @@ describe("formDisabled", () => {
   class Element {
     disabled: boolean | null = null;
 
+    formDisabledCallback(disabled: boolean) {
+      lifecycle.push(`formDisabledCallback:${disabled}`);
+      return this;
+    }
+
     @formDisabled
     handleFormDisabled(disabled) {
       lifecycle.push(`handleFormDisabled:${disabled}`);
       this.disabled = disabled;
-      return this;
-    }
-
-    // Simulando a chamada do método quando o estado de desativação do componente muda
-    formDisabledCallback(disabled: boolean) {
-      lifecycle.push(`formDisabledCallback:${disabled}`);
       return this;
     }
   }

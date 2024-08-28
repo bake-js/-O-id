@@ -6,15 +6,14 @@ describe("formReset", () => {
   let lifecycle: string[];
 
   class Element {
-    @formReset
-    handleFormReset() {
-      lifecycle.push("handleFormReset");
+    formResetCallback() {
+      lifecycle.push("formResetCallback");
       return this;
     }
 
-    // Simulando a chamada do método quando o formulário é redefinido
-    formResetCallback() {
-      lifecycle.push("formResetCallback");
+    @formReset
+    handleFormReset() {
+      lifecycle.push("handleFormReset");
       return this;
     }
   }

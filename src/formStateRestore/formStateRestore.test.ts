@@ -6,14 +6,14 @@ describe("formStateRestore", () => {
   let lifecycle: string[];
 
   class Element {
-    @formStateRestore
-    handleFormStateRestore(state, mode) {
-      lifecycle.push(`handleFormStateRestore:${mode}:${state.key}`);
+    formStateRestoreCallback(state: any, mode: "restore" | "autocomplete") {
+      lifecycle.push(`formStateRestoreCallback:${mode}:${state.key}`);
       return this;
     }
 
-    formStateRestoreCallback(state: any, mode: "restore" | "autocomplete") {
-      lifecycle.push(`formStateRestoreCallback:${mode}:${state.key}`);
+    @formStateRestore
+    handleFormStateRestore(state, mode) {
+      lifecycle.push(`handleFormStateRestore:${mode}:${state.key}`);
       return this;
     }
   }

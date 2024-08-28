@@ -8,16 +8,15 @@ describe("formAssociated", () => {
   class Element {
     form: any = null;
 
+    formAssociatedCallback(form) {
+      lifecycle.push("formAssociatedCallback");
+      return this;
+    }
+
     @formAssociated
     handleFormAssociation(form) {
       lifecycle.push("handleFormAssociation");
       this.form = form;
-      return this;
-    }
-
-    // Simulando a chamada do método quando o componente é associado a um formulário
-    formAssociatedCallback(form) {
-      lifecycle.push("formAssociatedCallback");
       return this;
     }
   }

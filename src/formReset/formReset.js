@@ -14,11 +14,21 @@ import { formResetCallback } from "../interfaces";
  * @returns {Function} Um decorator que intercepta a chamada do `formResetCallback`.
  *
  * @example
- * // Exemplo de uso:
- * @formReset
- * formResetCallback() {
- *   console.log('O formulário foi redefinido.');
+ * import { formReset } from '@bake-js/-o-id';
+ *
+ * class MyElement extends HTMLElement {
+ *   constructor() {
+ *     super();
+ *     this.attachShadow({ mode: 'open' });
+ *   }
+ *
+ *   @formReset
+ *   handleFormReset() {
+ *     console.log('O formulário foi redefinido.');
+ *   }
  * }
+ *
+ * customElements.define('my-element', MyElement);
  */
 const formReset = (target, propertyKey) => {
   // Cria uma instância do interceptor para o método `formResetCallback`.
