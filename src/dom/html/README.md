@@ -42,25 +42,16 @@ A função `html` usa template literals para criar e formatar strings HTML, remo
 ## Implementação
 
 ```javascript
-/**
- * Gera uma string HTML formatada a partir de template literals.
- * Remove quebras de linha e espaços extras para garantir uma saída limpa.
- *
- * @param {TemplateStringsArray} strings - Strings do template literal.
- * @param {...any} values - Valores interpolados no template literal.
- * @returns {string} - String HTML formatada e limpa.
- */
 function html(strings, ...values) {
-  // Combina valores interpolados e remove quebras de linha e espaços extras
   const combinedValues = values.map(value =>
     Array.isArray(value) ? value.join("") : value
   );
 
   let content = String.raw({ raw: strings }, ...combinedValues);
   content = content
-    .replace(/[\n\r]+/g, " ") // Remove quebras de linha
-    .replace(/\s+/g, " ") // Substitui múltiplos espaços por um único espaço
-    .replace(/>\s+</g, "><"); // Remove espaços entre tags
+    .replace(/[\n\r]+/g, " ")
+    .replace(/\s+/g, " ")
+    .replace(/>\s+</g, "><");
 
   return content.trim();
 }
