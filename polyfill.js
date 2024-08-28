@@ -20,7 +20,10 @@ class CSSStyleSheet {
   replaceSync(textContent) {
     this.cssRules = [
       {
-        cssText: textContent.replace(/\s+/g, " ").trim(),
+        cssText: textContent
+          .replace(/[\n\r]+/g, "")
+          .replace(/\s+/g, " ")
+          .trim(),
       },
     ];
   }
