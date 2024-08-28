@@ -4,6 +4,7 @@ import { adoptedCallback } from "../interfaces";
 /**
  * Decorator que adiciona lógica ao método `adoptedCallback` de um Custom Element.
  *
+ * @function
  * @param {Function} target - O alvo do decorator, geralmente a classe do Custom Element.
  * @param {string} propertyKey - O nome do método decorado.
  * @returns {Function} Um decorator que intercepta a chamada do `adoptedCallback`.
@@ -15,15 +16,15 @@ import { adoptedCallback } from "../interfaces";
  * de forma adequada, centralizando a lógica e mantendo a integridade dos métodos de callback.
  *
  * @example
- * // Exemplo de uso de `adopted` em um Custom Element
  * import { adopted } from '@bake-js/-o-id';
  *
  * class MyElement extends HTMLElement {
  *   @adopted
- *   adoptedCallback() {
+ *   handleAdoption() {
  *     console.log('Elemento foi adotado.');
  *   }
  * }
+ *
  * customElements.define('my-element', MyElement);
  */
 const adopted = (target, propertyKey) => {

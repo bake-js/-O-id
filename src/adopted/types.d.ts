@@ -12,15 +12,15 @@
  * de forma adequada, centralizando a lógica e mantendo a integridade dos métodos de callback.
  *
  * @example
- * // Exemplo de uso de `adopted` em um Custom Element
  * import { adopted } from '@bake-js/-o-id';
  *
  * class MyElement extends HTMLElement {
  *   @adopted
- *   adoptedCallback() {
+ *   handleAdoption() {
  *     console.log('Elemento foi adotado.');
  *   }
  * }
+ *
  * customElements.define('my-element', MyElement);
  */
 export declare function adopted(target: any, propertyKey: PropertyKey): void;
