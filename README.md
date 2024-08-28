@@ -108,6 +108,11 @@ A seguir, você encontrará a documentação detalhada para os principais módul
 - [Echo](https://github.com/bake-js/-o-id/blob/main/src/echo/echo/README.md)
 - [<o-id-echo-source />](https://github.com/bake-js/-o-id/blob/main/src/echo/source/README.md)
 
+
+### Interfaces
+- [global](https://github.com/bake-js/-o-id/blob/main/src/interfaces/README.md)
+- [dom](https://github.com/bake-js/-o-id/blob/main/src/dom/interfaces/README.md)
+
 ## Demo
 
 Confira um exemplo prático de como o **-O-id** pode ser utilizado em nosso [demo](https://github.com/bake-js/-o-id-demo).
