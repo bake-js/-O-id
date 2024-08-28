@@ -77,41 +77,47 @@ A seguir, você encontrará a documentação detalhada para os principais módul
 ## Índice de Referência
 
 ### Ciclo de Vida
-- [adopted](https://github.com/bake-js/-o-id/blob/main/src/adopted/README.md)
-- [attributeChanged](https://github.com/bake-js/-o-id/blob/main/src/attributeChanged/README.md)
-- [connected](https://github.com/bake-js/-o-id/blob/main/src/connected/README.md)
-- [disconnected](https://github.com/bake-js/-o-id/blob/main/src/disconnected/README.md)
-- [define](https://github.com/bake-js/-o-id/blob/main/src/define/README.md)
+Documentação sobre os callbacks e métodos relacionados ao ciclo de vida dos Custom Elements. Esses métodos são fundamentais para gerenciar o estado e as mudanças dos elementos ao longo de sua existência no DOM.
+- [adopted](https://github.com/bake-js/-o-id/blob/main/src/adopted/README.md) - Callback chamado quando um Custom Element é adotado por um novo documento.
+- [attributeChanged](https://github.com/bake-js/-o-id/blob/main/src/attributeChanged/README.md) - Callback chamado quando um atributo de um Custom Element é alterado.
+- [connected](https://github.com/bake-js/-o-id/blob/main/src/connected/README.md) - Callback chamado quando um Custom Element é inserido no DOM.
+- [disconnected](https://github.com/bake-js/-o-id/blob/main/src/disconnected/README.md) - Callback chamado quando um Custom Element é removido do DOM.
+- [define](https://github.com/bake-js/-o-id/blob/main/src/define/README.md) - Função para definir e registrar um novo Custom Element.
 
-### Cidlo de Vida Associados a Formulários
-- [formAssociated](https://github.com/bake-js/-o-id/blob/main/src/formAssociated/README.md)
-- [formDisabled](https://github.com/bake-js/-o-id/blob/main/src/formDisabled/README.md)
-- [formReset](https://github.com/bake-js/-o-id/blob/main/src/formReset/README.md)
-- [formStateRestore](https://github.com/bake-js/-o-id/blob/main/src/formStateRestore/README.md)
+### Ciclo de Vida Associados a Formulários
+Informações sobre os callbacks específicos para a interação de Custom Elements com formulários. Esses callbacks são utilizados para gerenciar o estado e as ações relacionadas aos formulários.
+- [formAssociated](https://github.com/bake-js/-o-id/blob/main/src/formAssociated/README.md) - Callback chamado quando um elemento é associado a um formulário.
+- [formDisabled](https://github.com/bake-js/-o-id/blob/main/src/formDisabled/README.md) - Callback chamado quando um elemento é desativado dentro de um formulário.
+- [formReset](https://github.com/bake-js/-o-id/blob/main/src/formReset/README.md) - Callback chamado quando um formulário associado é resetado.
+- [formStateRestore](https://github.com/bake-js/-o-id/blob/main/src/formStateRestore/README.md) - Callback chamado quando o estado de um elemento é restaurado dentro de um formulário.
 
 ### DOM
-- [css](https://github.com/bake-js/-o-id/blob/main/src/dom/css/README.md)
-- [didPaint](https://github.com/bake-js/-o-id/blob/main/src/dom/didPaint/README.md)
-- [html](https://github.com/bake-js/-o-id/blob/main/src/dom/html/README.md)
-- [paint](https://github.com/bake-js/-o-id/blob/main/src/dom/paint/README.md)
-- [repaint](https://github.com/bake-js/-o-id/blob/main/src/dom/repaint/README.md)
-- [willPaint](https://github.com/bake-js/-o-id/blob/main/src/dom/willPaint/README.md)
+Documentação sobre as funcionalidades e helpers relacionados ao DOM e ao processo de renderização dos Custom Elements. Inclui decorators e funções que ajudam a manipular estilos e o conteúdo visual dos componentes.
+- [css](https://github.com/bake-js/-o-id/blob/main/src/dom/css/README.md) - Helper para gerar folhas de estilo (`CSSStyleSheet`) para uso com Web Components.
+- [didPaint](https://github.com/bake-js/-o-id/blob/main/src/dom/didPaint/README.md) - Callback chamado após o componente ser pintado.
+- [html](https://github.com/bake-js/-o-id/blob/main/src/dom/html/README.md) - Helper para processar strings de template literal em HTML.
+- [paint](https://github.com/bake-js/-o-id/blob/main/src/dom/paint/README.md) - Decorator para chamar o callback de pintura durante a execução do método original.
+- [repaint](https://github.com/bake-js/-o-id/blob/main/src/dom/repaint/README.md) - Decorator para garantir que o callback de pintura seja chamado após a execução do método original.
+- [willPaint](https://github.com/bake-js/-o-id/blob/main/src/dom/willPaint/README.md) - Decorator para adicionar lógica que deve ser executada antes do callback de pintura.
 
 ### Event
-- [on](https://github.com/bake-js/-o-id/blob/main/src/event/on/README.md)
-- [formData](https://github.com/bake-js/-o-id/blob/main/src/event/formData/README.md)
-- [prevent](https://github.com/bake-js/-o-id/blob/main/src/event/prevent/README.md)
-- [stop](https://github.com/bake-js/-o-id/blob/main/src/event/stop/README.md)
-- [value](https://github.com/bake-js/-o-id/blob/main/src/event/value/README.md)
+Informações sobre os filtros e decorators para eventos. Inclui funções para gerenciar e processar eventos em Custom Elements, como adicionar listeners e manipular dados de eventos.
+- [on](https://github.com/bake-js/-o-id/blob/main/src/event/on/README.md) - Decorator para adicionar listeners de eventos a métodos de Custom Elements.
+- [formData](https://github.com/bake-js/-o-id/blob/main/src/event/formData/README.md) - Filtro que converte os dados de um formulário em um objeto.
+- [prevent](https://github.com/bake-js/-o-id/blob/main/src/event/prevent/README.md) - Filtro que impede o comportamento padrão de um evento.
+- [stop](https://github.com/bake-js/-o-id/blob/main/src/event/stop/README.md) - Filtro que interrompe a propagação de um evento.
+- [value](https://github.com/bake-js/-o-id/blob/main/src/event/value/README.md) - Filtro que extrai o valor de um campo de entrada associado ao evento.
 
 ### Echo
-- [Echo](https://github.com/bake-js/-o-id/blob/main/src/echo/echo/README.md)
-- [o-id-echo-source](https://github.com/bake-js/-o-id/blob/main/src/echo/source/README.md)
+Documentação sobre o módulo Echo, um barramento de eventos experimental para comunicação entre componentes. Inclui informações sobre como configurar e usar Echo para gerenciar eventos.
+- [Echo](https://github.com/bake-js/-o-id/blob/main/src/echo/echo/README.md) - Módulo para gerenciamento de eventos com um barramento de eventos.
+- [o-id-echo-source](https://github.com/bake-js/-o-id/blob/main/src/echo/source/README.md) - Fonte para eventos no módulo Echo.
 
 ### Interfaces
-- [Global](https://github.com/bake-js/-o-id/blob/main/src/interfaces/README.md)
-- [DOM](https://github.com/bake-js/-o-id/blob/main/src/dom/interfaces/README.md)
-- [Event](https://github.com/bake-js/-o-id/blob/main/src/event/interfaces/README.md)
+Descrição dos identificadores e constantes usadas para padronizar callbacks e estados em Custom Elements. Inclui informações sobre como esses identificadores são utilizados no contexto de Custom Elements e eventos.
+- [Global](https://github.com/bake-js/-o-id/blob/main/src/interfaces/README.md) - Identificadores e constantes globais usadas em Custom Elements.
+- [DOM](https://github.com/bake-js/-o-id/blob/main/src/dom/interfaces/README.md) - Identificadores e constantes específicas para manipulação do DOM em Custom Elements.
+- [Event](https://github.com/bake-js/-o-id/blob/main/src/event/interfaces/README.md) - Identificadores e constantes específicas para eventos e manipulação de dados de eventos.
 
 ## Demo
 
