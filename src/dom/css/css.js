@@ -5,7 +5,8 @@
  * @param {...any} values - Os valores interpolados na string do template.
  * @returns {CSSStyleSheet[]} Um array contendo a folha de estilos gerada.
  *
- * @description Esta função permite a criação dinâmica de folhas de estilo CSS utilizando
+ * @description
+ * Esta função permite a criação dinâmica de folhas de estilo CSS utilizando
  * template literals, permitindo a interpolação de valores dentro da string CSS. Ela
  * retorna a folha de estilo gerada como um array de `CSSStyleSheet`.
  *
