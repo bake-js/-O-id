@@ -118,6 +118,7 @@ Descrição dos identificadores e constantes usadas para padronizar callbacks e 
 - [Global](https://github.com/bake-js/-o-id/blob/main/src/interfaces/README.md) - Identificadores e constantes globais usadas em Custom Elements.
 - [DOM](https://github.com/bake-js/-o-id/blob/main/src/dom/interfaces/README.md) - Identificadores e constantes específicas para manipulação do DOM em Custom Elements.
 - [Event](https://github.com/bake-js/-o-id/blob/main/src/event/interfaces/README.md) - Identificadores e constantes específicas para eventos e manipulação de dados de eventos.
+- [Echo](https://github.com/bake-js/-o-id/blob/main/src/echo/interfaces/README.md) - Identificadores e constantes específicas para o barramento de eventos Echo.
 
 ## Demo
 
