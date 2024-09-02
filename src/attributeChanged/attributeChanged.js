@@ -26,23 +26,31 @@ import { attributeChangedCallback, observedAttributes } from "../interfaces";
  *
  * customElements.define('my-element', MyElement);
  */
-const attributeChanged = (attributeName) => (target, propertyKey) => {
-  // Atualiza a lista de atributos observados do Custom Element.
-  const observedAttrs = target.constructor[observedAttributes] ?? [];
+const attributeChanged =
+  (attributeName) => (target, propertyKey, propertyDescriptor) => {
+    // Atualiza a lista de atributos observados do Custom Element.
+    const observedAttrs = target.constructor[observedAttributes] ?? [];
 
-  Object.assign(target.constructor, {
-    [observedAttributes]: [...observedAttrs, attributeName],
-  });
-
-  // Configura o interceptor para o método `attributeChangedCallback`.
-  intercept(attributeChangedCallback)
-    .in(target)
-    .then(function (name, oldValue, newValue) {
-      if (name === attributeName && oldValue !== newValue) {
-        // Executa o método decorado com os novos e antigos valores do atributo.
-        this[propertyKey](newValue, oldValue);
-      }
+    Object.assign(target.constructor, {
+      [observedAttributes]: [...observedAttrs, attributeName],
     });
-};
+
+    // Configura o interceptor para o método `attributeChangedCallback`.
+    intercept(attributeChangedCallback)
+      .in(target)
+      .then(function (name, oldValue, newValue) {
+        if (name === attributeName && oldValue !== newValue) {
+          // Se o método for um setter, atualiza o valor do atributo.
+          if (propertyDescriptor.set) {
+            this[propertyKey] = newValue;
+          }
+
+          // Se o método for uma função, executa o método decorado com os novos e antigos valores do atributo.
+          if (propertyDescriptor.value) {
+            this[propertyKey](newValue, oldValue);
+          }
+        }
+      });
+  };
 
 export default attributeChanged;
