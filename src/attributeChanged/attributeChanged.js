@@ -27,7 +27,8 @@ import { attributeChangedCallback, observedAttributes } from "../interfaces";
  * customElements.define('my-element', MyElement);
  */
 const attributeChanged =
-  (attributeName) => (target, propertyKey, propertyDescriptor) => {
+  (attributeName, ...filters) =>
+  (target, propertyKey, propertyDescriptor) => {
     // Atualiza a lista de atributos observados do Custom Element.
     const observedAttrs = target.constructor[observedAttributes] ?? [];
 
@@ -40,14 +41,19 @@ const attributeChanged =
       .in(target)
       .then(function (name, oldValue, newValue) {
         if (name === attributeName && oldValue !== newValue) {
+          // Aplica filtros ao novo valor do atributo.
+          const value = filters.reduce(
+            (value, filter) => filter(value),
+            newValue,
+          );
           // Se o método for um setter, atualiza o valor do atributo.
           if (propertyDescriptor.set) {
-            this[propertyKey] = newValue;
+            this[propertyKey] = value;
           }
 
           // Se o método for uma função, executa o método decorado com os novos e antigos valores do atributo.
           if (propertyDescriptor.value) {
-            this[propertyKey](newValue, oldValue);
+            this[propertyKey](value, oldValue);
           }
         }
       });

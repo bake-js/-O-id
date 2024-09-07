@@ -9,6 +9,7 @@ import {
   on,
 } from "../interfaces";
 import { target } from "../target";
+import { asdf } from "./asdf";
 
 /**
  * Mixin Echo para adicionar suporte a um Event Bus em um Custom Element.
@@ -100,6 +101,7 @@ const Echo = (Klass) =>
      * document.body.removeChild(element); // Dispara o disconnectedCallback.
      */
     [disconnectedCallback]() {
+      super[disconnectedCallback]?.();
       Object.values(this.#controllers).forEach((controller) =>
         controller.abort(),
       );
@@ -132,34 +134,66 @@ const Echo = (Klass) =>
     /**
      * Conecta o protocolo de eventos, registrando listeners de eventos baseados no protocolo.
      *
-     * @param {string} protocol - O protocolo de eventos a ser conectado.
+     * @param {string} protocol - O protocolo de eventos a ser conectado. O formato deve ser
+     * `target/event:method|attribute|setter/target-name|filter1=value1|filter2=value2`.
      * @returns {this} - A instância do elemento.
      *
      * @description
      * Este método conecta o componente ao Event Bus, registrando listeners de eventos de acordo
-     * com o protocolo especificado. Ele permite que o componente reaja a eventos emitidos por
-     * outros componentes que seguem o mesmo protocolo.
+     * com o protocolo especificado. O protocolo define como os eventos devem ser manipulados e quais
+     * métodos, atributos ou setters devem ser atualizados em resposta aos eventos.
+     *
+     * O protocolo é dividido em várias partes:
+     * - `target/event`: Identifica o evento a ser ouvido.
+     * - `method|attribute|setter`: Especifica como o evento deve afetar o componente.
+     * - `target-name`: O nome do método, atributo ou setter a ser atualizado.
+     * - `filter1=value1|filter2=value2`: Filtros adicionais que serão aplicados aos eventos.
      *
      * @example
-     * element[echoConnectedCallback]('sender/message:method/handleMessage');
+     * // Supondo que `element` seja uma instância de um componente que utiliza o Echo.
+     * element[echoConnectedCallback]('sender/message:method/handleMessage|filter1=value1');
+     *
+     * @example
+     * // Exemplo com um filtro complexo.
+     * element[echoConnectedCallback]('sender/event:attribute/attributeName|filter1=value1|filter2=value2');
      */
     [echoConnectedCallback](protocol) {
+      // Inicializa o AbortController para gerenciar o cancelamento do evento.
       this.#controllers[protocol] = new AbortController();
 
-      const [, topic, type, name] = protocol.match(
-        /^([a-z0-9-_]+\/[a-z0-9-_]+):([a-z]+)\/([a-z0-9-_]+)$/i,
-      );
+      // Utiliza uma expressão regular para extrair partes do protocolo.
+      const [, topic, type, name, filtes] =
+        protocol.match(
+          /^([a-z0-9-_]+\/[a-z0-9-_]+):([a-z]+)\/([a-z0-9-_]+)(\|.*)?$/i,
+        ) || [];
 
+      // Processa filtros, se existirem.
+      const segments = (filtes || "").split("|").filter(Boolean);
+      const handlers = segments.map((filter) => {
+        const [func, val] = filter.split("=");
+        return [asdf[func], val];
+      });
+
+      // Adiciona o listener de eventos com o AbortController para gerenciamento.
       target.addEventListener(
         topic,
         (event) => {
-          if (/^method$/.test(type)) this[name](event.detail);
-          if (/^attribute$/.test(type)) this.setAttribute(name, event.detail);
-          if (/^setter$/.test(type)) this[name] = event.detail;
+          // Aplica os filtros ao detalhe do evento.
+          const value = handlers.reduce(
+            (accumulated, [func, val]) => func(accumulated, val),
+            event.detail,
+          );
+
+          // Atualiza o componente baseado no tipo especificado.
+          if (/^method$/.test(type)) this[name](value);
+          if (/^attribute$/.test(type)) this.setAttribute(name, value);
+          if (/^setter$/.test(type)) this[name] = value;
+
           return this;
         },
         { signal: this.#controllers[protocol].signal },
       );
+
       return this;
     }
 

@@ -24,7 +24,7 @@
  */
 const define = (name, options) => (constructor) => {
   // Define o Custom Element com o nome e opções fornecidos.
-  customElements.define(name, constructor, options);
+  customElements.get(name) ?? customElements.define(name, constructor, options);
 };
 
 export default define;

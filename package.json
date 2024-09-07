@@ -15,19 +15,19 @@
   "exports": {
     ".": {
       "import": "dist/-o-id.js",
-      "require": "dis/-o-id.cjs"
+      "require": "dist/-o-id.cjs"
     },
     "./dom": {
       "import": "dist/dom.js",
-      "require": "dis/dom.cjs"
+      "require": "dist/dom.cjs"
     },
     "./echo": {
       "import": "dist/echo.js",
-      "require": "dis/echo.cjs"
+      "require": "dist/echo.cjs"
     },
     "./event": {
       "import": "dist/event.js",
-      "require": "dis/event.cjs"
+      "require": "dist/event.cjs"
     }
   },
   "files": ["dist", "types.d.ts"],
@@ -51,7 +51,8 @@
     "build": "vite build",
     "prepare": "husky"
   },
+  "source": "src/index.js",
   "type": "module",
   "types": "types.d.ts",
-  "version": "0.0.43"
+  "version": "0.0.44"
 }
