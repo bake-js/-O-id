@@ -47,6 +47,7 @@ import {
   on,
 } from "./interfaces";
 import { target } from "./target";
+import filters from "./filters";
 
 const Echo = (Klass) =>
   class extends Klass {
@@ -82,16 +83,28 @@ const Echo = (Klass) =>
     [echoConnectedCallback](protocol) {
       this.#controllers[protocol] = new AbortController();
 
-      const [, topic, type, name] = protocol.match(
-        /^([a-z0-9-_]+\/[a-z0-9-_]+):([a-z]+)\/([a-z0-9-_]+)$/i,
+      const [, topic, type, name, pipes] = protocol.match(
+        /^([a-z0-9-_]+\/[a-z0-9-_]+):([a-z]+)\/([a-z0-9-_]+)(\|.*)?$/i,
       );
+
+      const segments = (pipes || "").split("|").filter(Boolean);
+      const handlers = segments.map((filter) => {
+        const [func, val] = filter.split("=");
+        return [filters[func], val];
+      });
 
       target.addEventListener(
         topic,
         (event) => {
-          if (/^method$/.test(type)) this[name](event.detail);
-          if (/^attribute$/.test(type)) this.setAttribute(name, event.detail);
-          if (/^setter$/.test(type)) this[name] = event.detail;
+          const value = handlers.reduce(
+            (accumulated, [func, val]) => func(accumulated, val),
+            event.detail,
+          );
+
+          if (/^method$/.test(type)) this[name](value);
+          if (/^attribute$/.test(type)) this.setAttribute(name, value);
+          if (/^setter$/.test(type)) this[name] = value;
+
           return this;
         },
         { signal: this.#controllers[protocol].signal },
@@ -119,6 +132,17 @@ class MyElement extends Echo(HTMLElement) {
 customElements.define('my-element', MyElement);
 ```
 
+### Exemplo com Filters
+
+```javascript
+element.setAttribute(
+  'on',
+  'sender/message:method/handleMessage|filter1=value1|filter2=value2',
+);
+```
+
+Os filtros podem ser usados para manipular e transformar os dados antes de serem processados pelos métodos, atributos ou setters. 
+
 ## Comparação com Concorrentes
 
 ### Lit
@@ -134,7 +158,8 @@ customElements.define('my-element', MyElement);
 
 - **Desacoplamento Completo:** Permite comunicação entre componentes sem dependências diretas.
 - **Centralização de Lógica:** Simplifica a gestão de eventos complexos.
+- **Suporte a Filtros:** Manipula e transforma os dados dos eventos antes de processá-los.
 
 ## Considerações Finais
 
-O `Echo` oferece uma solução poderosa e flexível para a comunicação entre componentes em aplicações Web, simplificando o desenvolvimento e promovendo um alto grau de desacoplamento.
+O `Echo` oferece uma solução poderosa e flexível para a comunicação entre componentes em aplicações Web, simplificando o desenvolvimento e promovendo um alto grau de desacoplamento. A adição de filtros aumenta ainda mais a flexibilidade, permitindo transformar os dados dos eventos conforme necessário.

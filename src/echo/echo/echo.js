@@ -9,7 +9,7 @@ import {
   on,
 } from "../interfaces";
 import { target } from "../target";
-import { asdf } from "./asdf";
+import filters from "./filters";
 
 /**
  * Mixin Echo para adicionar suporte a um Event Bus em um Custom Element.
@@ -162,16 +162,16 @@ const Echo = (Klass) =>
       this.#controllers[protocol] = new AbortController();
 
       // Utiliza uma expressão regular para extrair partes do protocolo.
-      const [, topic, type, name, filtes] =
+      const [, topic, type, name, pipes] =
         protocol.match(
           /^([a-z0-9-_]+\/[a-z0-9-_]+):([a-z]+)\/([a-z0-9-_]+)(\|.*)?$/i,
         ) || [];
 
       // Processa filtros, se existirem.
-      const segments = (filtes || "").split("|").filter(Boolean);
+      const segments = (pipes || "").split("|").filter(Boolean);
       const handlers = segments.map((filter) => {
         const [func, val] = filter.split("=");
-        return [asdf[func], val];
+        return [filters[func], val];
       });
 
       // Adiciona o listener de eventos com o AbortController para gerenciamento.
