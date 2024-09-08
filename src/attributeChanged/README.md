@@ -19,6 +19,7 @@ O uso do `attributeChanged` oferece as seguintes vantagens:
 
 1. **Reatividade a Alterações de Atributos:** Garante que o método decorado seja executado sempre que o atributo especificado for alterado.
 2. **Manutenção da Consistência:** Facilita a atualização de estados internos e a adaptação visual do componente em resposta a mudanças de atributos.
+3. **Filtros Personalizados:** Permite aplicar filtros aos novos valores dos atributos antes de executar a lógica personalizada.
 
 ## Aplicabilidade
 
@@ -41,28 +42,41 @@ import { attributeChanged } from '@bake-js/-o-id';
 import intercept from "../intercept";
 import { attributeChangedCallback, observedAttributes } from "../interfaces";
 
-const attributeChanged = (attributeName) => (target, propertyKey) => {
-  const observedAttrs = target.constructor[observedAttributes] ?? [];
+const attributeChanged =
+  (attributeName, ...filters) =>
+  (target, propertyKey, propertyDescriptor) => {
+    const observedAttrs = target.constructor[observedAttributes] ?? [];
 
-  Object.assign(target.constructor, {
-    [observedAttributes]: [...observedAttrs, attributeName],
-  });
-
-  intercept(attributeChangedCallback)
-    .in(target)
-    .then(function (name, oldValue, newValue) {
-      if (name === attributeName && oldValue !== newValue) {
-        this[propertyKey](newValue, oldValue);
-      }
+    Object.assign(target.constructor, {
+      [observedAttributes]: [...observedAttrs, attributeName],
     });
-};
+
+    intercept(attributeChangedCallback)
+      .in(target)
+      .then(function (name, oldValue, newValue) {
+        if (name === attributeName && oldValue !== newValue) {
+          const value = filters.reduce(
+            (value, filter) => filter(value),
+            newValue,
+          );
+
+          if (propertyDescriptor.set) {
+            this[propertyKey] = value;
+          }
+
+          if (propertyDescriptor.value) {
+            this[propertyKey](value, oldValue);
+          }
+        }
+      });
+  };
 
 export default attributeChanged;
 ```
 
 ### Exemplo de Uso
 
-```typescript
+```javascript
 import { attributeChanged } from '@bake-js/-o-id';
 
 class MyElement extends HTMLElement {
@@ -71,7 +85,7 @@ class MyElement extends HTMLElement {
     this.attachShadow({ mode: 'open' });
   }
 
-  @attributeChanged('value')
+  @attributeChanged('value', value => value.toUpperCase())
   handleAttributeChange(newValue, oldValue) {
     console.log(`Atributo 'value' alterado de ${oldValue} para ${newValue}`);
   }
@@ -135,7 +149,10 @@ export class ToDoListItem {
 
 - **Simplicidade na Implementação:** Facilita a adição de lógica de resposta a mudanças de atributos, centralizando a implementação.
 - **Reatividade Aprimorada:** Permite que componentes respondam rapidamente a alterações de atributos, mantendo a experiência do usuário fluida.
+- **Flexibilidade com Filt
+
+ros:** Oferece a capacidade de aplicar filtros personalizados aos valores dos atributos antes da execução da lógica, aumentando a flexibilidade e a adaptabilidade do componente.
 
 ## Considerações Finais
 
-O `attributeChanged` oferece uma solução prática e eficiente para gerenciar respostas a mudanças de atributos em Custom Elements. Ele promove a reatividade e a facilidade de manutenção dos componentes, facilitando a atualização e a sincronização do estado interno com os atributos do DOM.
+O `attributeChanged` oferece uma solução prática e eficiente para gerenciar respostas a mudanças de atributos em Custom Elements. Ele promove a reatividade e a facilidade de manutenção dos componentes, facilitando a atualização e a sincronização do estado interno com os atributos do DOM. Com a adição de filtros, o decorator se torna ainda mais poderoso, permitindo ajustes personalizados nos valores dos atributos antes de executar a lógica específica do componente.
