@@ -1,17 +1,3 @@
-Object.assign(self, {
-  CSSStyleSheet,
-
-  customElements: {
-    define() {},
-  },
-
-  document: self,
-
-  requestAnimationFrame(callback) {
-    setTimeout(callback, 0);
-  },
-});
-
 class CSSStyleSheet {
   constructor() {
     this.cssRules = [];
@@ -28,3 +14,12 @@ class CSSStyleSheet {
     ];
   }
 }
+
+function requestAnimationFrame(callback) {
+  return setTimeout(callback, 0);
+}
+
+Object.assign(self, {
+  CSSStyleSheet,
+  requestAnimationFrame,
+});

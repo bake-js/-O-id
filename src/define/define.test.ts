@@ -1,9 +1,9 @@
-import { beforeEach, describe, expect, it, mock } from "bun:test";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import define from "./define";
 
 describe("define", () => {
   beforeEach(() => {
-    customElements.define = mock(() => {});
+    customElements.define = vi.fn(() => {});
   });
 
   it("Registra o custom element com o name passado na execução do decorator", () => {

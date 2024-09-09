@@ -8,9 +8,12 @@
     "@biomejs/biome": "^1.8.3",
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
+    "@vitest/coverage-v8": "^2.0.5",
     "husky": "^9.0.11",
+    "jsdom": "^25.0.0",
     "lint-staged": "^15.2.7",
-    "vite": "^5.3.1"
+    "vite": "^5.3.1",
+    "vitest": "^2.0.5"
   },
   "exports": {
     ".": {
@@ -47,12 +50,16 @@
     "type": "git",
     "url": "git+https://github.com/bake-js/-o-id.git"
   },
+  "resolutions": {
+    "tough-cookie": "^5.0.0-rc.4"
+  },
   "scripts": {
     "build": "vite build",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test": "vitest --coverage"
   },
   "source": "src/index.js",
   "type": "module",
   "types": "types.d.ts",
-  "version": "0.0.45"
+  "version": "0.0.46"
 }

@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "bun:test";
+import { beforeEach, describe, expect, it } from "vitest";
 import disconnected from "./disconnected";
 
 describe("disconnectedCallback", () => {
