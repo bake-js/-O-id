@@ -50,6 +50,7 @@ const paint =
           requestAnimationFrame(() => {
             (this.shadowRoot ?? document).adoptedStyleSheets = style(this);
             (this.shadowRoot ?? this).innerHTML = component(this);
+            this.isPainted = true;
             resolve();
           });
         };

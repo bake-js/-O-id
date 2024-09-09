@@ -13,5 +13,6 @@ export default defineConfig({
       formats: ["cjs", "es"],
     },
     outDir: "dist",
+    sourcemap: true,
   },
 });
