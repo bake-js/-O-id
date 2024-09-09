@@ -15,11 +15,14 @@ class CSSStyleSheet {
   }
 }
 
+const document = {};
+
 function requestAnimationFrame(callback) {
   return setTimeout(callback, 0);
 }
 
 Object.assign(self, {
   CSSStyleSheet,
+  document,
   requestAnimationFrame,
 });
