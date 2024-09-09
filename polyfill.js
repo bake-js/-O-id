@@ -15,8 +15,6 @@ class CSSStyleSheet {
   }
 }
 
-const document = {};
-
 function requestAnimationFrame(callback) {
   return setTimeout(callback, 0);
 }
