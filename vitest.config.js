@@ -7,6 +7,6 @@ export default defineConfig({
       reporter: [["lcov", { projectRoot: "./src" }]],
     },
     environment: "jsdom",
-    setupFiles: [resolve(__dirname, "polyfill.js")],
+    setupFiles: [resolve(__dirname, "happydom.js")],
   },
 });
