@@ -4,12 +4,19 @@ import { defineConfig } from "vite";
 export default defineConfig({
   test: {
     coverage: {
-      reporter: [["lcov", { projectRoot: "./src" }]],
+      include: ["src/**/*.js"],
+      exclude: [
+        "src/**/*.spec.ts",
+        "src/**/index.js",
+        "src/**/types.d.ts",
+        "src/**/README.md",
+      ],
+      reporter: ["lcov", "text"],
       thresholds: {
-        statements: 56,
-        branches: 46,
-        functions: 36,
-        lines: 56,
+        statements: 60,
+        branches: 79,
+        functions: 66,
+        lines: 60,
       },
     },
     environment: "jsdom",
