@@ -6,6 +6,17 @@ describe("attributeChanged", () => {
   let lifecycle: string[];
 
   class Element {
+    #id: string;
+
+    get id() {
+      return (this.#id ??= "");
+    }
+
+    @attributeChanged("id")
+    set id(value: string) {
+      this.#id = value;
+    }
+
     attributeChangedCallback(name, oldValue, newValue) {
       lifecycle.push(
         `attributeChangedCallback -> ${name}, ${oldValue}, ${newValue}`,
@@ -80,5 +91,38 @@ describe("attributeChanged", () => {
   it("Não executa o método decorado se o attributeChangedCallback não for chamado", () => {
     // Não chamamos attributeChangedCallback
     expect(lifecycle).toEqual([]);
+  });
+
+  // Testes para o setter id com attributeChanged
+
+  it("Executa o setter do id e chama o attributeChangedCallback", async () => {
+    element.id = "new-id";
+
+    await element.attributeChangedCallback("id", "", "new-id");
+
+    expect(lifecycle).toEqual(["attributeChangedCallback -> id, , new-id"]);
+  });
+
+  it("Não chama attributeChangedCallback se o valor do id for o mesmo", async () => {
+    element.id = "same-id";
+
+    await element.attributeChangedCallback("id", "same-id", "same-id");
+
+    expect(lifecycle).toEqual([
+      "attributeChangedCallback -> id, same-id, same-id",
+    ]);
+  });
+
+  it("Chama attributeChangedCallback quando o id muda de um valor para outro", async () => {
+    element.id = "first-id";
+    await element.attributeChangedCallback("id", "", "first-id");
+
+    element.id = "second-id";
+    await element.attributeChangedCallback("id", "first-id", "second-id");
+
+    expect(lifecycle).toEqual([
+      "attributeChangedCallback -> id, , first-id",
+      "attributeChangedCallback -> id, first-id, second-id",
+    ]);
   });
 });
