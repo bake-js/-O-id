@@ -1,3 +1,4 @@
+import filters from "../filters";
 import {
   attributeChangedCallback,
   disconnectedCallback,
@@ -9,7 +10,6 @@ import {
   on,
 } from "../interfaces";
 import { target } from "../target";
-import filters from "./filters";
 
 /**
  * Mixin Echo para adicionar suporte a um Event Bus em um Custom Element.
@@ -78,6 +78,7 @@ const Echo = (Klass) =>
      * element.setAttribute('on', 'sender/message:method/handleMessage');
      */
     [attributeChangedCallback](name, oldValue, newValue) {
+      super[attributeChangedCallback]?.(name, oldValue, newValue);
       if (name === on) {
         this[echoDisconnectedCallback](oldValue);
         this[echoConnectedCallback](newValue);
@@ -102,8 +103,8 @@ const Echo = (Klass) =>
      */
     [disconnectedCallback]() {
       super[disconnectedCallback]?.();
-      Object.values(this.#controllers).forEach((controller) =>
-        controller.abort(),
+      Object.keys(this.#controllers).forEach((protocol) =>
+        this[echoDisconnectedCallback](protocol),
       );
       return this;
     }
@@ -122,7 +123,7 @@ const Echo = (Klass) =>
      * element.dispatchEvent(event);
      */
     [dispatchEvent](event) {
-      super[dispatchEvent](event);
+      super[dispatchEvent]?.(event);
       const element = this.getAttribute(id) ?? this.localName;
       target.dispatchEvent(
         new CustomEvent(`${element}/${event.type}`, {
