@@ -59,7 +59,7 @@ const repaint = (_target, _propertyKey, descriptor) => {
 
         // Se o elemento estiver conectado, chama o callback de pintura
         if (this.isPainted) {
-          await this[paintCallback]();
+          await this[paintCallback]?.();
         }
 
         // Retorna a instância do componente
@@ -79,7 +79,7 @@ const repaint = (_target, _propertyKey, descriptor) => {
 
         // Se o elemento estiver conectado, chama o callback de pintura
         if (this.isPainted) {
-          await this[paintCallback]();
+          await this[paintCallback]?.();
         }
       },
     });
