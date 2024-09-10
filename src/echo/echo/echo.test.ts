@@ -54,7 +54,7 @@ describe("Echo", () => {
 
       publisher.click();
 
-      await new Promise((resolve) => setTimeout(resolve));
+      await new Promise((resolve) => setTimeout(resolve), 100);
 
       expect(lifeCycle).toEqual([
         "click",
@@ -116,7 +116,7 @@ describe("Echo", () => {
 
       publisher.click();
 
-      await new Promise((resolve) => setTimeout(resolve));
+      await new Promise((resolve) => setTimeout(resolve), 100);
 
       expect(lifeCycle).toEqual([
         "click",
@@ -178,7 +178,7 @@ describe("Echo", () => {
 
       publisher.click();
 
-      await new Promise((resolve) => setTimeout(resolve));
+      await new Promise((resolve) => setTimeout(resolve), 100);
 
       expect(lifeCycle).toEqual([
         "click",
@@ -255,7 +255,7 @@ describe("Echo", () => {
 
       publisher.click();
 
-      await new Promise((resolve) => setTimeout(resolve));
+      await new Promise((resolve) => setTimeout(resolve), 100);
 
       expect(lifeCycle).toEqual([
         "click",

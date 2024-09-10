@@ -173,7 +173,7 @@ describe("repaint", () => {
       element.increment();
 
       // hack para esperar a execucao do repaint sobre o setter number
-      await new Promise((resolve) => setTimeout(resolve));
+      await new Promise((resolve) => setTimeout(resolve), 100);
 
       expect(lifecycle).toEqual([
         "connectedCallback",
