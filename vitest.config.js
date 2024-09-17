@@ -11,7 +11,7 @@ export default defineConfig({
         "src/**/types.d.ts",
         "src/**/README.md",
       ],
-      reporter: ["lcov", "text"],
+      reporter: ["lcov", "html"],
       thresholds: {
         statements: 88,
         branches: 90,

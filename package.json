@@ -10,11 +10,12 @@
     "@commitlint/config-conventional": "^19.2.2",
     "@happy-dom/global-registrator": "^15.7.3",
     "@vitest/coverage-v8": "^2.0.5",
+    "@vitest/ui": "^2.1.1",
     "husky": "^9.0.11",
     "jsdom": "^25.0.0",
     "lint-staged": "^15.2.7",
     "vite": "^5.3.1",
-    "vitest": "^2.0.5"
+    "vitest": "^2.1.1"
   },
   "exports": {
     ".": {
@@ -57,10 +58,10 @@
   "scripts": {
     "build": "vite build",
     "prepare": "husky",
-    "test": "vitest --coverage"
+    "test": "vitest --coverage --ui"
   },
   "source": "src/index.js",
   "type": "module",
   "types": "types.d.ts",
-  "version": "0.0.58"
+  "version": "0.0.59"
 }
