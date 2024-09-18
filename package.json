@@ -33,6 +33,10 @@
     "./event": {
       "import": "dist/event.js",
       "require": "dist/event.cjs"
+    },
+    "./relay": {
+      "import": "dist/relay.js",
+      "require": "dist/relay.cjs"
     }
   },
   "files": ["dist", "types.d.ts"],
@@ -63,5 +67,5 @@
   "source": "src/index.js",
   "type": "module",
   "types": "types.d.ts",
-  "version": "0.0.59"
+  "version": "0.0.60"
 }

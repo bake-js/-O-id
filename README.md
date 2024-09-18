@@ -72,6 +72,7 @@ A seguir, você encontrará a documentação detalhada para os principais módul
 - **[Guia Rápido](https://github.com/bake-js/-o-id/blob/main/src/README.md)**: Um guia completo para entender e aplicar os principais módulos e decorators do **-O-id**.
 - **[DOM](https://github.com/bake-js/-o-id/blob/main/src/dom/README.md)**: Documentação sobre a manipulação do DOM e renderização de componentes com o módulo DOM.
 - **[Event](https://github.com/bake-js/-o-id/blob/main/src/event/README.md)**: Guia para manipulação e resposta a eventos dentro dos Web Components, incluindo o uso de filtros.
+- **[Relay](https://github.com/bake-js/-o-id/blob/main/src/relay/README.md)**: Facilita a escuta de eventos emitidos pelo parentElement de um Custom Element.
 - **[Echo](https://github.com/bake-js/-o-id/blob/main/src/echo/README.md)**: Documentação sobre o barramento de eventos Echo, para comunicação entre componentes. **Nota:** Este módulo está em fase beta e pode estar sujeito a mudanças.
 
 ## Índice de Referência
@@ -102,11 +103,15 @@ Documentação sobre as funcionalidades e helpers relacionados ao DOM e ao proce
 
 ### Event
 Informações sobre os filtros e decorators para eventos. Inclui funções para gerenciar e processar eventos em Custom Elements, como adicionar listeners e manipular dados de eventos.
-- [on](https://github.com/bake-js/-o-id/blob/main/src/event/on/README.md) - Decorator para adicionar listeners de eventos a métodos de Custom Elements.
+- [event](https://github.com/bake-js/-o-id/blob/main/src/event/event/README.md) - Decorator para adicionar listeners de eventos a métodos de Custom Elements.
 - [formData](https://github.com/bake-js/-o-id/blob/main/src/event/formData/README.md) - Filtro que converte os dados de um formulário em um objeto.
 - [prevent](https://github.com/bake-js/-o-id/blob/main/src/event/prevent/README.md) - Filtro que impede o comportamento padrão de um evento.
 - [stop](https://github.com/bake-js/-o-id/blob/main/src/event/stop/README.md) - Filtro que interrompe a propagação de um evento.
 - [value](https://github.com/bake-js/-o-id/blob/main/src/event/value/README.md) - Filtro que extrai o valor de um campo de entrada associado ao evento.
+
+### Relay
+Facilita a escuta de eventos emitidos pelo `parentElement` de um Custom Element. Fornece uma maneira simples de conectar métodos a eventos do elemento pai, permitindo a comunicação eficiente entre componentes.
+- [relay](https://github.com/bake-js/-o-id/blob/main/src/relay/README.md) - Decorator para escutar eventos do `parentElement` e associar métodos a esses eventos.
 
 ### Echo
 Documentação sobre o módulo Echo, um barramento de eventos experimental para comunicação entre componentes. Inclui informações sobre como configurar e usar Echo para gerenciar eventos.

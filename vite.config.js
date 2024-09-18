@@ -9,6 +9,7 @@ export default defineConfig({
         dom: resolve(__dirname, "src/dom/index.js"),
         echo: resolve(__dirname, "src/echo/index.js"),
         event: resolve(__dirname, "src/event/index.js"),
+        relay: resolve(__dirname, "src/relay/index.js"),
       },
       formats: ["cjs", "es"],
     },
