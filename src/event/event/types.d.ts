@@ -22,5 +22,6 @@
 export declare const on: {
   [event: string]: (
     query: string,
+    ...filters: Array<(target: any) => any>
   ) => (target: any, propertyKey: PropertyKey) => void;
 };

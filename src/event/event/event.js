@@ -44,7 +44,6 @@ const attachEventListener =
         };
 
         this.addEventListener(type, listener, options);
-        this.shadowRoot?.addEventListener(type, listener, options);
       });
 
     intercept(disconnectedCallback)
@@ -55,7 +54,7 @@ const attachEventListener =
   };
 
 // Proxy para gerar os decorators dinamicamente com base no tipo de evento
-const on = new Proxy(
+const event = new Proxy(
   {},
   {
     get:
@@ -65,4 +64,4 @@ const on = new Proxy(
   },
 );
 
-export default on;
+export default event;
