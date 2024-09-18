@@ -1,9 +1,9 @@
-import intercept from "../event/intercept";
 import {
   abortController,
   connectedCallback,
   disconnectedCallback,
 } from "../event/interfaces";
+import intercept from "../intercept";
 
 /**
  * Configura um event listener no `parentElement` e o aplica como um decorator ao método alvo.
