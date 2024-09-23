@@ -10,16 +10,11 @@
  * que outras operações sejam realizadas com o evento modificado.
  *
  * @example
- * import { formData } from '@bake-js/-o-id/event';
+ * import prevent from '@bake-js/-o-id/event';
  *
- * function handleClick(event) {
+ * function handleClick(event: Event) {
  *   prevent(event);
- *   return event
+ *   return event;
  * }
  */
-function prevent(event) {
-  event.preventDefault();
-  return event;
-}
-
-export default prevent;
+export declare const prevent: (event: Event) => Event;
