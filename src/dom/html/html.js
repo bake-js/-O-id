@@ -15,6 +15,8 @@
  * também contribui para a performance ao reduzir o tamanho do conteúdo final.
  *
  * @example
+ * import { html } from '@bake-js/-o-id/dom';
+ *
  * const content = html`
  *   <div>
  *     <p>${'Texto'}</p>
