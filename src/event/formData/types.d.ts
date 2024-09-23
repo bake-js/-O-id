@@ -2,7 +2,7 @@
  * Converte os dados de um formulário em um objeto.
  *
  * @param {Event} event - O evento que contém os dados do formulário.
- * @returns {Object} Um objeto contendo os dados do formulário.
+ * @returns {Record<string, FormDataEntryValue>} Um objeto contendo os dados do formulário.
  *
  * @description
  * Este filtro cria um objeto a partir dos dados do formulário presente no evento,
@@ -13,13 +13,12 @@
  * @example
  * import { formData } from '@bake-js/-o-id/event';
  *
- * const handleSubmit = (event) => {
+ * const handleSubmit = (event: Event) => {
  *   event.preventDefault();
  *   const data = formData(event);
  *   console.log(data); // { nome: 'João', idade: '30' }
  * };
  */
-const formData = (event) =>
-  Object.fromEntries(new FormData(event.target, event.submitter));
-
-export default formData;
+export declare const formData: (
+  event: Event,
+) => Record<string, FormDataEntryValue>;
