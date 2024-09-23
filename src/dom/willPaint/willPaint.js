@@ -21,6 +21,8 @@ import { willPaintCallback } from "../interfaces";
  * antes da pintura.
  *
  * @example
+ * import { willPaint } from '@bake-js/-o-id/dom';
+ *
  * // Exemplo de uso do decorator `willPaint`
  * class MeuComponente extends HTMLElement {
  *   @willPaint
