@@ -10,6 +10,8 @@
  * retorna a folha de estilo gerada como um array de `CSSStyleSheet`.
  *
  * @example
+ * import { css } from '@bake-js/-o-id/dom';
+ *
  * const styles = css`
  *   body {
  *     background-color: ${backgroundColor};

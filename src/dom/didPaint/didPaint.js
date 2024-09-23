@@ -13,6 +13,8 @@ import { didPaintCallback } from "../interfaces";
  * lógica adicional ao ciclo de vida do componente, especificamente após a renderização.
  *
  * @example
+ * import { didPaint } from '@bake-js/-o-id/dom';
+ *
  * class MyComponent extends HTMLElement {
  *   @didPaint
  *   handleDidPaint() {
