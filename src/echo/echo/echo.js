@@ -23,7 +23,7 @@ import { target } from "../target";
  * de comunicação entre componentes.
  *
  * @example
- * import Echo from './echo';
+ * import Echo from '@bake-js/-o-id/echo';
  *
  * class MyComponent extends Echo(HTMLElement) {
  *   connectedCallback() {
