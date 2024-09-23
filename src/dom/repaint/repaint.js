@@ -23,6 +23,8 @@ import { paintCallback } from "../interfaces";
  * for atualizado.
  *
  * @example
+ * import { repaint } from '@bake-js/-o-id/dom';
+ *
  * class MyComponent extends HTMLElement {
  *   paintCallback() {
  *     console.log('Callback de pintura chamado');
