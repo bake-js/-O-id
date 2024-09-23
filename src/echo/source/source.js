@@ -66,4 +66,4 @@ class Source extends HTMLElement {
 }
 
 customElements.get("o-echo-source") ??
-  customElements.define("o-id-echo-source", Source);
+  customElements.define("o-echo-source", Source);
