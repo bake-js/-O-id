@@ -12,6 +12,8 @@
  * método decorado. É útil para gerenciar eventos de forma declarativa em Custom Elements.
  *
  * @example
+ * import on, { prevent, stop } from '@bake-js/-o-id/event';
+ *
  * class MyComponent extends HTMLElement {
  *   @on.click('button', prevent, stop)
  *   handleClick(event) {
