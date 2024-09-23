@@ -621,7 +621,7 @@ export declare const formData: (
  * que outras operações sejam realizadas com o evento modificado.
  *
  * @example
- * import prevent from '@bake-js/-o-id/event';
+ * import { prevent } from '@bake-js/-o-id/event';
  *
  * function handleClick(event: Event) {
  *   prevent(event);
