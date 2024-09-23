@@ -12,13 +12,9 @@
  * @example
  * import { value } from '@bake-js/-o-id/event';
  *
- * function handleInput(event) {
+ * function handleInput(event: Event) {
  *   const inputValue = value(event);
  *   return inputValue;
  * }
  */
-function value(event) {
-  return event.target.value;
-}
-
-export default value;
+export declare const value: (event: Event) => string | undefined;
