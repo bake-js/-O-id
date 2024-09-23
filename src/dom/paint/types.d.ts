@@ -18,6 +18,8 @@
  * controlada e eficiente, com suporte a estilos encapsulados via `adoptedStyleSheets`.
  *
  * @example
+ * import { paint } from '@bake-js/-o-id/dom';
+ *
  * @paint(
  *   (element) => `<div>${element.someProperty}</div>`,
  *   (element) => [new CSSStyleSheet()]
