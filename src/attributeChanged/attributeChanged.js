@@ -46,6 +46,7 @@ const attributeChanged =
             (value, filter) => filter(value),
             newValue,
           );
+
           // Se o método for um setter, atualiza o valor do atributo.
           if (propertyDescriptor.set) {
             this[propertyKey] = value;
