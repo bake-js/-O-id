@@ -131,5 +131,3 @@ export class MyComponent {
 ## Considerações Finais
 
 O `connected` oferece uma solução prática e eficiente para gerenciar a execução de lógica adicional ao conectar Custom Elements ao DOM. Ele promove a reatividade e a facilidade de manutenção dos componentes, simplificando a gestão do ciclo de vida e melhorando a experiência de desenvolvimento.
-
----
