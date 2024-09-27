@@ -1,13 +1,13 @@
-# `<o-id-echo-source />`
+# `<id-echo-source />`
 
-O `<o-id-echo-source>` é um componente que permite a associação de múltiplos eventos a um único elemento que utiliza o mixin `Echo`, facilitando o gerenciamento dinâmico de eventos em Custom Elements.
+O `<id-echo-source>` é um componente que permite a associação de múltiplos eventos a um único elemento que utiliza o mixin `Echo`, facilitando o gerenciamento dinâmico de eventos em Custom Elements.
 
 ## Visão Geral
 
 ### Nome e Classificação
 
-- **Nome:** `-o-id-echo-source`
-- **Classificação:** Componente Customizado do -O-id
+- **Nome:** `id-echo-source`
+- **Classificação:** Componente Customizado do id
 
 ### Objetivo
 
@@ -15,7 +15,7 @@ Facilitar a adição de múltiplos eventos em componentes que utilizam o mixin `
 
 ## Motivação
 
-Usar o `<o-id-echo-source>` traz as seguintes vantagens:
+Usar o `<id-echo-source>` traz as seguintes vantagens:
 
 1. **Flexibilidade:** Permite a adição dinâmica de múltiplos eventos a um único elemento.
 2. **Modularidade:** Separa a lógica de gerenciamento de eventos, tornando o código mais modular e fácil de manter.
@@ -27,10 +27,10 @@ Ideal para projetos que utilizam o mixin `Echo` e necessitam associar múltiplos
 
 ## Importação
 
-Para utilizar o componente `-o-id-echo-source`, importe-o ou inclua-o diretamente em seu HTML:
+Para utilizar o componente `id-echo-source`, importe-o ou inclua-o diretamente em seu HTML:
 
 ```javascript
-import '@bake-js/-o-id/echo';
+import '@bake-js/id/echo';
 ```
 
 ## Implementação
@@ -57,7 +57,7 @@ class Source extends HTMLElement {
   }
 }
 
-customElements.define("o-id-echo-source", Source);
+customElements.define("id-echo-source", Source);
 ```
 
 ### Exemplo de Uso
@@ -81,7 +81,7 @@ Neste exemplo, o `custom-element` gerenciará os eventos `event1`, `event2` e `e
 
 - **Comportamento Padrão:** O Stencil também não oferece suporte nativo para um mixin equivalente ao `Echo`.
 
-### Vantagens do `-o-id-echo-source`
+### Vantagens do `id-echo-source`
 
 - **Facilidade de Uso:** Adiciona eventos dinamicamente a um elemento sem necessidade de lógica adicional.
 - **Separação de Preocupações:** Mantém a lógica de eventos separada do componente principal.
@@ -89,4 +89,4 @@ Neste exemplo, o `custom-element` gerenciará os eventos `event1`, `event2` e `e
 
 ## Considerações Finais
 
-O componente `-o-id-echo-source` é uma solução prática e modular para associar múltiplos eventos a um único elemento que utiliza o mixin `Echo`. Ele simplifica o gerenciamento de eventos, tornando o desenvolvimento de componentes mais eficiente e o código mais limpo e fácil de manter.
+O componente `id-echo-source` é uma solução prática e modular para associar múltiplos eventos a um único elemento que utiliza o mixin `Echo`. Ele simplifica o gerenciamento de eventos, tornando o desenvolvimento de componentes mais eficiente e o código mais limpo e fácil de manter.

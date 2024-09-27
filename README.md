@@ -116,7 +116,7 @@ Facilita a escuta de eventos emitidos pelo `parentElement` de um Custom Element.
 ### Echo
 Documentação sobre o módulo Echo, um barramento de eventos experimental para comunicação entre componentes. Inclui informações sobre como configurar e usar Echo para gerenciar eventos.
 - [Echo](https://github.com/bake-js/-o-id/blob/main/src/echo/echo/README.md) - Módulo para gerenciamento de eventos com um barramento de eventos.
-- [o-id-echo-source](https://github.com/bake-js/-o-id/blob/main/src/echo/source/README.md) - Fonte para eventos no módulo Echo.
+- [id-echo-source](https://github.com/bake-js/-o-id/blob/main/src/echo/source/README.md) - Fonte para eventos no módulo Echo.
 
 ### Interfaces
 Descrição dos identificadores e constantes usadas para padronizar callbacks e estados em Custom Elements. Inclui informações sobre como esses identificadores são utilizados no contexto de Custom Elements e eventos.

@@ -10,7 +10,7 @@
  * que outras operações sejam realizadas com o evento modificado.
  *
  * @example
- * import { prevent } from '@bake-js/-o-id/event';
+ * import { stop } from '@bake-js/-o-id/event';
  *
  * // Exemplo de uso em um manipulador de evento:
  * function handleClick(event) {

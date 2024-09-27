@@ -3,8 +3,6 @@
  * dentro do módulo Echo, permitindo a comunicação entre diferentes componentes sem depender
  * diretamente do DOM.
  *
- * @type {EventTarget}
- *
  * @description
  * O `target` serve como o ponto central para o Event Bus no módulo Echo, facilitando a
  * comunicação desacoplada entre componentes. Com ele, eventos podem ser despachados e ouvidos
