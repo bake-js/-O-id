@@ -55,6 +55,8 @@ const filters = {
       return undefined;
     }
   },
+
+  value: (_object, value) => value,
 };
 
 export default filters;
