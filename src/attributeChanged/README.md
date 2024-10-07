@@ -131,10 +131,16 @@ O componente `Counter` é um exemplo de como criar um elemento personalizado que
 
 ### Como Usar
 
-Para utilizar o componente em sua aplicação, basta incluir o código acima e adicionar o elemento `<o-id-counter number="0"></o-id-counter>` em seu HTML. O contador estará pronto para ser usado, permitindo interação do usuário para incrementar o valor.
+Para utilizar este componente em sua aplicação:
+
+1. Certifique-se de que o código esteja devidamente importado e definido.
+2. Adicione o elemento `<o-id-counter></o-id-counter>` em qualquer parte do seu HTML.
+3. O componente estará pronto para uso, incrementando o valor a cada clique no botão.
+
+Exemplo de uso em HTML:
 
 ```html
-<o-id-counter number="0"></o-id-counter>
+<o-id-counter number="5"></o-id-counter>
 ```
 
 ## Vantagens do `@attributeChanged`

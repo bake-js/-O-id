@@ -52,82 +52,106 @@ const connected = (target, propertyKey) => {
 export default connected;
 ```
 
-### Exemplo de Uso
+## Exemplo de Uso
 
 ```javascript
-import { connected } from '@bake-js/-o-id';
+import { connected, define } from '@bake-js/-o-id';
+import { css, html, paint, repaint } from '@bake-js/-o-id/dom';
+import on from '@bake-js/-o-id/event';
 
+function component(self) {
+  return html`
+    <button>Increment ${self.number}</button>
+  `;
+}
+
+function style() {
+  return css`
+    button {
+      background: #ffffff;
+      border-radius: 8px;
+      color: #222222;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 20px;
+      padding: 10px 20px;
+      border: 1px solid #222222;
+
+      &:hover {
+        background: #f7f7f7;
+        border-color: #000000;
+      }
+    }
+  `;
+}
+
+@define('o-id-counter')
+@paint(component, style)
 class Counter extends HTMLElement {
+  #number;
+
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
   }
 
+  get number() {
+    return (this.#number ??= 0);
+  }
+
+  @repaint
+  set number(value) {
+    this.#number = value;
+  }
+
+  @on.click('button')
+  increment() {
+    this.number += 1;
+    return this;
+  }
+
   @connected
   handleConnected() {
-    console.log('Elemento conectado ao DOM');
-  }
-
-}
-
-customElements.define('element-counter', Counter);
-```
-
-## Comparação com Concorrentes
-
-### Lit
-
-- **Execução ao Conectar:** O Lit executa o `connectedCallback` após o elemento ser adicionado ao DOM e garante que o `renderRoot` (normalmente, o `shadowRoot`) esteja preparado para a renderização.
-- **Gerenciamento do Ciclo de Vida:** O Lit utiliza o `connectedCallback` para iniciar o ciclo de atualização do elemento e garantir que a renderização ocorra conforme esperado.
-
-Para mais detalhes sobre Lit, veja a [documentação oficial](https://lit.dev/docs/components/lifecycle/#connectedcallback).
-
-```javascript
-import { LitElement, html } from 'lit';
-
-class MyElement extends LitElement {
-  connectedCallback() {
-    super.connectedCallback();
-    console.log('Elemento conectado ao DOM');
-  }
-
-  render() {
-    return html`<div>Componente conectado!</div>`;
-  }
-}
-
-customElements.define('my-element', MyElement);
-```
-
-### Stencil
-
-- **Execução ao Conectar:** O Stencil chama o `connectedCallback` sempre que o componente é conectado ao DOM, permitindo a execução de lógica adicional nesse ponto.
-- **Gerenciamento de Ciclo de Vida:** O Stencil gerencia a conexão e desconexão dos componentes com hooks semelhantes aos do padrão de Web Components.
-
-Para mais detalhes sobre Stencil, veja a [documentação oficial](https://stenciljs.com/docs/component-lifecycle#connectedcallback).
-
-```javascript
-import { Component, h } from '@stencil/core';
-
-@Component({
-  tag: 'my-component',
-})
-export class MyComponent {
-  connectedCallback() {
-    console.log('Elemento conectado ao DOM');
-  }
-
-  render() {
-    return <div>Componente conectado!</div>;
+    // O elemento foi conectado ao DOM.
+    return this
   }
 }
 ```
 
-### Vantagens do `@connected`
+### Explicação do Componente
 
-- **Simplicidade na Implementação:** Facilita a adição de lógica de conexão, centralizando a implementação e evitando a repetição de código.
-- **Execução Automatizada:** Garante que a lógica de conexão seja executada sempre que o elemento for adicionado ao DOM, promovendo uma experiência de desenvolvimento mais fluida.
+Este exemplo demonstra a criação de um Custom Element chamado `o-id-counter`, que é um contador simples que incrementa ao clicar em um botão. Ele exemplifica a utilização do decorator `@connected`, que dispara a execução de uma lógica sempre que o elemento é conectado ao DOM.
+
+- **Definição do Elemento:**
+  - O elemento `o-id-counter` é definido utilizando o decorator `@define`, e encapsula sua estrutura e estilo usando Shadow DOM.
+  
+- **Estado Interno:**
+  - O estado do contador é gerido por uma propriedade privada `#number`, e pode ser acessado e modificado através dos métodos `get number()` e `set number(value)`, respectivamente.
+
+- **Renderização do Componente:**
+  - A função `component(self)` define a estrutura HTML do componente, enquanto a função `style()` aplica os estilos necessários ao botão.
+  
+- **Interatividade:**
+  - O método `increment()` é decorado com `@on.click('button')`, permitindo que o contador seja incrementado quando o botão for clicado.
+
+- **Conexão ao DOM:**
+  - O método `handleConnected()` é decorado com `@connected`, garantindo que ele seja chamado automaticamente quando o elemento for adicionado ao DOM. Essa abordagem simplifica a necessidade de sobrescrever o `connectedCallback` manualmente.
+
+### Como Usar
+
+Para utilizar este componente em sua aplicação:
+
+1. Certifique-se de que o código esteja devidamente importado e definido.
+2. Adicione o elemento `<o-id-counter></o-id-counter>` em qualquer parte do seu HTML.
+3. O componente estará pronto para uso, incrementando o valor a cada clique no botão.
+
+Exemplo de uso em HTML:
+
+```html
+<o-id-counter></o-id-counter>
+```
 
 ## Considerações Finais
 
-O `connected` oferece uma solução prática e eficiente para gerenciar a execução de lógica adicional ao conectar Custom Elements ao DOM. Ele promove a reatividade e a facilidade de manutenção dos componentes, simplificando a gestão do ciclo de vida e melhorando a experiência de desenvolvimento.
+O `connected` é uma solução eficiente e prática para gerenciar a lógica de conexão de Custom Elements ao DOM. Ele promove maior simplicidade e manutenção no desenvolvimento de componentes, integrando-se de maneira natural ao ciclo de vida dos elementos nativos.
