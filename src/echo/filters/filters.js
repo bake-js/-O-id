@@ -49,7 +49,7 @@ const filters = {
     try {
       return new Function(
         "data",
-        `return data${/(^\[$)/.test(propertyPath) ? "" : "."}${propertyPath}`,
+        `return data${/^\[/.test(propertyPath) ? "" : "."}${propertyPath}`,
       )(object);
     } catch (_error) {
       return undefined;

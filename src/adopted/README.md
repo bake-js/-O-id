@@ -117,17 +117,31 @@ class Counter extends HTMLElement {
 }
 ```
 
-### Detalhes do Exemplo:
+### Explicação do Componente
 
-1. **Componentes e Estilos:** A função `component` cria a estrutura HTML do botão, enquanto `style` define os estilos CSS que são aplicados ao botão.
+O exemplo abaixo ilustra a criação de um componente Custom Element chamado `o-id-counter`, que representa um contador que pode ser incrementado por meio de um botão. O componente demonstra a utilização do decorator `@adopted`, permitindo que lógica específica seja executada quando o elemento é movido no DOM.
 
-2. **Definição do Elemento:** O elemento é definido como `o-id-counter` usando o decorator `@define`.
+- **Definição do Elemento:**
+  - O elemento é definido como `o-id-counter` utilizando o decorator `@define`.
+  - Ele se utiliza de Shadow DOM para encapsular seus estilos e estrutura.
 
-3. **Estado Interno:** O contador é mantido na variável privada `#number`, que inicia com zero. O método `get` e `set` são utilizados para acessar e modificar o valor do contador.
+- **Estado Interno:**
+  - O estado do contador é armazenado em uma propriedade privada `#number`, que inicia com zero.
+  - O método `get number()` é utilizado para acessar o valor atual do contador, enquanto o método `set number(value)` permite modificá-lo.
 
-4. **Incremento de Valor:** O método `increment` é chamado ao clicar no botão, aumentando o valor do contador e atualizando a visualização.
+- **Renderização do Componente:**
+  - A função `component(self)` gera a estrutura HTML do botão, que exibe o valor atual do contador.
+  - A função `style()` define os estilos CSS aplicados ao botão, garantindo uma boa aparência.
 
-5. **Callback de Adoção:** O método `handleAdoption`, decorado com `@adopted`, é chamado automaticamente quando o componente é movido para um novo documento ou Shadow DOM. Ele pode conter qualquer lógica adicional que você deseja executar nessa situação.
+- **Interatividade:**
+  - O método `increment()` é decorado com `@on.click('button')`, permitindo que o contador seja incrementado ao clicar no botão. Este método atualiza o estado e re-renderiza o componente.
+
+- **Lógica de Adoção:**
+  - O método `handleAdoption()` é decorado com `@adopted`, o que significa que ele será chamado automaticamente sempre que o componente for movido para um novo documento ou Shadow DOM. Isso permite que você adicione qualquer lógica adicional necessária para esse evento.
+
+### Como Usar
+
+Para utilizar o componente em sua aplicação, basta incluir o código acima e adicionar o elemento `<o-id-counter></o-id-counter>` em seu HTML. O contador estará pronto para ser usado, permitindo interação do usuário para incrementar o valor.
 
 ## Considerações Finais
 
