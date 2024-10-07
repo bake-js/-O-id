@@ -98,13 +98,12 @@ class Counter extends HTMLElement {
     return (this.#number ??= 0);
   }
 
+  @repaint
   set number(value) {
     this.#number = value;
-    this.requestUpdate();
   }
 
   @on.click('button')
-  @repaint
   increment() {
     this.number += 1;
     return this;
