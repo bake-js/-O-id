@@ -1,157 +1,118 @@
-# Connected
+# Guia de Uso: Decorator `connected`
 
-O `connected` é um decorator que permite adicionar um hook a métodos específicos de Custom Elements para execução quando o elemento é conectado ao DOM. Ele faz parte da biblioteca `@bake-js/-o-id` e oferece uma maneira declarativa para gerenciar a lógica de conexão de elementos.
+O decorator `connected` é uma ferramenta poderosa que permite adicionar lógica ao método `connectedCallback` de Custom Elements. Ele intercepta o momento em que o elemento é inserido no DOM, chamando automaticamente o método decorado, permitindo que você execute lógica personalizada ao conectar o elemento.
 
-## Visão Geral
+### Quando Usar
 
-### Nome e Classificação
+- **Executar Lógica ao Conectar ao DOM**: Útil para executar tarefas como inicialização de dados, configuração de listeners ou atualização da interface do usuário quando o elemento for adicionado ao DOM.
+- **Centralizar a Lógica de Conexão**: Ajuda a manter o código organizado ao gerenciar o comportamento do ciclo de vida do componente.
 
-- **Nome:** Connected
-- **Classificação:** Decorators [ES Proposals](https://www.proposals.es/proposals/Decorators), [TypeScript](https://www.typescriptlang.org/docs/handbook/decorators.html)
+### Como Funciona
 
-### Objetivo
+O decorator `connected` intercepta o `connectedCallback`, permitindo que o método decorado seja chamado automaticamente sempre que o Custom Element for adicionado ao DOM. Ele faz uso de um interceptor para garantir que a lógica definida no método decorado seja executada na hora certa.
 
-Facilitar a execução de lógica adicional quando um Custom Element é conectado ao DOM, simplificando a gestão do ciclo de vida do componente.
-
-## Motivação
-
-Usar o `connected` traz as seguintes vantagens:
-
-1. **Execução Automática:** Garante que a lógica definida no método decorado seja executada sempre que o elemento for conectado ao DOM.
-2. **Manutenção Simplificada:** Facilita a gestão da lógica de conexão ao evitar a necessidade de sobrescrever manualmente o `connectedCallback`.
-
-## Aplicabilidade
-
-Ideal para situações onde se deseja executar automaticamente lógica adicional quando um Custom Element é adicionado ao DOM. É especialmente útil para:
-
-- **Inicialização de Componentes:** Preparar o estado do componente ou configurar recursos quando ele é conectado ao DOM.
-- **Configuração de Interações:** Adicionar event listeners ou outras interações quando o elemento é adicionado ao DOM.
-
-## Importação
-
-Para utilizar o decorator `connected`, importe-o da seguinte maneira:
+### Estrutura
 
 ```javascript
-import { connected } from '@bake-js/-o-id';
-```
-
-## Implementação
-
-```javascript
-import intercept, { exec } from "../intercept";
-import { connectedCallback } from "../interfaces";
-
+/**
+ * @param {Object} target - O alvo do decorator, geralmente a classe do Custom Element.
+ * @param {string} propertyKey - O nome do método decorado.
+ * @returns {Function} Um decorator que intercepta a chamada do `connectedCallback`.
+ */
 const connected = (target, propertyKey) => {
+  // Cria uma instância do interceptor para o método `connectedCallback`.
   const interceptor = intercept(connectedCallback);
 
-  return interceptor
-    .in(target)
-    .then(exec(propertyKey));
+  // Adiciona o método decorado à lista de callbacks a serem executados.
+  interceptor
+    .in(target) // Define o alvo do interceptor.
+    .then(exec(propertyKey)); // Define o método a ser executado pelo interceptor.
 };
 
 export default connected;
 ```
 
-## Exemplo de Uso
+### Parâmetros
+
+1. **target** (obrigatório):
+   - **Tipo:** `Object`
+   - **Descrição:** O alvo do decorator, normalmente a classe do Custom Element. Esse parâmetro define o contexto no qual o interceptor operará, permitindo que o método decorado seja interceptado corretamente.
+
+2. **propertyKey** (obrigatório):
+   - **Tipo:** `string`
+   - **Descrição:** O nome do método decorado. Este método será executado quando o `connectedCallback` for disparado.
+
+### Passos para Utilização
+
+1. **Importe o decorator `connected`**:
+
+   ```javascript
+   import { connected } from '@bake-js/-o-id';
+   ```
+
+2. **Aplique o decorator ao método que deverá ser chamado quando o Custom Element for conectado ao DOM**:
+   
+   - **Passo 1:** Escolha um método da classe que deverá ser executado ao inserir o elemento no DOM.
+   - **Passo 2:** Use o decorator diretamente sobre esse método.
+
+3. **Implemente a lógica de conexão**:
+   
+   - Defina o comportamento desejado dentro do método decorado. Esse método será chamado automaticamente ao conectar o elemento ao DOM.
+
+### Exemplo Prático
+
+**Caso 1: Executando código quando o elemento é conectado ao DOM**
+
+Aqui está um exemplo de como usar o `connected` para adicionar lógica ao ciclo de vida de conexão de um Custom Element:
 
 ```javascript
 import { connected, define } from '@bake-js/-o-id';
-import { css, html, paint, repaint } from '@bake-js/-o-id/dom';
-import on from '@bake-js/-o-id/event';
 
-function component(self) {
-  return html`
-    <button>Increment ${self.number}</button>
-  `;
+@define('my-element')
+class MyElement extends HTMLElement {
+  @connected
+  handleConnected() {
+    console.log('O elemento foi conectado ao DOM.');
+  }
 }
+```
 
-function style() {
-  return css`
-    button {
-      background: #ffffff;
-      border-radius: 8px;
-      color: #222222;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: 600;
-      line-height: 20px;
-      padding: 10px 20px;
-      border: 1px solid #222222;
+**Explicação:**
+- O método `handleConnected` será chamado automaticamente quando o elemento `MyElement` for adicionado ao DOM.
+- A mensagem `'O elemento foi conectado ao DOM.'` será exibida no console.
 
-      &:hover {
-        background: #f7f7f7;
-        border-color: #000000;
-      }
-    }
-  `;
-}
+**Caso 2: Inicializando o estado do componente ao ser conectado**
 
-@define('o-id-counter')
-@paint(component, style)
-class Counter extends HTMLElement {
-  #number;
+Em outro cenário, podemos usar o `connected` para inicializar o estado do componente ao conectá-lo ao DOM:
 
+```javascript
+import { connected, define } from '@bake-js/-o-id';
+
+@defing('stateful-element')
+class StatefulElement extends HTMLElement {
   constructor() {
     super();
-    this.attachShadow({ mode: 'open' });
-  }
-
-  get number() {
-    return (this.#number ??= 0);
-  }
-
-  @repaint
-  set number(value) {
-    this.#number = value;
-  }
-
-  @on.click('button')
-  increment() {
-    this.number += 1;
-    return this;
+    this.state = { initialized: false };
   }
 
   @connected
-  handleConnected() {
-    // O elemento foi conectado ao DOM.
-    return this
+  initialize() {
+    this.state.initialized = true;
+    console.log('Componente inicializado ao conectar ao DOM.');
   }
 }
 ```
 
-### Explicação do Componente
+**Explicação:**
+- O método `initialize` será chamado automaticamente quando o `StatefulElement` for conectado ao DOM.
+- A propriedade `state.initialized` será definida como `true`, e a mensagem `'Componente inicializado ao conectar ao DOM.'` será exibida no console.
 
-Este exemplo demonstra a criação de um Custom Element chamado `o-id-counter`, que é um contador simples que incrementa ao clicar em um botão. Ele exemplifica a utilização do decorator `@connected`, que dispara a execução de uma lógica sempre que o elemento é conectado ao DOM.
+### Benefícios do Decorator `connected`
 
-- **Definição do Elemento:**
-  - O elemento `o-id-counter` é definido utilizando o decorator `@define`, e encapsula sua estrutura e estilo usando Shadow DOM.
-  
-- **Estado Interno:**
-  - O estado do contador é gerido por uma propriedade privada `#number`, e pode ser acessado e modificado através dos métodos `get number()` e `set number(value)`, respectivamente.
+1. **Organização de Código**: Ao usar o `connected`, você mantém a lógica do ciclo de vida do componente organizada e centralizada, sem necessidade de lidar diretamente com o `connectedCallback`.
+2. **Interceptação Inteligente**: O decorator faz uso do interceptor interno para garantir que o método decorado seja chamado no momento certo, sem a necessidade de código boilerplate.
+3. **Reuso de Lógica**: A lógica que precisa ser executada quando o componente é conectado pode ser facilmente aplicada em diferentes elementos, aumentando a reutilização do código.
 
-- **Renderização do Componente:**
-  - A função `component(self)` define a estrutura HTML do componente, enquanto a função `style()` aplica os estilos necessários ao botão.
-  
-- **Interatividade:**
-  - O método `increment()` é decorado com `@on.click('button')`, permitindo que o contador seja incrementado quando o botão for clicado.
+### Considerações Finais
 
-- **Conexão ao DOM:**
-  - O método `handleConnected()` é decorado com `@connected`, garantindo que ele seja chamado automaticamente quando o elemento for adicionado ao DOM. Essa abordagem simplifica a necessidade de sobrescrever o `connectedCallback` manualmente.
-
-### Como Usar
-
-Para utilizar este componente em sua aplicação:
-
-1. Certifique-se de que o código esteja devidamente importado e definido.
-2. Adicione o elemento `<o-id-counter></o-id-counter>` em qualquer parte do seu HTML.
-3. O componente estará pronto para uso, incrementando o valor a cada clique no botão.
-
-Exemplo de uso em HTML:
-
-```html
-<o-id-counter></o-id-counter>
-```
-
-## Considerações Finais
-
-O `connected` é uma solução eficiente e prática para gerenciar a lógica de conexão de Custom Elements ao DOM. Ele promove maior simplicidade e manutenção no desenvolvimento de componentes, integrando-se de maneira natural ao ciclo de vida dos elementos nativos.
+O decorator `connected` é uma solução eficaz para gerenciar o comportamento de Custom Elements quando eles são adicionados ao DOM. Ao interceptar o método `connectedCallback`, ele permite a execução de lógica personalizada de forma elegante, promovendo um código limpo e mantendo a separação de responsabilidades.

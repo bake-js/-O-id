@@ -1,154 +1,136 @@
-# AttributeChanged
+# Guia de Uso: Decorator `attributeChanged`
 
-O `attributeChanged` é um decorator que permite adicionar lógica personalizada a métodos específicos de Custom Elements para execução quando um atributo definido é alterado. Ele é parte da biblioteca `@bake-js/-o-id` e fornece uma abordagem declarativa para gerenciar mudanças de atributos.
+O decorator `attributeChanged` é utilizado para adicionar lógica ao método `attributeChangedCallback` de um Custom Element. Ele permite que você defina ações que devem ser executadas quando um atributo específico é modificado.
 
-## Visão Geral
+### Quando Usar
 
-### Nome e Classificação
+- **Mudança de Estado**: Ideal para Custom Elements que precisam reagir a alterações de atributos e atualizar seu estado ou aparência de acordo.
+- **Validação de Atributos**: Útil para validar ou transformar valores de atributos sempre que eles mudam.
 
-- **Nome:** AttributeChanged
-- **Classificação:** Decorators [ES Proposals](https://www.proposals.es/proposals/Decorators), [TypeScript](https://www.typescriptlang.org/docs/handbook/decorators.html)
+### Como Funciona
 
-### Objetivo
+O decorator `attributeChanged` é aplicado a um método que será chamado automaticamente quando o atributo especificado (definido pelo parâmetro `attributeName`) for alterado. O método decorado recebe os valores antigo e novo do atributo, permitindo a execução de lógica personalizada.
 
-Proporcionar uma maneira eficiente de reagir a alterações de atributos em Custom Elements, simplificando a lógica de atualização de componentes.
-
-## Motivação
-
-O uso do `attributeChanged` oferece as seguintes vantagens:
-
-1. **Reatividade a Alterações de Atributos:** Garante que o método decorado seja executado sempre que o atributo especificado for alterado.
-2. **Manutenção da Consistência:** Facilita a atualização de estados internos e a adaptação visual do componente em resposta a mudanças de atributos.
-3. **Filtros Personalizados:** Permite aplicar filtros aos novos valores dos atributos antes de executar a lógica personalizada.
-
-## Aplicabilidade
-
-Ideal para qualquer situação onde se deseja responder a alterações de atributos específicos em Custom Elements. É especialmente útil para:
-
-- **Componentes Interativos:** Quando a atualização dinâmica com base em atributos é necessária.
-- **Sincronização de Estados Internos:** Para manter a consistência entre atributos e o estado interno do componente.
-
-## Importação
-
-Para utilizar o decorator `attributeChanged`, importe-o da seguinte maneira:
+### Estrutura
 
 ```javascript
-import { attributeChanged } from '@bake-js/-o-id';
+/**
+ * @param {string} attributeName - O nome do atributo a ser monitorado.
+ * @returns {Function} Um decorator que intercepta a chamada do `attributeChangedCallback`.
+ */
+const attributeChanged =
+  (attributeName, ...filters) =>
+  (target, propertyKey, propertyDescriptor) => {
+    // Atualiza a lista de atributos observados do Custom Element.
+    const observedAttrs = target.constructor[observedAttributes] ?? [];
+
+    Object.assign(target.constructor, {
+      [observedAttributes]: [...observedAttrs, attributeName],
+    });
+
+    // Configura o interceptor para o método `attributeChangedCallback`.
+    intercept(attributeChangedCallback)
+      .in(target)
+      .then(function (name, oldValue, newValue) {
+        if (name === attributeName && oldValue !== newValue) {
+          // Aplica filtros ao novo valor do atributo.
+          const value = filters.reduce(
+            (value, filter) => filter(value),
+            newValue,
+          );
+
+          // Se o método for um setter, atualiza o valor do atributo.
+          if (propertyDescriptor.set) {
+            this[propertyKey] = value;
+          }
+
+          // Se o método for uma função, executa o método decorado com os novos e antigos valores do atributo.
+          if (propertyDescriptor.value) {
+            this[propertyKey](value, oldValue);
+          }
+        }
+      });
+  };
+
+export default attributeChanged;
 ```
 
-## Implementação
+### Parâmetros
+
+1. **attributeName** (obrigatório):
+   - **Tipo:** `string`
+   - **Descrição:** O nome do atributo que deve ser monitorado. Quando esse atributo for alterado, o método decorado será chamado.
+
+2. **...filters** (opcional):
+   - **Tipo:** `Function`
+   - **Descrição:** Filtros que podem ser aplicados ao novo valor do atributo antes de ele ser usado no método decorado. Você pode passar múltiplos filtros, que serão aplicados em sequência.
+
+### Passos para Utilização
+
+1. **Importe o decorator `attributeChanged`**:
+
+   ```javascript
+   import { attributeChanged } from '@bake-js/-o-id';
+   ```
+
+2. **Aplique o decorator ao método que deverá ser chamado quando o atributo específico for alterado**:
+
+   - **Passo 1:** Identifique o método que deve executar a lógica após a alteração do atributo.
+   - **Passo 2:** Aplique o decorator, passando o nome do atributo que deseja monitorar.
+
+3. **Implemente a lógica de alteração**:
+
+   - Defina o comportamento necessário no método decorado. O método será automaticamente invocado ao alterar o atributo especificado.
+
+### Exemplo Prático
+
+**Caso 1: Notificando sobre a alteração de um atributo**
+
+Aqui está um exemplo de como utilizar o `attributeChanged` para notificar quando um atributo é alterado:
 
 ```javascript
-import { define, attributeChanged } from '@bake-js/-o-id';
-import { css, html, paint, repaint } from '@bake-js/-o-id/dom';
-import on from '@bake-js/-o-id/event';
+import { attributeChanged, define } from '@bake-js/-o-id';
 
-function component(self) {
-  return html
-    <button>Increment ${self.number}</button>
-  ;
-}
-
-function style() {
-  return css
-    button {
-      background: #ffffff;
-      border-radius: 8px;
-      color: #222222;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: 600;
-      line-height: 20px;
-      padding: 10px 20px;
-      border: 1px solid #222222;
-      transition: background 0.3s, border-color 0.3s;
-
-      &:hover {
-        background: #f7f7f7;
-        border-color: #000000;
-      }
-    }
-
-    p {
-      font-size: 14px;
-      color: #555555;
-      margin-top: 10px;
-    }
-  ;
-}
-
-@define('o-id-counter')
-@paint(component, style)
-class Counter extends HTMLElement {
-  #number;
-
-  constructor() {
-    super();
-    this.attachShadow({ mode: 'open' });
-  }
-
-  get number() {
-    return (this.#number ??= 0);
-  }
-
-  @attributeChanged('number')
-  @repaint
-  set number(value) {
-    this.#number = value;
-  }
-
-  @on.click('button')
-  increment() {
-    this.number += 1;
-    return this;
+@define('my-element')
+class MyElement extends HTMLElement {
+  @attributeChanged('my-attribute')
+  handleAttributeChange(newValue, oldValue) {
+    console.log(`Atributo alterado de ${oldValue} para ${newValue}`);
   }
 }
 ```
 
-### Explicação do Componente
+**Explicação:**
+- O método `handleAttributeChange` é chamado automaticamente quando o atributo `my-attribute` é alterado, permitindo que você execute a lógica necessária.
 
-O componente `Counter` é um exemplo de como criar um elemento personalizado que gerencia seu próprio estado e reatividade. Abaixo, estão os principais aspectos do componente:
+**Caso 2: Aplicando filtros ao novo valor do atributo**
 
-- **Estrutura do Componente:**
-  - O componente é definido usando o decorator `@define`, que registra o nome do elemento como `o-id-counter`.
-  - A função `component` retorna o HTML do botão que exibe o valor atual do contador.
+Um segundo exemplo mostra como você pode aplicar filtros ao novo valor do atributo antes de executá-lo:
 
-- **Estilos:**
-  - Os estilos do botão são definidos pela função `style`, que utiliza CSS moderno e inclui efeitos de transição para uma interação suave.
+```javascript
+import { attributeChanged, define } from '@bake-js/-o-id';
 
-- **Gerenciamento de Estado:**
-  - A propriedade privada `#number` armazena o valor atual do contador, que inicia em `0`.
-  - O getter `number` retorna o valor atual e inicializa `#number` caso ele seja `undefined`.
+// Um filtro simples que converte o valor para maiúsculas.
+const toUpperCase = (value) => value.toUpperCase();
 
-- **Reatividade:**
-  - O decorator `@repaint` é utilizado no setter `number`, garantindo que a renderização do componente seja atualizada sempre que o valor do contador mudar.
-
-- **Eventos:**
-  - O método `increment` é decorado com `@on.click('button')`, permitindo que o número seja incrementado cada vez que o botão é clicado.
-
-- **Adoção de Elementos:**
-  - O componente é configurado para utilizar `Shadow DOM` ao chamar `this.attachShadow({ mode: 'open' })`, garantindo que os estilos e scripts não afetem outros elementos na página.
-
-### Como Usar
-
-Para utilizar este componente em sua aplicação:
-
-1. Certifique-se de que o código esteja devidamente importado e definido.
-2. Adicione o elemento `<o-id-counter></o-id-counter>` em qualquer parte do seu HTML.
-3. O componente estará pronto para uso, incrementando o valor a cada clique no botão.
-
-Exemplo de uso em HTML:
-
-```html
-<o-id-counter number="5"></o-id-counter>
+@define('custom-element')
+class CustomElement extends HTMLElement {
+  @attributeChanged('title', toUpperCase)
+  handleTitleChange(newValue, oldValue) {
+    console.log(`Título alterado de ${oldValue} para ${newValue}`);
+  }
+}
 ```
 
-## Vantagens do `@attributeChanged`
+**Explicação:**
+- O método `handleTitleChange` é chamado quando o atributo `title` é alterado. O novo valor é passado através do filtro `toUpperCase`, garantindo que o valor seja sempre registrado em maiúsculas.
 
-- **Simplicidade na Implementação:** Facilita a adição de lógica de resposta a mudanças de atributos, centralizando a implementação.
-- **Reatividade Aprimorada:** Permite que componentes respondam rapidamente a alterações de atributos, mantendo a experiência do usuário fluida.
-- **Flexibilidade com Filtros:** Oferece a capacidade de aplicar filtros personalizados aos valores dos atributos antes da execução da lógica, aumentando a flexibilidade e a adaptabilidade do componente.
+### Benefícios do Decorator `attributeChanged`
 
-## Considerações Finais
+1. **Encapsulamento da Lógica**: Permite que a lógica de alteração de atributos seja centralizada em um único método, melhorando a organização do código.
+2. **Reatividade**: Facilita a construção de Custom Elements reativos que respondem a alterações de atributos de maneira intuitiva.
+3. **Flexibilidade com Filtros**: Os filtros permitem a transformação dos valores dos atributos, possibilitando uma lógica de manipulação mais robusta.
 
-O `attributeChanged` oferece uma solução prática e eficiente para gerenciar respostas a mudanças de atributos em Custom Elements. Ele promove a reatividade e a facilidade de manutenção dos componentes, facilitando a atualização e a sincronização do estado interno com os atributos do DOM. Com a adição de filtros, o decorator se torna ainda mais poderoso, permitindo ajustes personalizados nos valores dos atributos antes de executar a lógica específica do componente.
+### Considerações Finais
+
+O decorator `attributeChanged` é uma ferramenta poderosa para gerenciar alterações em atributos de Custom Elements, permitindo uma abordagem modular e limpa para implementar lógica específica em resposta a essas alterações.

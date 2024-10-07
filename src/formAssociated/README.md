@@ -1,116 +1,127 @@
-# FormAssociated
+# Guia de Uso: Decorator `formAssociated`
 
-O `formAssociated` é um decorator que simplifica a adição de lógica ao método `formAssociatedCallback` de um Custom Element, sendo parte da biblioteca `@bake-js/-o-id`.
+O decorator `formAssociated` é projetado para permitir que Custom Elements implementem lógica personalizada quando associados a um formulário. Esse decorator intercepta a invocação do `formAssociatedCallback`, permitindo que você execute ações específicas nesse momento crucial.
 
-## Visão Geral
+### Quando Usar
 
-### Nome e Classificação
+- **Integração com Formulários**: Ideal para Custom Elements que precisam interagir com formulários HTML, permitindo que eles se comportem como elementos de formulário nativos.
+- **Validação e Configuração**: Útil para validar ou configurar o estado do elemento quando ele é associado a um formulário, como inicializar valores ou ajustar o comportamento do elemento.
 
-- **Nome:** FormAssociated
-- **Classificação:** Decorators [ES Proposals](https://www.proposals.es/proposals/Decorators), [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)
+### Como Funciona
 
-### Objetivo
+O decorator `formAssociated` é aplicado a um método que deve ser chamado automaticamente sempre que o Custom Element for associado a um formulário. Isso permite que a lógica necessária seja encapsulada e organizada de forma eficaz.
 
-Facilitar a execução de lógica personalizada quando um Custom Element é associado a um formulário, utilizando o callback `formAssociatedCallback`.
-
-## Motivação
-
-Usar o `formAssociated` traz as seguintes vantagens:
-
-1. **Simplificação do Código:** Elimina a necessidade de definir manualmente o método `formAssociatedCallback`.
-2. **Facilidade de Manutenção:** Centraliza a lógica relacionada à associação de elementos a formulários em um único método decorado.
-3. **Consistência:** Garante que a lógica de associação seja executada de maneira consistente sempre que o elemento é associado a um formulário.
-
-## Aplicabilidade
-
-Ideal para qualquer situação onde se deseja executar lógica personalizada sempre que um Custom Element é associado a um formulário, especialmente em componentes que precisam interagir com formulários de maneira dinâmica.
-
-## Importação
-
-Para utilizar o decorator `formAssociated`, importe-o da seguinte maneira:
+### Estrutura
 
 ```javascript
-import { formAssociated } from '@bake-js/-o-id';
-```
-
-## Implementação
-
-```javascript
-import intercept, { exec } from "../intercept";
-import { formAssociatedCallback } from "../interfaces";
-
+/**
+ * @param {Object} target - O alvo do decorator, geralmente a classe do Custom Element.
+ * @param {string} propertyKey - O nome do método decorado.
+ * @returns {Function} Um decorator que intercepta a chamada do `formAssociatedCallback`.
+ */
 const formAssociated = (target, propertyKey) => {
+  // Cria uma instância do interceptor para o método `formAssociatedCallback`.
   const interceptor = intercept(formAssociatedCallback);
 
+  // Adiciona o método decorado à lista de callbacks a serem executados.
   return interceptor
-    .in(target)
-    .then(exec(propertyKey));
+    .in(target) // Define o alvo do interceptor.
+    .then(exec(propertyKey)); // Define o método a ser executado pelo interceptor.
 };
 
 export default formAssociated;
 ```
 
-### Exemplo de Uso
+### Parâmetros
+
+1. **target** (obrigatório):
+   - **Tipo:** `Object`
+   - **Descrição:** O alvo do decorator, normalmente a classe do Custom Element. Define o contexto onde o método decorado será interceptado.
+
+2. **propertyKey** (obrigatório):
+   - **Tipo:** `string`
+   - **Descrição:** O nome do método decorado. Este método será chamado automaticamente quando o `formAssociatedCallback` for disparado.
+
+### Passos para Utilização
+
+1. **Importe o decorator `formAssociated`**:
+
+   ```javascript
+   import { formAssociated } from '@bake-js/-o-id';
+   ```
+
+2. **Aplique o decorator ao método que deverá ser chamado quando o Custom Element for associado a um formulário**:
+   
+   - **Passo 1:** Identifique o método que deve executar a lógica ao ser associado.
+   - **Passo 2:** Aplique o decorator diretamente sobre esse método.
+
+3. **Implemente a lógica de associação**:
+
+   - Defina o comportamento necessário no método decorado. O método será automaticamente invocado ao associar o componente a um formulário.
+
+### Exemplo Prático
+
+**Caso 1: Inicializando valores quando associado a um formulário**
+
+Aqui está um exemplo de como utilizar o `formAssociated` para inicializar valores ao associar o elemento a um formulário:
 
 ```javascript
-import { formAssociated } from '@bake-js/-o-id';
+import { define, formAssociated } from '@bake-js/-o-id';
 
+@define('my-element')
 class MyElement extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+    this.value = '';
+  }
+
   @formAssociated
-  handleFormAssociation() {
-    console.log('Element has been associated with a form.');
+  handleFormAssociated() {
+    // Inicializa o valor do elemento quando associado a um formulário.
+    this.value = this.getAttribute('value') || '';
+    console.log('O elemento foi associado a um formulário com valor:', this.value);
   }
 }
-
-customElements.define('my-element', MyElement);
 ```
 
-## Comparação com Concorrentes
+**Explicação:**
+- O método `handleFormAssociated` é chamado automaticamente quando o `MyElement` é associado a um formulário, permitindo que ele inicialize seu estado interno com o valor adequado.
 
-### Lit
+**Caso 2: Configurando o comportamento ao ser associado**
 
-- **Comportamento Padrão:** O Lit não fornece comportamento padrão para `formAssociatedCallback`.
-- **Extensão Obrigatória:** Requer a extensão de `LitElement` para definir componentes.
-
-Para mais detalhes sobre o `formAssociatedCallback` no Lit, veja a [documentação oficial](https://lit.dev/docs/components/forms/).
+Um segundo exemplo mostra como você pode ajustar o comportamento do elemento ao ser associado a um formulário:
 
 ```javascript
-import { LitElement } from 'lit';
+import { define, formAssociated } from '@bake-js/-o-id';
 
-class MyElement extends LitElement {
-  formAssociatedCallback() {
-    console.log('Element has been associated with a form.');
+@define('custom-checkbox')
+class CustomCheckbox extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+    this.checked = false;
   }
-}
-customElements.define('my-element', MyElement);
-```
 
-### Stencil
-
-- **Hook Não Disponível:** O Stencil não possui um hook específico para `formAssociatedCallback`.
-
-Para mais detalhes sobre o Stencil, veja a [documentação oficial](https://stenciljs.com/docs/forms).
-
-```typescript
-import { Component, h } from '@stencil/core';
-
-@Component({
-  tag: 'my-component',
-  shadow: true,
-})
-export class MyComponent {
-  formAssociatedCallback() {
-    console.log('Element has been associated with a form.');
+  @formAssociated
+  handleFormAssociated() {
+    // Configura o estado de checked com base no valor do formulário.
+    const isChecked = this.getAttribute('checked') === 'true';
+    this.checked = isChecked;
+    console.log('Checkbox associado ao formulário com estado:', this.checked);
   }
 }
 ```
 
-### Vantagens do `@formAssociated`
+**Explicação:**
+- O método `handleFormAssociated` é chamado automaticamente ao associar o `CustomCheckbox` a um formulário, permitindo que ele ajuste seu estado baseado no valor do atributo `checked`.
 
-- **Facilidade de Uso:** Simplifica a adição de lógica ao método `formAssociatedCallback`.
-- **Código Mais Limpo:** Centraliza a lógica de associação a formulários em um único método decorado.
-- **Flexibilidade:** Não exige extensão de classes específicas, como `LitElement`.
+### Benefícios do Decorator `formAssociated`
 
-## Considerações Finais
+1. **Facilita a Integração**: Permite que Custom Elements sejam tratados como elementos de formulário nativos, facilitando sua utilização em contextos de formulários HTML.
+2. **Centralização da Lógica**: A lógica de inicialização e configuração é centralizada em um único método, tornando o código mais limpo e organizado.
+3. **Flexibilidade**: Possibilita personalizar o comportamento do elemento ao ser associado a um formulário, adaptando-se facilmente a diferentes necessidades.
 
-O decorator `formAssociated` oferece uma maneira eficaz e declarativa de adicionar lógica ao método `formAssociatedCallback`, simplificando o desenvolvimento e melhorando a legibilidade do código.
+### Considerações Finais
+
+O decorator `formAssociated` é uma ferramenta poderosa para desenvolver Custom Elements que precisam se integrar a formulários, permitindo uma abordagem mais modular e reutilizável para gerenciar o estado e o comportamento dos elementos durante a associação a um formulário.

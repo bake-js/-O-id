@@ -1,143 +1,90 @@
-# WillPaint
+# Guia de Uso: Decorator `willPaint`
 
-O `willPaint` é um decorator que permite a execução de lógica antes do processo de renderização de Custom Elements. Ele garante que ações específicas ocorram antes do ciclo de pintura do componente.
+O decorator `willPaint` permite que desenvolvedores adicionem comportamentos personalizados ao ciclo de vida de um Custom Element, garantindo que a lógica necessária seja executada antes que o componente seja renderizado. Isso é especialmente útil para preparar o estado do componente ou ajustar propriedades antes da pintura.
 
-## Visão Geral
+### Quando Usar
 
-### Nome e Classificação
+- **Preparação Antes da Renderização**: Ideal para cenários em que ajustes precisam ser feitos no estado ou nas propriedades do componente antes de sua exibição.
+- **Validação de Condições**: Útil para validar se todas as condições necessárias estão atendidas antes da renderização.
 
-- **Nome:** WillPaint
-- **Classificação:** Decorators [ES Proposals](https://www.proposals.es/proposals/Decorators), [TypeScript](https://www.typescriptlang.org/docs/handbook/decorators.html)
-
-### Objetivo
-
-O objetivo do `willPaint` é garantir que o componente execute determinadas ações antes de ser renderizado, proporcionando um ponto de entrada para lógica preparatória.
-
-## Motivação
-
-Usar o `willPaint` traz as seguintes vantagens:
-
-1. **Preparação:** Permite preparar o componente antes da renderização.
-2. **Modularidade:** Mantém a lógica de preparação separada do ciclo de renderização principal.
-3. **Flexibilidade:** Facilita a adição de lógica preparatória sem modificar diretamente o método de renderização.
-
-## Aplicabilidade
-
-Ideal para situações onde é necessário executar lógica preparatória antes da renderização do componente, especialmente em componentes que requerem configurações dinâmicas.
-
-## Importação
-
-Para usar o decorator `willPaint`, importe-o da seguinte forma:
+### Estrutura
 
 ```javascript
-import { willPaint } from '@bake-js/-o-id/dom';
-```
-
-## Implementação
-
-```javascript
-import intercept, { exec } from "../intercept";
-import { willPaintCallback } from "../interfaces";
-
-const willPaint = (target, propertyKey) =>
+/**
+ * @param {Function} target - O alvo do decorator, geralmente a classe do Custom Element.
+ * @param {string} propertyKey - O nome do método decorado.
+ * @returns {Function} - O decorator que intercepta a chamada do `willPaintCallback`.
+ */
+const willPaint = (target, propertyKey) => {
+  // Cria uma instância do interceptor para o método `willPaintCallback`.
   const interceptor = intercept(willPaintCallback);
 
+  // Adiciona o método decorado à lista de callbacks a serem executados.
   return interceptor
-    .in(target)
-    .then(exec(propertyKey));
+    .in(target) // Define o alvo do interceptor.
+    .then(exec(propertyKey)); // Define o método a ser executado pelo interceptor.
+};
 
 export default willPaint;
 ```
 
-## Exemplo de Uso
+### Parâmetros
 
-counter.ts:
+1. **target**:
+   - **Tipo:** `Function`
+   - **Descrição:** O alvo do decorator, geralmente a classe do Custom Element que contém o método a ser decorado.
+
+2. **propertyKey**:
+   - **Tipo:** `string`
+   - **Descrição:** O nome do método que será interceptado e decorado. Este método deve conter a lógica a ser executada antes da renderização do componente.
+
+### Passos para Utilização
+
+1. **Importe o decorator `willPaint`**:
+
+   ```javascript
+   import { willPaint } from '@bake-js/-o-id/dom';
+   ```
+
+2. **Aplique o decorator ao método desejado**:
+
+   - **Passo 1:** Crie um método na sua classe Custom Element que contenha a lógica que deve ser executada antes da renderização.
+   - **Passo 2:** Decore o método com `@willPaint`.
+
+### Exemplo Prático
+
+**Exemplo: Lógica Antes da Renderização**
+
+Aqui está um exemplo de como utilizar o `willPaint` para adicionar lógica ao ciclo de vida do componente antes de sua renderização:
 
 ```javascript
-import { define, paint, willPaint } from '@bake-js/-o-id/dom';
-import component from './component';
-import style from './style';
+import { define } from '@bake-js/-o-id'
+import { willPaint } from '@bake-js/-o-id/dom';
 
-@define('be-counter')
-@paint(component, style)
-class Counter extends HTMLElement {
-  #number = 0;
-
-  get number() {
-    return this.#number;
-  }
-
-  set number(value) {
-    this.#number = value;
-  }
-
+@define('meu-componente')
+class MeuComponente extends HTMLElement {
   @willPaint
-  prepare() {
-    // Lógica preparatória antes da renderização
-    console.log('Preparando o componente antes da renderização');
+  handleWillPaint() {
+    console.log('Preparando o componente para a pintura...');
+    // Lógica a ser executada, como a definição de propriedades ou a validação de estado.
   }
-
-  increment() {
-    this.number += 1;
-  }
-}
-```
-
-## Comparação com Concorrentes
-
-### Lit
-
-Lit utiliza a função `updateWhenLocaleChanges` para executar lógica antes da renderização, garantindo que o componente esteja atualizado com o estado atual. Para mais detalhes, veja a [documentação oficial](https://lit.dev/docs/localization/runtime-mode/#automatically-re-render).
-
-```javascript
-import { LitElement, html } from 'lit';
-import { msg, updateWhenLocaleChanges } from '@lit/localize';
-
-class MyElement extends LitElement {
-  constructor() {
-    super();
-    updateWhenLocaleChanges(this);
-  }
-
-  render() {
-    return msg(html`Hello <b>World!</b>`);
-  }
-}
-
-customElements.define('my-element', MyElement);
-```
-
-### Stencil
-
-Stencil usa o decorator `@State` para monitorar mudanças de estado e executar lógica antes da renderização do componente. Para mais detalhes, veja a [documentação oficial](https://stenciljs.com/docs/state#the-state-decorator-state).
-
-```typescript
-import { Component, State, h } from '@stencil/core';
-
-@Component({
-  tag: 'current-time',
-})
-export class CurrentTime {
-  @State() currentTime: number = Date.now();
 
   connectedCallback() {
-    setInterval(() => {
-      this.currentTime = Date.now();
-    }, 1000);
-  }
-
-  render() {
-    const time = new Date(this.currentTime).toLocaleTimeString();
-    return <span>{time}</span>;
+    // Simulação de renderização
+    this.innerHTML = `<p>Meu componente está pronto para ser renderizado!</p>`;
   }
 }
 ```
 
-### Vantagens do `@willPaint`
+**Explicação:**
+- O método `handleWillPaint` é chamado automaticamente antes da renderização do componente, permitindo que a lógica de preparação seja centralizada e mantenha o código do componente organizado.
 
-- **Preparação:** Permite preparar o componente antes da renderização.
-- **Modularidade:** Facilita a adição de lógica preparatória sem modificar diretamente o método de renderização.
+### Benefícios do Decorator `willPaint`
 
-## Considerações Finais
+1. **Flexibilidade**: Permite que os desenvolvedores executem lógica personalizada antes da renderização, garantindo que o componente esteja pronto para ser exibido.
+2. **Organização do Código**: Ajuda a separar a lógica de preparação da lógica de renderização, resultando em um código mais claro e gerenciável.
+3. **Aumento da Manutenibilidade**: Facilita a manutenção do código, permitindo que as alterações necessárias sejam feitas em um único local, sem afetar a lógica de renderização.
 
-O `willPaint` é uma ferramenta eficaz para garantir que Custom Elements executem ações preparatórias antes da renderização, simplificando a lógica do componente e mantendo a modularidade e coesão do código.
+### Considerações Finais
+
+O decorator `willPaint` é uma ferramenta poderosa para desenvolvedores que desejam garantir que seus Custom Elements sejam configurados corretamente antes da renderização. Isso não apenas melhora a qualidade do código, mas também oferece maior controle sobre o ciclo de vida dos componentes personalizados.

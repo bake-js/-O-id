@@ -1,158 +1,118 @@
-# Adopted
+# Guia de Uso: Decorator `adopted`
 
-O `adopted` é um decorator que simplifica a execução de lógica específica quando um Custom Element é movido no DOM, sendo parte da biblioteca `@bake-js/-o-id`.
+O decorator `adopted` é utilizado para interceptar e executar lógica no método `adoptedCallback` de Custom Elements. Ele simplifica a adição de lógica quando um elemento é movido para um novo contexto de documento, centralizando o comportamento de adoção no ciclo de vida do componente.
 
-## Visão Geral
+### Quando Usar
 
-### Nome e Classificação
+- **Monitorar Movimentos de Documento**: Quando um Custom Element é movido de um documento para outro, como de um iframe para outro ou entre janelas.
+- **Centralizar a Lógica de Callbacks**: Gerencie facilmente a execução de callbacks de adoção sem sobrecarregar o código com a lógica interna de `adoptedCallback`.
 
-- **Nome:** Adopted
-- **Classificação:** Decorators [ES Proposals](https://www.proposals.es/proposals/Decorators), [TypeScript](https://www.typescriptlang.org/docs/handbook/decorators.html)
+### Como Funciona
 
-### Objetivo
+O decorator `adopted` intercepta o método `adoptedCallback` de um Custom Element, permitindo que você adicione lógica personalizada sempre que o elemento for movido para um novo documento. O método decorado é registrado para ser executado automaticamente quando o evento de adoção ocorrer.
 
-Facilitar a adição de lógica que é executada automaticamente quando um Custom Element é adotado em um novo documento ou Shadow DOM.
-
-## Motivação
-
-Usar o `adopted` traz as seguintes vantagens:
-
-1. **Simplificação do Código:** Elimina a necessidade de definir manualmente o método `adoptedCallback`.
-2. **Facilidade de Manutenção:** Centraliza a lógica relacionada à adoção de elementos em um único método decorado.
-3. **Consistência:** Garante que a lógica de adoção seja executada de maneira consistente sempre que o elemento é movido.
-
-## Aplicabilidade
-
-Ideal para qualquer situação onde se deseja executar lógica personalizada sempre que um Custom Element é movido para um novo documento ou Shadow DOM, especialmente em componentes que mantêm estado ou precisam reagir a mudanças de contexto.
-
-## Importação
-
-Para utilizar o decorator `adopted`, importe-o da seguinte maneira:
+### Estrutura
 
 ```javascript
-import { adopted } from '@bake-js/-o-id';
-```
-
-## Implementação
-
-```javascript
-import intercept, { exec } from "../intercept";
-import { adoptedCallback } from "../interfaces";
-
+/**
+ * @param {Function} target - O alvo do decorator, geralmente a classe do Custom Element.
+ * @param {string} propertyKey - O nome do método decorado.
+ * @returns {Function} Um decorator que intercepta a chamada do `adoptedCallback`.
+ */
 const adopted = (target, propertyKey) => {
+  // Cria uma instância do interceptor para o método `adoptedCallback`.
   const interceptor = intercept(adoptedCallback);
 
+  // Adiciona o método decorado à lista de callbacks a serem executados.
   return interceptor
-    .in(target)
-    .then(exec(propertyKey));
+    .in(target) // Define o alvo do interceptor.
+    .then(exec(propertyKey)); // Define o método a ser executado pelo interceptor.
 };
 
 export default adopted;
 ```
 
-## Exemplo de Uso
+### Parâmetros
+
+1. **target** (obrigatório):
+   - **Tipo:** `Function`
+   - **Descrição:** O alvo do decorator, geralmente a classe do Custom Element. Esse parâmetro define o contexto no qual o interceptor irá operar.
+
+2. **propertyKey** (obrigatório):
+   - **Tipo:** `string`
+   - **Descrição:** O nome do método da classe que será chamado quando o `adoptedCallback` for disparado.
+
+### Passos para Utilização
+
+1. **Importe o decorator `adopted`**:
+
+   ```javascript
+   import { adopted } from '@bake-js/-o-id';
+   ```
+
+2. **Aplique o decorator ao método de callback de adoção**:
+   
+   - **Passo 1:** Escolha um método da classe que será executado quando o Custom Element for adotado em um novo documento.
+   - **Passo 2:** Use o decorator diretamente sobre o método da classe que deverá reagir ao evento de adoção.
+
+3. **Implemente a lógica de adoção**:
+   
+   - Defina o comportamento desejado dentro do método decorado, como atualizações no estado do componente ou respostas visuais.
+
+### Exemplo Prático
+
+**Caso 1: Adicionando lógica ao ser adotado em um novo documento**
+
+Aqui está um exemplo de como usar o `adopted` para adicionar lógica personalizada ao evento de adoção de um elemento:
 
 ```javascript
 import { adopted, define } from '@bake-js/-o-id';
-import { css, html, paint, repaint } from '@bake-js/-o-id/dom';
-import on from '@bake-js/-o-id/event';
 
-function component(self) {
-  return html`
-    <button>Increment ${self.number}</button>
-  `;
+@define('my-element')
+class MyElement extends HTMLElement {
+  @adopted
+  handleAdoption() {
+    console.log('Elemento foi adotado em um novo documento.');
+  }
 }
+```
 
-function style() {
-  return css`
-    button {
-      background: #ffffff;
-      border-radius: 8px;
-      color: #222222;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: 600;
-      line-height: 20px;
-      padding: 10px 20px;
-      border: 1px solid #222222;
+**Explicação:**
+- O método `handleAdoption` será chamado automaticamente sempre que o elemento `MyElement` for movido para um novo documento.
+- O console exibirá a mensagem `'Elemento foi adotado em um novo documento.'` quando o evento de adoção ocorrer.
 
-      &:hover {
-        background: #f7f7f7;
-        border-color: #000000;
-      }
-    }
-  `;
-}
+**Caso 2: Atualizando o estado do elemento ao ser adotado**
 
-@define('o-id-counter')
-@paint(component, style)
-class Counter extends HTMLElement {
-  #number;
+Outro exemplo seria atualizar o estado interno do elemento ao ser adotado:
 
+```javascript
+import { adopted, define } from '@bake-js/-o-id';
+
+@define('stateful-element')
+class StatefulElement extends HTMLElement {
   constructor() {
     super();
-    this.attachShadow({ mode: 'open' });
-  }
-
-  get number() {
-    return (this.#number ??= 0);
-  }
-
-  @repaint
-  set number(value) {
-    this.#number = value;
-  }
-
-  @on.click('button')
-  increment() {
-    this.number += 1;
-    return this;
+    this.state = { adopted: false };
   }
 
   @adopted
-  handleAdoption() {
-    // Qualquer lógica adicional ao ser adotado pode ser adicionada aqui
-    return this
+  updateState() {
+    this.state.adopted = true;
+    console.log('Estado atualizado: Elemento adotado.');
   }
 }
 ```
 
-### Explicação do Componente
+**Explicação:**
+- Ao ser adotado, o método `updateState` atualiza a propriedade `state.adopted` para `true`.
+- Além disso, imprime a mensagem `'Estado atualizado: Elemento adotado.'` no console.
 
-O exemplo abaixo ilustra a criação de um componente Custom Element chamado `o-id-counter`, que representa um contador que pode ser incrementado por meio de um botão. O componente demonstra a utilização do decorator `@adopted`, permitindo que lógica específica seja executada quando o elemento é movido no DOM.
+### Benefícios do Decorator `adopted`
 
-- **Definição do Elemento:**
-  - O elemento é definido como `o-id-counter` utilizando o decorator `@define`.
-  - Ele se utiliza de Shadow DOM para encapsular seus estilos e estrutura.
+1. **Centralização de Lógica**: Ao usar o `adopted`, você evita a necessidade de escrever manualmente o método `adoptedCallback`, delegando essa responsabilidade ao decorator.
+2. **Interceptação Simples**: O interceptor garante que a lógica do método decorado será executada no momento certo, sem que você precise lidar diretamente com a infraestrutura de callbacks nativos.
+3. **Organização e Clareza**: O código permanece limpo, com a lógica de adoção separada de outros métodos do ciclo de vida do componente.
 
-- **Estado Interno:**
-  - O estado do contador é armazenado em uma propriedade privada `#number`, que inicia com zero.
-  - O método `get number()` é utilizado para acessar o valor atual do contador, enquanto o método `set number(value)` permite modificá-lo.
+### Considerações Finais
 
-- **Renderização do Componente:**
-  - A função `component(self)` gera a estrutura HTML do botão, que exibe o valor atual do contador.
-  - A função `style()` define os estilos CSS aplicados ao botão, garantindo uma boa aparência.
-
-- **Interatividade:**
-  - O método `increment()` é decorado com `@on.click('button')`, permitindo que o contador seja incrementado ao clicar no botão. Este método atualiza o estado e re-renderiza o componente.
-
-- **Lógica de Adoção:**
-  - O método `handleAdoption()` é decorado com `@adopted`, o que significa que ele será chamado automaticamente sempre que o componente for movido para um novo documento ou Shadow DOM. Isso permite que você adicione qualquer lógica adicional necessária para esse evento.
-
-### Como Usar
-
-Para utilizar este componente em sua aplicação:
-
-1. Certifique-se de que o código esteja devidamente importado e definido.
-2. Adicione o elemento `<o-id-counter></o-id-counter>` em qualquer parte do seu HTML.
-3. O componente estará pronto para uso, incrementando o valor a cada clique no botão.
-
-Exemplo de uso em HTML:
-
-```html
-<o-id-counter></o-id-counter>
-```
-
-## Considerações Finais
-
-O decorator `adopted` oferece uma maneira eficaz e declarativa de adicionar lógica ao método `adoptedCallback`, simplificando o desenvolvimento e melhorando a legibilidade do código. Ele se destaca pela sua capacidade de centralizar e simplificar o gerenciamento de eventos de adoção em Custom Elements, tornando a manutenção do código mais eficiente e intuitiva.
+O decorator `adopted` é uma maneira poderosa e conveniente de gerenciar o comportamento de Custom Elements ao serem movidos entre documentos. Ao utilizar o interceptor interno, ele assegura que a lógica definida será executada corretamente, mantendo a integridade do ciclo de vida dos elementos e reduzindo o código repetitivo.

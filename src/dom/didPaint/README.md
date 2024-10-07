@@ -1,129 +1,90 @@
-# didPaint
+# Guia de Uso: Decorator `didPaint`
 
-O `didPaint` é um decorator que adiciona um hook a métodos específicos de Custom Elements para execução após o método `paint`, sendo parte da biblioteca Element.
+O decorator `didPaint` fornece uma maneira eficaz de estender a lógica de um Custom Element logo após sua renderização. Ele permite que os desenvolvedores adicionem comportamentos personalizados sem modificar diretamente o fluxo de renderização do componente.
 
-## Visão Geral
+### Quando Usar
 
-### Nome e Classificação
+- **Personalização Pós-Renderização**: Ideal para situações em que é necessário executar lógica específica imediatamente após a renderização do componente.
+- **Gerenciamento de Estado**: Útil para atualizar o estado ou acionar eventos após a finalização do processo de renderização.
 
-- **Nome:** `didPaint`
-- **Classificação:** Decorators [ES Proposals](https://www.proposals.es/proposals/Decorators), [TypeScript](https://www.typescriptlang.org/docs/handbook/decorators.html)
-
-### Objetivo
-
-Facilitar a execução de lógica personalizada após a execução do método `paint` de um Custom Element, sem a necessidade de sobrescrever manualmente o método `paint`.
-
-## Motivação
-
-Utilizar o `didPaint` oferece as seguintes vantagens:
-
-1. **Execução Pós-Renderização:** Permite adicionar lógica adicional a ser executada imediatamente após o método `paint`.
-2. **Clareza e Organização:** Melhora a organização do ciclo de vida do componente ao centralizar a lógica pós-renderização.
-
-## Aplicabilidade
-
-Ideal para situações onde é necessário realizar ações específicas após a renderização inicial do componente, como:
-
-- **Atualizações Dinâmicas:** Aplicar ajustes ou atualizações no DOM após a renderização.
-- **Integração com Outras Lógicas:** Sincronizar o componente com outras partes da aplicação após o `paint`.
-
-## Importação
-
-Para utilizar o decorator `didPaint`, importe-o da seguinte forma:
+### Estrutura
 
 ```javascript
-import { didPaint } from '@bake-js/-o-id/dom';
-```
-
-## Implementação
-
-```javascript
-import intercept, { exec } from "../intercept";
-import { didPaintCallback } from "../interfaces";
-
+/**
+ * @param {Object} target - O alvo do decorator, geralmente a classe do Custom Element.
+ * @param {string} propertyKey - O nome do método decorado.
+ * @returns {void} Um decorator que intercepta a chamada do `didPaintCallback`.
+ */
 const didPaint = (target, propertyKey) => {
+  // Cria uma instância do interceptor para o método `didPaintCallback`.
   const interceptor = intercept(didPaintCallback);
-  
+
+  // Adiciona o método decorado à lista de callbacks a serem executados.
   return interceptor
-    .in(target)        // Define o alvo do interceptor.
+    .in(target) // Define o alvo do interceptor.
     .then(exec(propertyKey)); // Define o método a ser executado pelo interceptor.
 };
 
 export default didPaint;
 ```
 
-### Exemplo de Uso
+### Parâmetros
 
-```typescript
-import { paint, didPaint } from '@bake-js/-o-id/dom';
+1. **target**:
+   - **Tipo:** `Object`
+   - **Descrição:** O alvo do decorator, que é geralmente a classe do Custom Element que contém o método a ser decorado.
 
-@paint((self) => {
-  return `<p>Hello, ${self.name}</p>`;
-})
-class GreetingElement extends HTMLElement {
-  #name;
+2. **propertyKey**:
+   - **Tipo:** `string`
+   - **Descrição:** O nome do método que será interceptado e decorado. Este método deve conter a lógica que será executada após a renderização do componente.
 
-  get name() {
-    return (this.#name ??= 'World');
-  }
+### Passos para Utilização
 
-  constructor() {
-    super();
-    this.attachShadow({ mode: 'open' });
-  }
+1. **Importe o decorator `didPaint`**:
 
+   ```javascript
+   import { didPaint } from '@bake-js/-o-id/dom';
+   ```
+
+2. **Aplique o decorator ao método desejado**:
+
+   - **Passo 1:** Crie um método na sua classe Custom Element que contenha a lógica que deve ser executada após a renderização.
+   - **Passo 2:** Decore o método com `@didPaint`.
+
+### Exemplo Prático
+
+**Exemplo: Lógica Pós-Renderização**
+
+Aqui está um exemplo de como utilizar o `didPaint` para adicionar lógica ao ciclo de vida do componente após sua renderização:
+
+```javascript
+import { define } from '@bake-js/-o-id'
+import { didPaint } from '@bake-js/-o-id/dom';
+
+@define('my-component')
+class MyComponent extends HTMLElement {
   @didPaint
-  afterRender() {
-    console.log('Componente pintado:', this.innerHTML);
+  handleDidPaint() {
+    console.log('O componente foi pintado!');
+    // Adicione lógica adicional aqui, como atualizações de estado ou interações.
   }
-}
 
-customElements.define('greeting-element', GreetingElement);
-```
-
-## Comparação com Concorrentes
-
-### Lit
-
-- **Pós-Renderização:** O Lit oferece o método `updated`, que é chamado após a renderização, mas não é um decorator específico para isso.
-  
-Para mais detalhes sobre o Lit, veja a [documentação oficial](https://lit.dev/docs/components/lifecycle/#updated).
-
-```typescript
-class MyElement extends LitElement {
-  updated(changedProperties: Map<string | number | symbol, unknown>): void {
-    super.updated(changedProperties);
-    // Lógica pós-renderização aqui
+  connectedCallback() {
+    // Simulação de renderização
+    this.innerHTML = `<p>Meu componente está renderizado!</p>`;
   }
 }
 ```
 
-### Stencil
+**Explicação:**
+- O método `handleDidPaint` é chamado automaticamente após a renderização do componente, permitindo que a lógica de pós-renderização seja centralizada e mantida separada do restante do código do componente.
 
-- **Pós-Renderização:** O Stencil fornece o método `componentDidRender`, chamado após o método `render` do componente.
+### Benefícios do Decorator `didPaint`
 
-Para mais detalhes sobre Stencil, veja a [documentação oficial](https://stenciljs.com/docs/component-lifecycle#componentdidrender).
+1. **Extensibilidade**: Facilita a adição de lógica adicional ao ciclo de vida do componente sem a necessidade de alterar a estrutura existente.
+2. **Organização do Código**: Mantém o código do componente limpo e organizado, separando a lógica de renderização da lógica de pós-renderização.
+3. **Manutenção Facilitada**: Permite que mudanças na lógica de pós-renderização sejam feitas em um local específico, facilitando a manutenção do código a longo prazo.
 
-```typescript
-@Component({ tag: 'my-component', shadow: true })
-export class MyComponent {
-  @State() name: string;
+### Considerações Finais
 
-  render() {
-    return <p>Hello, {this.name}</p>;
-  }
-
-  componentDidRender() {
-    // Lógica pós-renderização aqui
-  }
-}
-```
-
-### Vantagens do `didPaint`
-
-- **Interface Declarativa:** Permite adicionar facilmente lógica pós-renderização sem alterar o método `paint` diretamente.
-- **Flexibilidade:** Fornece um hook específico para lógica adicional após a renderização, sem a necessidade de manipulação manual do ciclo de vida.
-
-## Considerações Finais
-
-O `didPaint` oferece uma maneira eficaz e declarativa de gerenciar ações pós-renderização em Custom Elements. Ele melhora a organização do código e proporciona flexibilidade adicional para desenvolvedores ao trabalhar com Web Components.
+O decorator `didPaint` é uma ferramenta valiosa para desenvolvedores que desejam adicionar lógica personalizada ao ciclo de vida de seus Custom Elements, garantindo que a aplicação permaneça modular e de fácil manutenção.

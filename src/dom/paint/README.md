@@ -1,58 +1,21 @@
-# Paint
+# Guia de Uso: Decorator `paint`
 
-O `paint` é um decorator da biblioteca Element que facilita a renderização e estilização de Custom Elements de maneira declarativa. Ele permite definir a estrutura (HTML) e o estilo (CSS) de um componente fora da classe, mantendo o código mais organizado e modular.
+O decorator `paint` é uma ferramenta poderosa que permite a definição declarativa de HTML e estilos para um Custom Element. Ele otimiza o processo de renderização e garante que os ciclos de vida do componente sejam respeitados.
 
-## Visão Geral
+### Quando Usar
 
-### Nome e Classificação
+- **Renderização Controlada**: Ideal para componentes que requerem uma renderização específica e eficiente.
+- **Estilos Encapsulados**: Útil para aplicar estilos encapsulados a um componente, utilizando `adoptedStyleSheets`.
+- **Desempenho**: Para melhorar o desempenho de renderização ao utilizar `requestAnimationFrame`.
 
-- **Nome:** Paint
-- **Classificação:** Decorator ([ES Proposals](https://www.proposals.es/proposals/Decorators), [TypeScript](https://www.typescriptlang.org/docs/handbook/decorators.html))
+### Como Funciona
 
-### Objetivo
+O decorator `paint` intercepta os métodos de ciclo de vida `paintCallback`, `willPaintCallback`, `didPaintCallback` e `connectedCallback`, permitindo uma renderização otimizada e controlada do componente.
 
-O decorator `paint` visa:
-
-- **Separação de Responsabilidades:** Permitir que a lógica de renderização e estilização seja definida separadamente da classe do componente.
-- **Manutenção da Coesão:** Manter a classe do componente limpa e livre de HTML e CSS, promovendo uma melhor organização do código.
-
-## Motivação
-
-O uso do `paint` proporciona as seguintes vantagens:
-
-1. **Separação Clara:** Define a estrutura e o estilo do componente fora da classe, melhorando a legibilidade e manutenção do código.
-2. **Reutilização de Componentes:** Permite reutilizar estruturas e estilos em diferentes componentes.
-3. **Código Limpo:** Evita a "poluição" da classe do componente com HTML e CSS, mantendo-a focada na lógica do componente.
-
-## Aplicabilidade
-
-O decorator `paint` é ideal para:
-
-- **Componentes Web Dinâmicos:** Gerar e estilizar HTML dentro de componentes web.
-- **Templates Dinâmicos:** Criar templates HTML dinâmicos baseados em dados de runtime, mantendo o código organizado.
-
-## Importação
-
-Para utilizar o decorator `paint`, importe-o da seguinte forma:
+### Estrutura
 
 ```javascript
-import { paint } from '@bake-js/-o-id/dom';
-```
-
-## Implementação
-
-```javascript
-import intercept, { exec } from "../intercept";
-import {
-  connectedCallback,
-  didPaintCallback,
-  paintCallback,
-  willPaintCallback,
-} from "../interfaces";
-
 /**
- * Decorator que adiciona suporte para renderização e estilização de um componente.
- * 
  * @param {Function} component - Função que retorna o HTML a ser renderizado.
  * @param {Function} [style] - Função opcional que retorna as folhas de estilo a serem aplicadas.
  * @returns {Function} - O decorator para ser aplicado à classe do componente.
@@ -60,160 +23,139 @@ import {
 const paint =
   (component, style = () => []) =>
   (target) => {
-  // Intercepta o método paintCallback para adicionar lógica de renderização
-  intercept(paintCallback)
-    .in(target.prototype)
-    .then(async function () {
-      // Função para renderizar o componente após o próximo frame
-      const render = (resolve) => {
-        requestAnimationFrame(() => {
-          (this.shadowRoot ?? document).adoptedStyleSheets = style(this);
-          (this.shadowRoot ?? this).innerHTML = component(this);
-          resolve();
-        });
-      };
+    // Intercepta o método paintCallback para adicionar lógica de renderização
+    intercept(paintCallback)
+      .in(target.prototype)
+      .then(async function () {
+        // Função para renderizar o componente após o próximo frame
+        const render = (resolve) => {
+          requestAnimationFrame(() => {
+            (this.shadowRoot ?? document).adoptedStyleSheets = style(this);
+            (this.shadowRoot ?? this).innerHTML = component(this);
+            this.isPainted = true;
+            resolve();
+          });
+        };
 
-      // Executa os callbacks de ciclo de vida antes e depois da renderização
-      await this[willPaintCallback]?.();
-      await new Promise(render);
-      await this[didPaintCallback]?.();
-    });
+        // Executa os callbacks de ciclo de vida antes e depois da renderização
+        await this[willPaintCallback]?.();
+        await new Promise(render);
+        await this[didPaintCallback]?.();
+      });
 
-  // Intercepta o método connectedCallback para garantir que paintCallback seja chamado
-  intercept(connectedCallback)
-    .in(target.prototype)
-    .then(exec(paintCallback));
-};
+    // Intercepta o método connectedCallback para garantir que paintCallback seja chamado
+    intercept(connectedCallback)
+      .in(target.prototype) // Define o alvo do interceptor.
+      .then(exec(paintCallback)); // Define o método a ser executado pelo interceptor.
+  };
 
 export default paint;
 ```
 
-### Exemplo de Uso
+### Parâmetros
 
-**component.js:**
+1. **component** (obrigatório):
+   - **Tipo:** `Function`
+   - **Descrição:** Uma função que retorna uma string contendo o HTML a ser renderizado. Essa função é chamada com a instância do componente como argumento.
+
+2. **style** (opcional):
+   - **Tipo:** `Function`
+   - **Descrição:** Uma função que retorna um array de folhas de estilo (`CSSStyleSheet`) a serem aplicadas ao componente. Se não fornecido, um array vazio será utilizado por padrão.
+
+### Passos para Utilização
+
+1. **Importe o decorator `paint`**:
+
+   ```javascript
+   import { paint } from '@bake-js/-o-id/dom';
+   ```
+
+2. **Aplique o decorator à classe do seu Custom Element**:
+
+   - **Passo 1:** Identifique a função que gera o HTML do seu componente.
+   - **Passo 2:** Aplique o decorator `paint`, passando a função de renderização e, opcionalmente, a função de estilo.
+
+3. **Implemente a lógica de conexão**:
+
+   - O decorator cuida da chamada ao método `paintCallback` dentro do ciclo de vida do componente, garantindo que a renderização ocorra no momento apropriado.
+
+### Exemplo Prático
+
+**Exemplo 1: Renderização Simples**
+
+Aqui está um exemplo de como utilizar o `paint` para renderizar um Custom Element com um conteúdo dinâmico:
 
 ```javascript
-import { html } from '@bake-js/-o-id/dom';
+import { define } from '@bake-js/-o-id'
+import { html, paint, css } from '@bake-js/-o-id/dom';
 
-/**
- * Função que retorna o HTML a ser renderizado.
- * 
- * @param {Object} self - Instância do componente.
- * @returns {string} - HTML a ser renderizado.
- */
-export function component(self) {
+const component = (element) => {
   return html`
-    <button>Increment ${self.number}</button>
-  `;
-}
-```
+    <div>My component</div>
+  `
+};
 
-**style.js:**
-
-```javascript
-import { css } from '@bake-js/-o-id/dom';
-
-/**
- * Função que retorna as folhas de estilo a serem aplicadas.
- * 
- * @param {Object} self - Instância do componente.
- * @returns {CSSStyleSheet[]} - Folhas de estilo a serem aplicadas.
- */
-export function style(self) {
+const style = () => {
   return css`
-    button { color: red; }
-  `;
-}
-```
+    div {
+      color: red;
+    }
+  `
+};
 
-**counter.ts:**
-
-```javascript
-import { define, paint } from '@bake-js/-o-id/dom';
-import component from './component';
-import style from './style';
-
-/**
- * Define um Custom Element com renderização e estilização separadas.
- */
-@define('be-counter')
+@define('my-component')
 @paint(component, style)
-class Counter extends HTMLElement {
-  #number = 0;
-
-  get number() {
-    return this.#number;
-  }
-
-  set number(value) {
-    this.#number = value;
-  }
-
-  increment() {
-    this.number += 1;
+class MyComponent extends HTMLElement {
+  connectedCallback() {
+    console.log('MyComponent conectado');
   }
 }
 ```
 
-## Comparação com Concorrentes
+**Explicação:**
+- O método de renderização gera um `div` contendo o valor de `someProperty`. As folhas de estilo são aplicadas através de `adoptedStyleSheets`.
 
-### Lit
+**Exemplo 2: Comportamento de Estilo Personalizado**
 
-- **Templates Integrados:** Utiliza tagged template literals para definir o HTML diretamente dentro da classe.
-- **Estilos Internos:** CSS é definido dentro da classe, o que pode tornar a classe mais complexa.
-
-Para mais detalhes sobre Lit, veja a [documentação oficial](https://lit.dev/docs/components/rendering).
-
-**Exemplo com Lit:**
+Você pode adicionar estilos personalizados ao seu componente:
 
 ```javascript
-import { LitElement, html, css } from 'lit';
+import { define } from '@bake-js/-o-id'
+import { html, paint, css } from '@bake-js/-o-id/dom';
 
-class MyElement extends LitElement {
-  static styles = css`
-    button { color: red; }
-  `;
+const component = (element) => {
+  return html`
+    <div>${element.color}</div>
+  `
+};
 
-  render() {
-    return html`
-      <button>Click me</button>
-    `;
-  }
-}
-customElements.define('my-element', MyElement);
-```
+const style = (element) => {
+  return css`
+    div {
+      color: ${element.color};
+    }
+  `
+};
 
-### Stencil
-
-- **Templates e Estilos Integrados:** Utiliza decorators e metadados para definir HTML e CSS diretamente dentro da classe.
-- **Lógica Integrada:** HTML e CSS são definidos junto com a lógica, o que pode dificultar a separação de responsabilidades.
-
-Para mais detalhes sobre Stencil, veja a [documentação oficial](https://stenciljs.com/docs/getting-started).
-
-**Exemplo com Stencil:**
-
-```typescript
-import { Component, h } from '@stencil/core';
-
-@Component({
-  tag: 'my-component',
-  styleUrl: 'my-component.css',
-  shadow: true,
-})
-export class MyComponent {
-  render() {
-    return (
-      <button>Click me</button>
-    );
+@define('my-styled-component')
+@paint(component, style)
+class MyStyledComponent extends HTMLElement {
+  connectedCallback() {
+    console.log('MyStyledComponent conectado');
+    this.color = 'blue'; // Define uma propriedade para a cor
   }
 }
 ```
 
-### Vantagens do `@paint`
+**Explicação:**
+- O `customStyle` retorna uma folha de estilo que aplica uma cor dinâmica ao texto do `div` baseado na propriedade `color` do componente.
 
-- **Separação de Responsabilidades:** HTML e CSS definidos fora da classe, promovendo a reutilização e mantendo a coesão da classe.
-- **Reutilização Facilitada:** Componentes e estilos podem ser reutilizados em diferentes classes sem duplicação de código.
+### Benefícios do Decorator `paint`
 
-## Considerações Finais
+1. **Centralização da Lógica de Renderização**: Permite que a lógica de renderização e estilo seja centralizada, melhorando a legibilidade e manutenção do código.
+2. **Desempenho Otimizado**: Utiliza `requestAnimationFrame` para garantir que a renderização ocorra no momento ideal, melhorando o desempenho visual.
+3. **Estilos Encapsulados**: Suporte a `adoptedStyleSheets`, permitindo a aplicação de estilos sem poluir o escopo global.
 
-O `paint` oferece uma maneira eficaz de separar a definição de estrutura e estilo de Custom Elements, promovendo código limpo e modular. Ao permitir que HTML e CSS sejam definidos fora da classe, ele melhora a organização do código e a reutilização dos componentes.
+### Considerações Finais
+
+O decorator `paint` oferece uma maneira eficaz e organizada de gerenciar a renderização e os estilos de Custom Elements, garantindo que o ciclo de vida de renderização seja respeitado e otimizado.

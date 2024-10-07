@@ -1,52 +1,23 @@
-# Disconnected
+# Guia de Uso: Decorator `disconnected`
 
-O `disconnected` é um decorator que adiciona um hook aos métodos de Custom Elements para execução quando o elemento é desconectado do DOM. Este pacote faz parte da biblioteca Element.
+O decorator `disconnected` é projetado para interceptar o momento em que um Custom Element é removido do DOM, permitindo que você adicione lógica personalizada quando o método `disconnectedCallback` for invocado. Essa abordagem torna a manipulação do ciclo de vida do componente mais limpa e organizada.
 
-## Visão Geral
+### Quando Usar
 
-### Nome e Classificação
+- **Gerenciamento de Limpeza**: Ideal para executar lógica de limpeza, como a remoção de listeners de eventos, cancelamento de timers ou desconexão de observadores quando o elemento for removido do DOM.
+- **Evitar Vazamentos de Memória**: Útil para liberar recursos e evitar vazamentos de memória, especialmente ao trabalhar com componentes de longa duração.
 
-- **Nome:** Disconnected
-- **Classificação:** Decorators [ES Proposals](https://www.proposals.es/proposals/Decorators), [TypeScript](https://www.typescriptlang.org/docs/handbook/decorators.html)
+### Como Funciona
 
-### Objetivo
+O decorator `disconnected` intercepta o `disconnectedCallback`, chamando o método decorado sempre que o elemento for removido do DOM. Isso centraliza a lógica necessária, garantindo que ela seja executada no momento correto.
 
-Facilitar a execução de lógica adicional quando o elemento for desconectado do DOM, sem a necessidade de sobrescrever manualmente o `disconnectedCallback`.
-
-## Motivação
-
-Utilizar o `disconnected` proporciona as seguintes vantagens:
-
-1. **Execução Automatizada:** Garante que a lógica definida no método decorado seja executada sempre que o elemento for desconectado do DOM.
-2. **Simplicidade e Manutenção:** Elimina a necessidade de sobrescrever o `disconnectedCallback` manualmente, simplificando a manutenção do código.
-
-## Aplicabilidade
-
-Ideal para situações onde é necessário executar automaticamente lógica adicional ao remover um elemento customizado do DOM, como:
-
-- **Limpeza de Recursos:** Liberação de recursos ou listeners ao desconectar o componente.
-- **Desconexão de Listeners:** Remoção de event listeners ou outras interações ao remover o elemento do DOM.
-
-## Importação
-
-Para utilizar o decorator `disconnected`, importe-o da seguinte forma:
+### Estrutura
 
 ```javascript
-import { disconnected } from '@bake-js/-o-id';
-```
-
-## Implementação
-
-```javascript
-import intercept from "../intercept";
-import { disconnectedCallback } from "../interfaces";
-
 /**
- * Decorator que adiciona lógica ao método `disconnectedCallback` de um Custom Element.
- *
- * @param target - O alvo do decorator, geralmente a classe do Custom Element.
- * @param propertyKey - O nome do método decorado.
- * @returns Um decorator que intercepta a chamada do `disconnectedCallback`.
+ * @param {Object} target - O alvo do decorator, geralmente a classe do Custom Element.
+ * @param {string} propertyKey - O nome do método decorado.
+ * @returns {Function} Um decorator que intercepta a chamada do `disconnectedCallback`.
  */
 const disconnected = (target, propertyKey) => {
   // Cria uma instância do interceptor para o método `disconnectedCallback`.
@@ -61,69 +32,98 @@ const disconnected = (target, propertyKey) => {
 export default disconnected;
 ```
 
-### Exemplo de Uso
+### Parâmetros
+
+1. **target** (obrigatório):
+   - **Tipo:** `Object`
+   - **Descrição:** O alvo do decorator, normalmente a classe do Custom Element. Define o contexto onde o método decorado será interceptado.
+
+2. **propertyKey** (obrigatório):
+   - **Tipo:** `string`
+   - **Descrição:** O nome do método decorado. Esse método será chamado automaticamente quando o `disconnectedCallback` for disparado.
+
+### Passos para Utilização
+
+1. **Importe o decorator `disconnected`**:
+
+   ```javascript
+   import { disconnected } from '@bake-js/-o-id';
+   ```
+
+2. **Aplique o decorator ao método que deverá ser chamado quando o Custom Element for removido do DOM**:
+   
+   - **Passo 1:** Identifique o método que deverá executar a lógica de remoção.
+   - **Passo 2:** Aplique o decorator diretamente sobre esse método.
+
+3. **Implemente a lógica de desconexão**:
+
+   - Defina o comportamento necessário no método decorado. O método será automaticamente invocado ao remover o componente do DOM.
+
+### Exemplo Prático
+
+**Caso 1: Limpando listeners ao remover o elemento do DOM**
+
+Aqui está um exemplo de como utilizar o `disconnected` para garantir que os event listeners sejam removidos ao desconectar o Custom Element:
 
 ```javascript
-import { disconnected, define } from '@bake-js/-o-id';
+import { define, disconnected } from '@bake-js/-o-id';
 
-@define("element-cleanup")
-class CleanupElement extends HTMLElement {
+@define('my-element')
+class MyElement extends HTMLElement {
+  constructor() {
+    super();
+    this.handleClick = this.handleClick.bind(this);
+    document.addEventListener('click', this.handleClick);
+  }
+
+  handleClick() {
+    console.log('Documento clicado');
+  }
+
   @disconnected
-  onDisconnected() {
-    console.log('Elemento desconectado do DOM');
-    window.removeEventListener('resize', this.handleResize);
-  }
-
-  connectedCallback() {
-    window.addEventListener('resize', this.handleResize);
-  }
-
-  handleResize = () => {
-    console.log('Redimensionamento detectado');
+  cleanUp() {
+    document.removeEventListener('click', this.handleClick);
+    console.log('Listeners removidos ao desconectar o elemento do DOM.');
   }
 }
 ```
 
-## Comparação com Concorrentes
+**Explicação:**
+- Quando o `MyElement` é removido do DOM, o método `cleanUp` é invocado automaticamente, garantindo que os event listeners sejam removidos, evitando vazamentos de memória.
 
-### Lit
+**Caso 2: Cancelando timers ao desconectar o elemento**
 
-- **Requer Sobrescrição:** É necessário sobrescrever `disconnectedCallback` manualmente.
-- **Pausa Automática:** Pausa o ciclo de atualização reativa automaticamente ao desconectar o elemento.
+Um segundo exemplo mostra como podemos cancelar um timer ao remover o componente do DOM:
 
-Para mais detalhes sobre Lit, veja a [documentação oficial](https://lit.dev/docs/components/lifecycle/#disconnectedcallback).
+```javascript
+import { define, disconnected } from '@bake-js/-o-id';
 
-```typescript
-disconnectedCallback() {
-  super.disconnectedCallback();
-  window.removeEventListener('keydown', this._handleKeydown);
-}
-```
+@define('timer-element')
+class TimerElement extends HTMLElement {
+  constructor() {
+    super();
+    this.timer = setInterval(() => {
+      console.log('Timer ativo');
+    }, 1000);
+  }
 
-### Stencil
-
-- **Automático:** O `disconnectedCallback` é chamado automaticamente sempre que o componente é desconectado do DOM, podendo ser disparado mais de uma vez. Diferente do evento de "destruição", é usado para limpar o componente.
-
-Para mais detalhes sobre Stencil, veja a [documentação oficial](https://stenciljs.com/docs/component-lifecycle#disconnectedcallback).
-
-```typescript
-@Component({
-  tag: 'my-component',
-  styleUrl: 'my-component.css',
-  shadow: true,
-})
-export class MyComponent {
-  disconnectedCallback() {
-    // Lógica de limpeza aqui
+  @disconnected
+  stopTimer() {
+    clearInterval(this.timer);
+    console.log('Timer cancelado ao desconectar o elemento.');
   }
 }
 ```
 
-### Vantagens do `@disconnected`
+**Explicação:**
+- O método `stopTimer` é chamado automaticamente ao remover o `TimerElement` do DOM, garantindo que o `setInterval` seja limpo corretamente.
 
-- **Interface Nativa:** Respeita a assinatura do método nativo `disconnectedCallback` ([MDN](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements#using_the_lifecycle_callbacks)).
-- **Flexibilidade:** Não exige a extensão de uma classe específica, proporcionando maior flexibilidade.
+### Benefícios do Decorator `disconnected`
 
-## Considerações Finais
+1. **Centralização da Lógica**: A lógica de remoção é automaticamente chamada quando o elemento é removido do DOM, sem a necessidade de implementar diretamente o `disconnectedCallback`.
+2. **Limpeza Automática de Recursos**: O decorator facilita a execução de rotinas de limpeza, como remover listeners de eventos ou cancelar timers, mantendo o código claro e organizado.
+3. **Proteção Contra Vazamentos**: Ajuda a proteger contra vazamentos de memória, garantindo que recursos não utilizados sejam liberados corretamente ao remover o elemento.
 
-O decorator `disconnected` oferece uma solução eficiente para gerenciar a execução de lógica adicional ao desconectar elementos customizados do DOM. Facilita a manutenção do código e garante uma limpeza eficiente de recursos e listeners, promovendo uma experiência de desenvolvimento mais organizada e simplificada.
+### Considerações Finais
+
+O decorator `disconnected` oferece uma solução prática e eficiente para lidar com a desconexão de Custom Elements do DOM, facilitando o gerenciamento de recursos e promovendo uma abordagem mais limpa para o ciclo de vida dos componentes.

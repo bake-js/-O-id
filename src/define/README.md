@@ -1,98 +1,110 @@
-# Define
+# Guia de Uso: Decorator `define`
 
-O `define` é um decorator que simplifica o registro de Custom Elements de maneira declarativa, sendo parte da biblioteca `@bake-js/-o-id`.
+O decorator `define` é utilizado para registrar classes como Custom Elements de maneira declarativa. Ele simplifica o processo de registro de um Custom Element, que geralmente envolve a chamada manual de `customElements.define`.
 
-## Visão Geral
+### Quando Usar
 
-### Nome e Classificação
+- **Criar um Custom Element**: Registre uma nova tag personalizada no DOM.
+- **Estender Elementos Nativos**: Crie Custom Elements baseados em elementos HTML nativos, como `<div>`, `<button>`, etc.
 
-- **Nome:** Define
-- **Classificação:** Decorators [ES Proposals](https://www.proposals.es/proposals/Decorators), [TypeScript](https://www.typescriptlang.org/docs/handbook/decorators.html)
+### Como Funciona
 
-### Objetivo
+Quando o `define` é aplicado a uma classe, ele registra automaticamente a classe como um Custom Element no `CustomElementRegistry`. A tag do elemento, definida pelo parâmetro `name`, se torna a representação visual do Custom Element.
 
-Facilitar o registro de Custom Elements, eliminando a necessidade de chamadas manuais para `customElements.define` ([MDN](https://developer.mozilla.org/en-US/docs/Web/API/CustomElementRegistry/define)).
-
-## Motivação
-
-Usar o `define` traz as seguintes vantagens:
-
-1. **Simplificação:** Reduz chamadas repetitivas a `customElements.define`.
-2. **Legibilidade:** Melhora a leitura do código ao associar diretamente o nome da tag à definição da classe.
-
-## Aplicabilidade
-
-Ideal para qualquer situação onde se deseja registrar Custom Elements de maneira mais organizada e declarativa, especialmente em projetos grandes.
-
-## Importação
-
-Para utilizar o decorator `define`, importe-o da seguinte maneira:
+### Estrutura
 
 ```javascript
-import { define } from '@bake-js/-o-id';
-```
-
-## Implementação
-
-```javascript
-const define = (name, options) => (constructor) =>
-  customElements.define(name, constructor, options);
+/**
+ * @param {string} name - Nome da tag do Custom Element.
+ * @param {ElementDefinitionOptions} [options] - Configurações opcionais para a definição do Custom Element.
+ * @returns {Function} Um decorator que registra o Custom Element.
+ */
+const define = (name, options) => (constructor) => {
+  // Registra o Custom Element se ele ainda não estiver registrado.
+  customElements.get(name) ?? customElements.define(name, constructor, options);
+};
 
 export default define;
 ```
 
-### Exemplo de Uso
+### Parâmetros
+
+1. **name** (obrigatório):
+   - **Tipo:** `string`
+   - **Descrição:** O nome da tag HTML que será associada ao Custom Element. Deve seguir as convenções de nomes de tags, ou seja, conter um hífen, como `'my-element'`.
+
+2. **options** (opcional):
+   - **Tipo:** `ElementDefinitionOptions`
+   - **Descrição:** Um objeto que pode conter a propriedade `extends`, especificando qual elemento nativo será estendido pelo Custom Element. Exemplo: `{ extends: 'div' }` estende um elemento `div` nativo.
+
+### Passos para Utilização
+
+1. **Importe o decorator `define`**:
+
+   ```javascript
+   import { define } from '@bake-js/-o-id';
+   ```
+
+2. **Aplique o decorator à sua classe**:
+   
+   - **Passo 1:** Escolha um nome único para o Custom Element, seguindo as regras de nomeação de tags (precisa conter um hífen).
+   - **Passo 2:** Use o decorator diretamente sobre a declaração da classe.
+
+3. **Construa a lógica do seu componente**:
+   
+   - Defina a funcionalidade e comportamento da classe que será associada ao Custom Element.
+   - Se necessário, utilize o parâmetro `options` para especificar elementos nativos a serem estendidos.
+
+### Exemplo Prático
+
+**Caso 1: Criando um Custom Element simples**
+
+Aqui está um exemplo de como definir um Custom Element chamado `my-element`:
 
 ```javascript
 import { define } from '@bake-js/-o-id';
 
-@define('element-counter')
-class Counter extends HTMLElement {
-  connectedCallback() {
-    this.innerHTML = '<div>Counter Component</div>';
+@define('my-element')
+class MyElement extends HTMLElement {
+  constructor() {
+    super();
+    this.textContent = 'Hello, world!';
   }
 }
 ```
 
-## Comparação com Concorrentes
+**Explicação:**
+- O `define('my-element')` registra a classe `MyElement` com o nome de tag `my-element`.
+- A classe estende `HTMLElement`, criando um Custom Element genérico.
+- Ao adicionar `<my-element></my-element>` no HTML, o conteúdo "Hello, world!" será exibido.
 
-### Lit
+**Caso 2: Extensão de um elemento nativo (`div`)**
 
-- **Requer Extensão:** Necessário estender `LitElement`.
-- **Decorator:** `@customElement` altera a assinatura de `customElements.define`.
-
-Para mais detalhes sobre o Lit, veja a [documentação oficial](https://lit.dev/docs/components/defining/).
+Você pode estender elementos HTML nativos como `div`:
 
 ```javascript
-@customElement('simple-greeting')
-export class SimpleGreeting extends LitElement { /* ... */ }
-```
+import { define } from '@bake-js/-o-id';
 
-### Stencil
-
-- **Configurável:** Utiliza `@Component` com metadados.
-
-Para mais detalhes sobre Stencil, veja a [documentação oficial](https://stenciljs.com/docs/getting-started).
-
-```typescript
-@Component({
-  tag: 'my-component',
-  styleUrl: 'my-component.css',
-  shadow: true,
-})
-export class MyComponent {
-  @Prop() first: string;
-  @Prop() middle: string;
-  @Prop() last: string;
-  /* ... */
+@define('my-div', { extends: 'div' })
+class MyDivElement extends HTMLDivElement {
+  constructor() {
+    super();
+    this.textContent = 'This is an extended div!';
+  }
 }
 ```
 
-### Vantagens do `@define`
+**Explicação:**
+- O `define('my-div', { extends: 'div' })` registra um Custom Element que estende o comportamento de um `div` nativo.
+- O conteúdo do `div` é modificado para "This is an extended div!".
+- Este elemento pode ser utilizado da seguinte maneira no HTML: `<div is="my-div"></div>`.
 
-- **Interface Nativa:** Respeita a assinatura do método nativo `customElements.define` ([MDN](https://developer.mozilla.org/en-US/docs/Web/API/CustomElementRegistry/define)).
-- **Flexibilidade:** Não obriga a extensão de uma classe específica, oferecendo maior flexibilidade.
+### Benefícios do Decorator `define`
 
-## Considerações Finais
+1. **Simplificação do Registro**: Não é necessário chamar manualmente `customElements.define`. O decorator gerencia o processo de registro automaticamente.
+2. **Extensão de Elementos Nativos**: Usando o parâmetro `options`, você pode facilmente estender qualquer elemento nativo do HTML.
+3. **Redução de Boilerplate**: O uso de `define` torna o código mais conciso e legível, removendo a repetição de chamadas explícitas de `customElements`.
 
-O `define` é uma ferramenta eficaz para registrar Custom Elements, simplificando o desenvolvimento e melhorando a legibilidade do código, oferecendo uma interface familiar e flexível.
+### Considerações Finais
+
+O decorator `define` é uma solução eficiente para registrar Custom Elements de forma declarativa e sem necessidade de invocações manuais do registro de elementos. Sua flexibilidade permite não apenas criar novos componentes, mas também estender elementos nativos com facilidade.

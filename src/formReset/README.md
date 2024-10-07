@@ -1,116 +1,124 @@
-# FormReset
+# Guia de Uso: Decorator `formReset`
 
-O `formReset` é um decorator que facilita a adição de lógica ao método `formResetCallback` de um Custom Element, sendo parte da biblioteca `@bake-js/-o-id`.
+O decorator `formReset` é projetado para adicionar lógica personalizada ao método `formResetCallback` de um Custom Element. Este método é automaticamente chamado quando o formulário ao qual o elemento pertence é redefinido, permitindo que você execute ações específicas nesse momento.
 
-## Visão Geral
+### Quando Usar
 
-### Nome e Classificação
+- **Gerenciamento de Estado**: Ideal para Custom Elements que precisam redefinir seu estado interno ou aparência quando o formulário é redefinido.
+- **Validação e Mensagens de Erro**: Útil para remover mensagens de erro ou realizar validações necessárias após a redefinição do formulário.
 
-- **Nome:** FormReset
-- **Classificação:** Decorators [ES Proposals](https://www.proposals.es/proposals/Decorators), [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)
+### Como Funciona
 
-### Objetivo
+O decorator `formReset` é aplicado a um método que deve ser chamado automaticamente sempre que o formulário associado ao Custom Element for redefinido. Isso permite que a lógica necessária para gerenciar a redefinição seja encapsulada e organizada de forma eficaz.
 
-Facilitar a execução de lógica personalizada quando um formulário associado ao Custom Element é resetado, utilizando o callback `formResetCallback`.
-
-## Motivação
-
-Usar o `formReset` traz as seguintes vantagens:
-
-1. **Simplificação do Código:** Elimina a necessidade de definir manualmente o método `formResetCallback`.
-2. **Facilidade de Manutenção:** Centraliza a lógica relacionada ao reset do formulário em um único método decorado.
-3. **Consistência:** Garante que a lógica de reset seja executada de maneira consistente sempre que o formulário associado é resetado.
-
-## Aplicabilidade
-
-Ideal para qualquer situação onde se deseja executar lógica personalizada sempre que um formulário associado a um Custom Element é resetado, especialmente em componentes que precisam reagir a eventos de reset de formulário.
-
-## Importação
-
-Para utilizar o decorator `formReset`, importe-o da seguinte maneira:
+### Estrutura
 
 ```javascript
-import { formReset } from '@bake-js/-o-id';
-```
-
-## Implementação
-
-```javascript
-import intercept, { exec } from "../intercept";
-import { formResetCallback } from "../interfaces";
-
+/**
+ * @param {Object} target - O alvo do decorator, geralmente a classe do Custom Element.
+ * @param {string} propertyKey - O nome do método decorado.
+ * @returns {Function} Um decorator que intercepta a chamada do `formResetCallback`.
+ */
 const formReset = (target, propertyKey) => {
+  // Cria uma instância do interceptor para o método `formResetCallback`.
   const interceptor = intercept(formResetCallback);
 
+  // Adiciona o método decorado à lista de callbacks a serem executados.
   return interceptor
-    .in(target)
-    .then(exec(propertyKey));
+    .in(target) // Define o alvo do interceptor.
+    .then(exec(propertyKey)); // Define o método a ser executado pelo interceptor.
 };
 
 export default formReset;
 ```
 
-### Exemplo de Uso
+### Parâmetros
+
+1. **target** (obrigatório):
+   - **Tipo:** `Object`
+   - **Descrição:** O alvo do decorator, geralmente a classe do Custom Element. Define o contexto onde o método decorado será interceptado.
+
+2. **propertyKey** (obrigatório):
+   - **Tipo:** `string`
+   - **Descrição:** O nome do método decorado. Este método será chamado automaticamente quando o `formResetCallback` for disparado.
+
+### Passos para Utilização
+
+1. **Importe o decorator `formReset`**:
+
+   ```javascript
+   import { formReset } from '@bake-js/-o-id';
+   ```
+
+2. **Aplique o decorator ao método que deverá ser chamado quando o formulário for redefinido**:
+   
+   - **Passo 1:** Identifique o método que deve executar a lógica após a redefinição do formulário.
+   - **Passo 2:** Aplique o decorator diretamente sobre esse método.
+
+3. **Implemente a lógica de redefinição**:
+
+   - Defina o comportamento necessário no método decorado. O método será automaticamente invocado ao redefinir o componente no formulário.
+
+### Exemplo Prático
+
+**Caso 1: Notificando sobre a redefinição do formulário**
+
+Aqui está um exemplo de como utilizar o `formReset` para notificar quando o formulário é redefinido:
 
 ```javascript
-import { formReset } from '@bake-js/-o-id';
+import { define, formReset } from '@bake-js/-o-id';
 
+@define('my-element')
 class MyElement extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+  }
+
   @formReset
   handleFormReset() {
-    console.log('The form associated with the element has been reset.');
+    console.log('O formulário foi redefinido.');
   }
 }
-
-customElements.define('my-element', MyElement);
 ```
 
-## Comparação com Concorrentes
+**Explicação:**
+- O método `handleFormReset` é chamado automaticamente quando o formulário que contém o `MyElement` é redefinido, permitindo que você execute a lógica necessária nesse momento.
 
-### Lit
+**Caso 2: Resetando o estado visual após a redefinição**
 
-- **Comportamento Padrão:** O Lit não fornece comportamento padrão para `formResetCallback`.
-- **Extensão Obrigatória:** Requer a extensão de `LitElement` para definir componentes.
-
-Para mais detalhes sobre o `formResetCallback` no Lit, veja a [documentação oficial](https://lit.dev/docs/components/forms/).
+Um segundo exemplo mostra como você pode redefinir a aparência do elemento após o formulário ser redefinido:
 
 ```javascript
-import { LitElement } from 'lit';
+import { define, formReset } from '@bake-js/-o-id';
 
-class MyElement extends LitElement {
-  formResetCallback() {
-    console.log('The form associated with the element has been reset.');
+@define('custom-input')
+class CustomInput extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+    this.input = document.createElement('input');
+    this.shadowRoot.appendChild(this.input);
   }
-}
-customElements.define('my-element', MyElement);
-```
 
-### Stencil
-
-- **Hook Não Disponível:** O Stencil não possui um hook específico para `formResetCallback`.
-
-Para mais detalhes sobre o Stencil, veja a [documentação oficial](https://stenciljs.com/docs/forms).
-
-```typescript
-import { Component, h } from '@stencil/core';
-
-@Component({
-  tag: 'my-component',
-  shadow: true,
-})
-export class MyComponent {
-  formResetCallback() {
-    console.log('The form associated with the element has been reset.');
+  @formReset
+  handleFormReset() {
+    // Limpa o valor do input ao redefinir o formulário.
+    this.input.value = '';
+    console.log('O input foi redefinido.');
   }
 }
 ```
 
-### Vantagens do `@formReset`
+**Explicação:**
+- O método `handleFormReset` é chamado automaticamente ao redefinir o formulário que contém o `CustomInput`, permitindo que o valor do input seja limpo e o estado seja ajustado.
 
-- **Facilidade de Uso:** Simplifica a adição de lógica ao método `formResetCallback`.
-- **Código Mais Limpo:** Centraliza a lógica de reset em um único método decorado.
-- **Flexibilidade:** Não exige extensão de classes específicas, como `LitElement`.
+### Benefícios do Decorator `formReset`
 
-## Considerações Finais
+1. **Gerenciamento Simplificado**: Permite que a lógica de redefinição seja centralizada em um único método, tornando o código mais limpo e organizado.
+2. **Interatividade Aprimorada**: Proporciona uma forma de responder visualmente à redefinição do formulário, melhorando a experiência do usuário.
+3. **Flexibilidade**: Possibilita personalizar o comportamento do elemento ao ser redefinido, adaptando-se facilmente a diferentes necessidades.
 
-O decorator `formReset` oferece uma maneira eficaz e declarativa de adicionar lógica ao método `formResetCallback`, simplificando o desenvolvimento e melhorando a legibilidade do código.
+### Considerações Finais
+
+O decorator `formReset` é uma ferramenta útil para Custom Elements que precisam reagir à redefinição em formulários, permitindo uma abordagem modular e reutilizável para gerenciar o estado e o comportamento dos elementos durante esse processo.
