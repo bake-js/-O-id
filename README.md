@@ -29,8 +29,8 @@ npm install @bake-js/-o-id
 Aqui está um exemplo simples de como utilizar a biblioteca para criar um contador interativo:
 
 ```javascript
-import { define } from '@bake-js/-o-id';
-import { html, paint, repaint } from '@bake-js/-o-id/dom';
+import { adopted, define } from '@bake-js/-o-id';
+import { css, html, paint, repaint } from '@bake-js/-o-id/dom';
 import on from '@bake-js/-o-id/event';
 
 function component(self) {
@@ -39,10 +39,36 @@ function component(self) {
   `;
 }
 
+function style() {
+  return css`
+    button {
+      background: #ffffff;
+      border-radius: 8px;
+      color: #222222;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 20px;
+      padding: 10px 20px;
+      border: 1px solid #222222;
+
+      &:hover {
+        background: #f7f7f7;
+        border-color: #000000;
+      }
+    }
+  `;
+}
+
 @define('o-id-counter')
-@paint(component)
+@paint(component, style)
 class Counter extends HTMLElement {
   #number;
+
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+  }
 
   get number() {
     return (this.#number ??= 0);
@@ -50,6 +76,7 @@ class Counter extends HTMLElement {
 
   set number(value) {
     this.#number = value;
+    this.requestUpdate();
   }
 
   @on.click('button')
@@ -58,12 +85,28 @@ class Counter extends HTMLElement {
     this.number += 1;
     return this;
   }
+
+  @adopted
+  handleAdoption() {
+    // Qualquer lógica adicional ao ser adotado pode ser adicionada aqui
+    return this
+  }
 }
 ```
 
-Este exemplo mostra como **-O-id** facilita a criação de componentes interativos com uma sintaxe clara e eficiente.
+### Detalhes do Exemplo:
 
-Claro! Aqui está a seção de documentação atualizada com links para os quatro principais guias:
+1. **Componentes e Estilos:** A função `component` cria a estrutura HTML do botão, enquanto `style` define os estilos CSS que são aplicados ao botão.
+
+2. **Definição do Elemento:** O elemento é definido como `o-id-counter` usando o decorator `@define`.
+
+3. **Estado Interno:** O contador é mantido na variável privada `#number`, que inicia com zero. O método `get` e `set` são utilizados para acessar e modificar o valor do contador.
+
+4. **Incremento de Valor:** O método `increment` é chamado ao clicar no botão, aumentando o valor do contador e atualizando a visualização.
+
+5. **Callback de Adoção:** O método `handleAdoption`, decorado com `@adopted`, é chamado automaticamente quando o componente é movido para um novo documento ou Shadow DOM. Ele pode conter qualquer lógica adicional que você deseja executar nessa situação.
+
+> Este exemplo mostra como **-O-id** facilita a criação de componentes interativos com uma sintaxe clara e eficiente.
 
 ## Documentação
 
