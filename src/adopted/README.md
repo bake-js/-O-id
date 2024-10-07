@@ -50,67 +50,86 @@ const adopted = (target, propertyKey) => {
 export default adopted;
 ```
 
-### Exemplo de Uso
-
-```typescript
-import { adopted } from '@bake-js/-o-id';
-
-class MyElement extends HTMLElement {
-  @adopted
-  handleAdoption() {
-    console.log('Element has been adopted into a new document or shadow DOM.');
-  }
-}
-
-customElements.define('my-element', MyElement);
-```
-
-## Comparação com Concorrentes
-
-### Lit
-
-- **Comportamento Padrão:** O Lit não fornece comportamento padrão para `adoptedCallback`.
-- **Extensão Obrigatória:** Requer a extensão de `LitElement` para definir componentes.
-
-Para mais detalhes sobre o `adoptedCallback` no Lit, veja a [documentação oficial](https://lit.dev/docs/components/lifecycle/#adoptedcallback).
+## Exemplo de Uso
 
 ```javascript
-import { LitElement } from 'lit';
+import { adopted, define } from '@bake-js/-o-id';
+import { css, html, paint, repaint } from '@bake-js/-o-id/dom';
+import on from '@bake-js/-o-id/event';
 
-class MyElement extends LitElement {
-  adoptedCallback() {
-    console.log('Element has been adopted into a new document or shadow DOM.');
+function component(self) {
+  return html`
+    <button>Increment ${self.number}</button>
+  `;
+}
+
+function style() {
+  return css`
+    button {
+      background: #ffffff;
+      border-radius: 8px;
+      color: #222222;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 20px;
+      padding: 10px 20px;
+      border: 1px solid #222222;
+
+      &:hover {
+        background: #f7f7f7;
+        border-color: #000000;
+      }
+    }
+  `;
+}
+
+@define('o-id-counter')
+@paint(component, style)
+class Counter extends HTMLElement {
+  #number;
+
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+  }
+
+  get number() {
+    return (this.#number ??= 0);
+  }
+
+  set number(value) {
+    this.#number = value;
+    this.requestUpdate();
+  }
+
+  @on.click('button')
+  @repaint
+  increment() {
+    this.number += 1;
+    return this;
+  }
+
+  @adopted
+  handleAdoption() {
+    // Qualquer lógica adicional ao ser adotado pode ser adicionada aqui
+    return this
   }
 }
-customElements.define('my-element', MyElement);
 ```
 
-### Stencil
+### Detalhes do Exemplo:
 
-- **Hook Não Disponível:** O Stencil não possui um hook específico para `adoptedCallback`.
+1. **Componentes e Estilos:** A função `component` cria a estrutura HTML do botão, enquanto `style` define os estilos CSS que são aplicados ao botão.
 
-Para mais detalhes sobre o Stencil, veja a [documentação oficial](https://stenciljs.com/docs/getting-started).
+2. **Definição do Elemento:** O elemento é definido como `o-id-counter` usando o decorator `@define`.
 
-```typescript
-import { Component, h } from '@stencil/core';
+3. **Estado Interno:** O contador é mantido na variável privada `#number`, que inicia com zero. O método `get` e `set` são utilizados para acessar e modificar o valor do contador.
 
-@Component({
-  tag: 'my-component',
-  shadow: true,
-})
-export class MyComponent {
-  adoptedCallback() {
-    console.log('Element has been adopted into a new document or shadow DOM.');
-  }
-}
-```
+4. **Incremento de Valor:** O método `increment` é chamado ao clicar no botão, aumentando o valor do contador e atualizando a visualização.
 
-### Vantagens do `@adopted`
-
-- **Facilidade de Uso:** Simplifica a adição de lógica ao método `adoptedCallback`.
-- **Código Mais Limpo:** Centraliza a lógica de adoção em um único método decorado.
-- **Flexibilidade:** Não exige extensão de classes específicas, como `LitElement`.
+5. **Callback de Adoção:** O método `handleAdoption`, decorado com `@adopted`, é chamado automaticamente quando o componente é movido para um novo documento ou Shadow DOM. Ele pode conter qualquer lógica adicional que você deseja executar nessa situação.
 
 ## Considerações Finais
 
-O decorator `adopted` oferece uma maneira eficaz e declarativa de adicionar lógica ao método `adoptedCallback`, simplificando o desenvolvimento e melhorando a legibilidade do código.
+O decorator `adopted` oferece uma maneira eficaz e declarativa de adicionar lógica ao método `adoptedCallback`, simplificando o desenvolvimento e melhorando a legibilidade do código. Ele se destaca pela sua capacidade de centralizar e simplificar o gerenciamento de eventos de adoção em Custom Elements, tornando a manutenção do código mais eficiente e intuitiva.
