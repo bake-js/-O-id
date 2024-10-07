@@ -116,6 +116,10 @@ O exemplo abaixo ilustra a criação de um componente Custom Element chamado `o-
 
 Para utilizar o componente em sua aplicação, basta incluir o código acima e adicionar o elemento `<o-id-counter></o-id-counter>` em seu HTML. O contador estará pronto para ser usado, permitindo interação do usuário para incrementar o valor.
 
+```html
+<o-id-counter></o-id-counter>
+```
+
 > Este exemplo mostra como **-O-id** facilita a criação de componentes interativos com uma sintaxe clara e eficiente.
 
 ## Documentação
