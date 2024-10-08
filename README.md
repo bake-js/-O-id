@@ -88,7 +88,6 @@ class Counter extends HTMLElement {
 
 Você pode ver o exemplo interativo no [CodePen](https://codepen.io/demgoncalves/pen/dyxpdLw?editors=1010).
 
-
 ### Explicação do Componente
 
 O exemplo ilustra a criação de um componente Custom Element chamado `o-id-counter`, representando um contador que pode ser incrementado por meio de um botão. A seguir, as principais características do componente:
@@ -120,42 +119,6 @@ Exemplo de uso em HTML:
 ```
 
 > Este exemplo demonstra como **-O-id** facilita a criação de componentes interativos com uma sintaxe clara e eficiente.
-
-### Exemplo de Uso
-
-```javascript
-// Seu código exemplo aqui
-```
-
-Você pode testar e interagir com o código no seguinte link: [CodePen Demo](https://codepen.io/demgoncalves/pen/dyxpdLw?editors=1010).
-```
-
-Isso garantirá que o link seja facilmente acessível após o exemplo de código. Se precisar de mais alguma coisa, é só avisar!
-```markdown
-### Exemplo
-
-```javascript
-// Seu código de exemplo aqui
-```
-
-### Visualizar no CodePen
-[Veja o exemplo ao vivo no CodePen](https://codepen.io/demgoncalves/pen/dyxpdLw?editors=1010)
-```
-
-Assim, a seção de exemplo fica clara e o link é facilmente acessível. Se preferir uma formulação diferente ou outra organização, me avise!
-
-```markdown
-### Exemplo
-
-```javascript
-// Seu código de exemplo aqui
-```
-
-### Visualizar no CodePen
-[Veja o exemplo ao vivo no CodePen](https://codepen.io/demgoncalves/pen/dyxpdLw?editors=1010)
-```
-
-Assim, a seção de exemplo fica clara e o link é facilmente acessível. Se preferir uma formulação diferente ou outra organização, me avise!
 
 ## Demonstração
 
