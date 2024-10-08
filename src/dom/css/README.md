@@ -1,133 +1,96 @@
-# CSS
+# Guia de Uso: Função `css`
 
-O `css` é um helper que facilita a criação e gerenciamento de estilos CSS utilizando `CSSStyleSheet` e tagged template literals. Este pacote faz parte da biblioteca Element, que visa simplificar o desenvolvimento de Web Components.
+A função `css` facilita a criação de folhas de estilo dinâmicas dentro de Web Components, utilizando template literals. Ela permite interpolar variáveis JavaScript diretamente no CSS, e é especialmente útil quando usada com o Shadow DOM e a API `adoptedStyleSheets`.
 
-## Visão Geral
+### Quando Usar
 
-### Nome e Classificação
+- **Estilos Reativos**: Ideal para aplicar estilos que dependem de variáveis ou estados de componentes.
+- **Componentização com Shadow DOM**: A função gera folhas de estilo diretamente compatíveis com o Shadow DOM, proporcionando isolamento de estilo.
 
-- **Nome:** CSS
-- **Classificação:** Helpers [Tagged Template Literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
-
-### Objetivo
-
-Facilitar a definição e aplicação de estilos encapsulados em componentes customizados, utilizando uma API moderna e eficiente.
-
-## Motivação
-
-Utilizar o `css` proporciona as seguintes vantagens:
-
-1. **Encapsulamento de Estilos:** Permite a definição de estilos específicos para componentes, evitando conflitos com CSS global.
-2. **Reutilização e Modularidade:** Promove a reutilização de estilos entre diferentes componentes e mantém o código organizado e modular.
-3. **Performance:** Aproveita as capacidades do `CSSStyleSheet` para aplicar estilos de forma eficiente e dinâmica.
-
-## Aplicabilidade
-
-O helper `css` é ideal para situações onde é necessário definir estilos CSS para componentes customizados, como:
-
-- **Desenvolvimento de Web Components:** Aplicando estilos encapsulados para cada componente.
-- **Aplicações Moduladas:** Manter a separação de estilos para uma melhor manutenção e escalabilidade.
-
-## Importação
-
-Para utilizar o helper `css`, importe-o da seguinte forma:
+### Estrutura
 
 ```javascript
-import { css } from '@bake-js/-o-id/dom';
-```
-
-## Implementação
-
-```javascript
+/**
+ * @param {TemplateStringsArray} strings - As partes literais da string do template.
+ * @param {...any} values - Os valores interpolados na string do template.
+ * @returns {CSSStyleSheet[]} Um array contendo a folha de estilos gerada.
+ */
 const css = (strings, ...values) => {
   const styleSheet = new CSSStyleSheet();
   const cssText = String.raw({ raw: strings }, ...values);
   styleSheet.replaceSync(cssText);
   return [styleSheet];
 };
-
-export default css;
 ```
 
-## Exemplo de Uso
+### Parâmetros
+
+1. **strings**:
+   - **Tipo:** `TemplateStringsArray`
+   - **Descrição:** As partes literais da string de template CSS.
+
+2. **values**:
+   - **Tipo:** `any[]`
+   - **Descrição:** Os valores interpolados na string, que podem ser variáveis, expressões ou resultados de funções.
+
+### Retorno
+
+- **Tipo:** `CSSStyleSheet[]`
+- **Descrição:** Um array contendo uma ou mais folhas de estilo (`CSSStyleSheet`), que podem ser aplicadas diretamente ao componente com o Shadow DOM.
+
+### Exemplo Prático
+
+**Exemplo: Usando `@paint` e `css` para Gerar Estilos Dinâmicos**
 
 ```javascript
-import { css } from '@bake-js/-o-id/dom';
+import { define } from '@bake-js/-o-id';
+import { css, html, paint } from '@bake-js/-o-id/dom';
 
-const styles = css`
-  :host {
-    display: block;
-    padding: 16px;
-    background-color: #f0f0f0;
-  }
+// Função responsável por gerar o template HTML do componente
+function component() {
+  return html`
+    <div>Meu Componente</div>
+  `;
+}
 
-  h1 {
-    color: #333;
-  }
-`;
+// Função que retorna a folha de estilo dinâmica com interpolação de variáveis
+function style() {
+  return css`
+    :host {
+      display: block;
+      background-color: ${this.backgroundColor};
+      color: ${this.textColor};
+    }
+  `;
+}
 
-class MyElement extends HTMLElement {
-  static get observedAttributes() {
-    return ['title'];
-  }
-
+// Define o Web Component e associa o template e os estilos via @paint
+@define('my-component')
+@paint(component, style)
+class MyComponent extends HTMLElement {
   constructor() {
     super();
-    const shadow = this.attachShadow({ mode: 'open' });
-    shadow.adoptedStyleSheets = [styles];
-    shadow.innerHTML = `
-      <h1>${this.getAttribute('title')}</h1>
-    `;
+    this.attachShadow({ mode: 'open' });
+    this.backgroundColor = 'lightblue';
+    this.textColor = 'black';
   }
 }
-
-customElements.define('my-element', MyElement);
 ```
 
-## Comparação com Concorrentes
+### Explicação:
 
-### Lit
+- **Função `component()`**: Define o conteúdo HTML do componente, retornando o template via `html`.
+- **Função `style()`**: Retorna a folha de estilo gerada pela função `css`. As variáveis `backgroundColor` e `textColor` são interpoladas diretamente no CSS, permitindo que os estilos sejam dinâmicos e reativos.
+- **Decorador `@paint`**: Aplica o HTML e CSS ao componente, automatizando o processo de renderização e estilização.
+- **Uso de `@define`**: Define o Web Component nativo, conectando-o ao DOM.
 
-- **CSS Literal:** Utiliza o `css` para definir estilos, mas integra-se com o `LitElement` para aplicar esses estilos.
-- **Exemplo:** O `css` é usado para criar um template literal que é integrado ao `LitElement`.
+### Benefícios
 
-Para mais detalhes sobre Lit, veja a [documentação oficial](https://lit.dev/docs/components/styles/).
+1. **Simplicidade**: O uso do template literal para CSS elimina a necessidade de manipulação direta de strings.
+2. **Estilos Isolados**: A função `css` retorna folhas de estilo compatíveis com `adoptedStyleSheets`, facilitando a aplicação direta no Shadow DOM e evitando conflitos de estilo globais.
+3. **Interpolação de Variáveis**: Permite a inserção de variáveis e propriedades dinâmicas no CSS, adaptando-se a diferentes estados do componente.
 
-```typescript
-import { css, LitElement } from 'lit';
+### Considerações Finais
 
-const styles = css`
-  :host {
-    display: block;
-    background-color: #f0f0f0;
-  }
-`;
-
-class MyElement extends LitElement {
-  static styles = styles;
-}
-```
-
-### Stencil
-
-- **CSS Encapsulado:** Utiliza o `@Component` para definir estilos encapsulados, mas não oferece uma API diretamente comparável ao `css`.
-
-Para mais detalhes sobre Stencil, veja a [documentação oficial](https://stenciljs.com/docs/style).
-
-```typescript
-@Component({
-  tag: 'my-component',
-  styleUrl: 'my-component.css',
-  shadow: true,
-})
-export class MyComponent {}
-```
-
-## Vantagens do `@css`
-
-- **Encapsulamento de Estilos:** Permite a definição de estilos específicos para Web Components, evitando conflitos globais.
-- **Flexibilidade:** Facilita a aplicação de estilos dinâmicos e modulares, utilizando a API moderna `CSSStyleSheet`.
-
-## Considerações Finais
-
-O helper `css` oferece uma solução moderna e eficiente para definir estilos CSS dentro de Web Components. Ao utilizar `CSSStyleSheet` e tagged template literals, ele promove o encapsulamento e reutilização de estilos, facilitando o desenvolvimento de componentes estilizados e modulares.
+- **Uso em Web Components**: A função foi desenhada para funcionar bem em ambientes que utilizam Shadow DOM e `adoptedStyleSheets`.
+- **Compatibilidade**: Certifique-se de verificar o suporte do navegador para `CSSStyleSheet` e `adoptedStyleSheets`.

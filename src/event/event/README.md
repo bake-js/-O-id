@@ -1,151 +1,127 @@
-# On
+# Guia de Uso: Decorator `event`
 
-O `on` é um decorator que facilita a adição de listeners de eventos a elementos dentro de um Custom Element, sendo parte da biblioteca `@bake-js/-o-id/event`.
+O decorator `event` permite que desenvolvedores declarem listeners de eventos de forma simplificada e gerenciem a conexão e desconexão desses eventos automaticamente com base no ciclo de vida do Custom Element. O decorator pode ser utilizado para eventos comuns como `click`, `keydown`, `mouseover`, entre outros, e inclui suporte para filtros que modificam o comportamento do evento antes que o método decorado seja executado.
 
-## Visão Geral
+### Quando Usar
 
-### Nome e Classificação
+- **Gerenciamento de Eventos Declarativo**: Útil para adicionar listeners a elementos do DOM de forma concisa, integrando-os ao ciclo de vida do componente.
+- **Uso de Filtros**: Permite aplicar filtros como `preventDefault`, `stopPropagation`, ou qualquer outro modificador antes de executar a lógica associada ao evento.
 
-- **Nome:** On
-- **Classificação:** Decorators [ES Proposals](https://www.proposals.es/proposals/Decorators), [TypeScript](https://www.typescriptlang.org/docs/handbook/decorators.html)
-
-### Objetivo
-
-Permitir a associação simplificada de eventos a métodos específicos dentro de um Custom Element, garantindo que a lógica seja executada sempre que o evento especificado ocorrer.
-
-## Motivação
-
-Usar o `on` traz as seguintes vantagens:
-
-1. **Simplificação do Código:** Elimina a necessidade de adicionar manualmente event listeners nos métodos `connectedCallback` e `disconnectedCallback`.
-2. **Facilidade de Manutenção:** Centraliza a lógica de eventos em métodos decorados, facilitando o gerenciamento e a compreensão do código.
-3. **Consistência:** Garante que os listeners sejam corretamente adicionados e removidos conforme o ciclo de vida do componente.
-
-## Aplicabilidade
-
-Ideal para situações onde é necessário reagir a eventos específicos em elementos internos de um Custom Element, como cliques em botões ou mudanças em campos de formulário.
-
-## Importação
-
-Para utilizar o decorator `on`, importe-o da seguinte maneira:
+### Estrutura
 
 ```javascript
-import on from '@bake-js/-o-id/event';
+/**
+ * @param {string} type - O tipo do evento a ser ouvido (e.g., 'click').
+ * @param {string} query - Seletor CSS para filtrar o alvo do evento.
+ * @param {...Function} filters - Funções de filtro aplicadas ao evento antes de chamar o método decorado.
+ * @returns {Function} - O decorator para adicionar lógica ao método decorado.
+ */
+const attachEventListener = (type, query, ...filters) => (target, propertyKey) => {
+  intercept(connectedCallback)
+    .in(target)
+    .then(function () {
+      const controller = (this[abortController] ??= new AbortController());
+      const options = { signal: controller.signal };
+
+      const listener = (event) => {
+        if (event.target.matches(query)) {
+          this[propertyKey](
+            filters.reduce((target, filter) => filter(target), event),
+          );
+        }
+      };
+
+      this.addEventListener(type, listener, options);
+      this.shadowRoot?.addEventListener(type, listener, options);
+    });
+
+  intercept(disconnectedCallback)
+    .in(target)
+    .then(function () {
+      this[abortController].abort();
+    });
+};
 ```
 
-## Implementação
+### Parâmetros
+
+1. **type**:
+   - **Tipo:** `string`
+   - **Descrição:** O tipo de evento a ser monitorado, como `'click'`, `'mouseover'`, ou `'keydown'`.
+
+2. **query**:
+   - **Tipo:** `string`
+   - **Descrição:** Um seletor CSS que filtra o alvo do evento. Apenas eventos que correspondem ao seletor serão processados.
+
+3. **filters**:
+   - **Tipo:** `Function[]`
+   - **Descrição:** Funções de filtro opcionais que são aplicadas ao evento antes de chamar o método decorado. Essas funções podem modificar o evento ou impedir sua propagação.
+
+4. **target**:
+   - **Tipo:** `Function`
+   - **Descrição:** A classe que contém o método decorado, geralmente um Custom Element.
+
+5. **propertyKey**:
+   - **Tipo:** `string`
+   - **Descrição:** O nome do método que será chamado quando o evento ocorrer.
+
+### Funcionalidade
+
+1. **Intercepta o Ciclo de Vida**: O listener do evento é adicionado quando o Custom Element é conectado ao DOM (via `connectedCallback`) e removido quando o elemento é desconectado (via `disconnectedCallback`), usando um `AbortController` para facilitar a remoção do listener.
+2. **Aplicação de Filtros**: Funções de filtro, como `preventDefault()` e `stopPropagation()`, podem ser aplicadas ao evento antes de ele chegar ao método decorado. Isso permite modificar o evento ou bloquear sua propagação de forma declarativa.
+
+### Exemplo Prático
+
+**Exemplo: Listener para Evento de Clique com Filtros**
 
 ```javascript
-import intercept from "./intercept";
-import {
-  abortController,
-  connectedCallback,
-  disconnectedCallback,
-} from "./interfaces";
+import { define } from '@bake-js/-o-id'
+import on, { prevent, stop } from '@bake-js/-o-id/event';
 
-const attachEventListener =
-  (type, query, ...filters) =>
-  (target, propertyKey) => {
-    intercept(connectedCallback)
-      .in(target)
-      .then(function () {
-        const controller = (this[abortController] ??= new AbortController());
-        const options = { signal: controller.signal };
+@define('my-component')
+class MyComponent extends HTMLElement {
+  @on.click('button', prevent, stop)
+  handleClick(event) {
+    console.log('Botão clicado');
+  }
 
-        const listener = (event) => {
-          if (event.target.matches(query)) {
-            this[propertyKey](
-              filters.reduce((target, filter) => filter(target), event),
-            );
-          }
-        };
+  connectedCallback() {
+    this.innerHTML = `<button>Clique Aqui</button>`;
+  }
+}
+```
 
-        this.addEventListener(type, listener, options);
-      });
+**Explicação**:
+- O decorator `@on.click('button', prevent, stop)` define um listener de clique que será disparado apenas quando o evento ocorrer em um botão dentro do componente.
+- Antes de o método `handleClick` ser chamado, os filtros `prevent` (que chama `preventDefault()`) e `stop` (que chama `stopPropagation()`) são aplicados ao evento.
+- O listener é automaticamente adicionado quando o componente é inserido no DOM e removido ao ser desconectado, evitando vazamento de memória.
 
-    intercept(disconnectedCallback)
-      .in(target)
-      .then(function () {
-        this[abortController].abort();
-      });
-  };
+### Filtros Disponíveis
 
-const on = new Proxy(
+1. **`prevent`**: Impede a ação padrão do evento chamando `event.preventDefault()`.
+2. **`stop`**: Evita a propagação do evento chamando `event.stopPropagation()`.
+
+### Proxy para Criação de Decorators
+
+O decorator `event` utiliza um Proxy para gerar decorators dinamicamente com base no tipo de evento:
+
+```javascript
+// Proxy para gerar os decorators dinamicamente com base no tipo de evento
+const event = new Proxy(
   {},
   {
-    get:
-      (_, type) =>
-      (query, ...filters) =>
-        attachEventListener(type, query, ...filters),
+    get: (_, type) => (query, ...filters) => attachEventListener(type, query, ...filters),
   },
 );
-
-export default on;
 ```
 
-### Exemplo de Uso
+Isso permite que você use a sintaxe `@on.eventType` para declarar listeners de eventos de maneira declarativa:
 
-```javascript
-import on from '@bake-js/-o-id/event';
+- `@on.click('button')`: Escuta cliques em um botão.
+- `@on.keydown('input')`: Escuta o evento de pressionar teclas em um campo de input.
 
-class MyElement extends HTMLElement {
-  @on.click('button')
-  handleClick(event) {
-    console.log('Button clicked!', event);
-  }
-}
+### Benefícios do Decorator `event`
 
-customElements.define('my-element', MyElement);
-```
-
-## Comparação com Concorrentes
-
-### Lit
-
-- **Comportamento Padrão:** No Lit, event listeners são geralmente definidos dentro do método `render` com `@event`.
-- **Extensão Obrigatória:** Requer a extensão de `LitElement` para definir componentes.
-
-```javascript
-import { LitElement, html } from 'lit';
-
-class MyElement extends LitElement {
-  render() {
-    return html`<button @click=${this.handleClick}>Click me</button>`;
-  }
-
-  handleClick(event) {
-    console.log('Button clicked!', event);
-  }
-}
-customElements.define('my-element', MyElement);
-```
-
-### Stencil
-
-- **Decoração Alternativa:** No Stencil, listeners são adicionados com decorators específicos como `@Listen`.
-- **Shadow DOM:** O suporte ao Shadow DOM é opcional e configurável.
-
-```typescript
-import { Component, Listen } from '@stencil/core';
-
-@Component({
-  tag: 'my-component',
-  shadow: true,
-})
-export class MyComponent {
-  @Listen('click', { target: 'button' })
-  handleClick(event: Event) {
-    console.log('Button clicked!', event);
-  }
-}
-```
-
-### Vantagens do `@on`
-
-- **Facilidade de Uso:** Simplifica a adição de event listeners com uma sintaxe declarativa.
-- **Código Mais Limpo:** Centraliza a lógica de eventos em um único método decorado.
-- **Flexibilidade:** Não exige extensão de classes específicas, como `LitElement`.
-
-## Considerações Finais
-
-O decorator `on` oferece uma maneira poderosa e concisa de associar eventos a métodos específicos em um Custom Element, melhorando a legibilidade e a manutenção do código.
+1. **Centralização de Lógica**: O código para adicionar e remover listeners de eventos fica encapsulado no decorator, simplificando a lógica dos Custom Elements.
+2. **Filtros Poderosos**: A adição de filtros permite modificar o comportamento do evento sem precisar duplicar código em diferentes partes do componente.
+3. **Gerenciamento Automático de Listeners**: Listeners são automaticamente limpos quando o componente é desconectado, evitando vazamentos de memória e garantindo uma gestão eficiente dos eventos.

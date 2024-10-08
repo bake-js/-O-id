@@ -1,91 +1,94 @@
-# HTML
+# Guia de Uso: Função `html`
 
-O `html` é uma função template que simplifica a criação de strings HTML formatadas em JavaScript. Este helper faz parte da biblioteca Element, projetada para facilitar o desenvolvimento de Web Components.
+A função `html` facilita a criação de templates HTML otimizados dentro de Web Components. Utilizando template literals, ela permite a inserção de variáveis diretamente no HTML, melhorando a legibilidade e a manutenção do código.
 
-## Visão Geral
+### Quando Usar
 
-### Nome e Classificação
+- **Templates Dinâmicos**: Ideal para gerar conteúdo HTML que muda conforme as propriedades do componente.
+- **Interpolação de Variáveis**: Permite a inclusão de variáveis JavaScript diretamente no HTML, tornando o código mais expressivo.
 
-- **Nome:** HTML
-- **Classificação:** Template Literal
-
-### Objetivo
-
-Facilitar a criação de strings HTML a partir de templates literais, proporcionando uma forma limpa e organizada de escrever HTML dentro do JavaScript.
-
-## Motivação
-
-A função `html` oferece as seguintes vantagens:
-
-1. **Leitura Facilitada:** Permite escrever HTML de maneira clara e legível dentro do código JavaScript.
-2. **Interpolação de Valores:** Suporta a inserção de variáveis e expressões dentro das strings HTML.
-
-## Aplicabilidade
-
-Utilize a função `html` em situações onde é necessário gerar HTML dinâmico. Exemplos incluem:
-
-- **Componentes Web Dinâmicos:** Para gerar markup HTML dentro de componentes personalizados.
-- **Templates Dinâmicos:** Quando for necessário criar templates HTML que dependem de dados em tempo real.
-
-## Importação
-
-Para utilizar a função `html`, importe-a da seguinte forma:
+### Estrutura
 
 ```javascript
-import { html } from '@bake-js/-o-id/dom';
+/**
+ * @param {TemplateStringsArray} strings - As partes literais da string do template.
+ * @param {...any} values - Os valores interpolados na string do template.
+ * @returns {string} O HTML gerado como uma string.
+ */
+const html = (strings, ...values) => {
+  return String.raw({ raw: strings }, ...values)
+    .replace(/\n\s*/g, ' ') // Remove quebras de linha e espaços em branco indesejados.
+    .trim(); // Remove espaços em branco no início e no final da string.
+};
 ```
 
-## Estrutura
+### Parâmetros
 
-A função `html` usa template literals para criar e formatar strings HTML, removendo quebras de linha e espaços extras para manter o conteúdo limpo e organizado.
+1. **strings**:
+   - **Tipo:** `TemplateStringsArray`
+   - **Descrição:** As partes literais da string de template HTML.
 
-## Implementação
+2. **values**:
+   - **Tipo:** `any[]`
+   - **Descrição:** Os valores interpolados na string, que podem ser variáveis, expressões ou resultados de funções.
+
+### Retorno
+
+- **Tipo:** `string`
+- **Descrição:** O HTML gerado como uma string, que pode ser utilizado diretamente no componente.
+
+### Exemplo Prático
+
+**Exemplo: Usando `html` e `@paint` para Gerar Templates Dinâmicos**
 
 ```javascript
-function html(strings, ...values) {
-  const combinedValues = values.map(value =>
-    Array.isArray(value) ? value.join("") : value
-  );
+import { define } from '@bake-js/-o-id';
+import { css, html, paint } from '@bake-js/-o-id/dom';
 
-  let content = String.raw({ raw: strings }, ...combinedValues);
-  content = content
-    .replace(/[\n\r]+/g, " ")
-    .replace(/\s+/g, " ")
-    .replace(/>\s+</g, "><");
-
-  return content.trim();
+// Função responsável por gerar o template HTML do componente
+function component(self) {
+  return html`
+    <div>${self.text}</div>
+  `;
 }
 
-export default html;
+// Função que retorna a folha de estilo dinâmica com interpolação de variáveis
+function style() {
+  return css`
+    :host {
+      display: block;
+      background-color: lightblue;
+      color: black;
+    }
+  `;
+}
+
+// Define o Web Component e associa o template e os estilos via @paint
+@define('my-component')
+@paint(component, style)
+class MyComponent extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+    this.text = 'Olá, Mundo!'; // Texto padrão a ser exibido no componente
+  }
+}
 ```
 
-### Exemplo de Uso
+### Explicação:
 
-```javascript
-import { html } from '@bake-js/-o-id/dom';
+- **Função `component(self)`**: Define o conteúdo HTML do componente, retornando o template via `html`. A variável `${self.text}` é interpolada diretamente no HTML, permitindo que o conteúdo seja dinâmico.
+- **Função `style()`**: Retorna a folha de estilo gerada pela função `css`, aplicando um estilo básico ao componente, como cor de fundo e cor do texto.
+- **Decorador `@paint`**: Aplica automaticamente o HTML e o CSS ao componente, integrando a lógica de renderização e estilização.
+- **Uso de `@define`**: Registra o Web Component, tornando-o disponível para uso em qualquer parte do documento HTML.
 
-// Criação de um template HTML dinâmico
-const template = html`
-  <div class="container">
-    <h1>${title}</h1>
-    <p>${description}</p>
-  </div>
-`;
+### Benefícios
 
-console.log(template);
-// <div class="container"><h1>Title Goes Here</h1><p>Description goes here.</p></div>
-```
+1. **Legibilidade**: A utilização de template literals com `html` melhora a clareza do código, permitindo uma fácil visualização do layout do componente.
+2. **Flexibilidade**: A interpolação de variáveis permite que o conteúdo HTML mude dinamicamente, tornando o componente reativo a alterações de estado.
+3. **Integração com Estilos**: A função `html` se integra perfeitamente com `css` e `@paint`, permitindo uma abordagem coesa para a criação de componentes.
 
-## Usos Conhecidos
+### Considerações Finais
 
-- **Componentes Web Dinâmicos:** Ideal para gerar markup HTML dentro de Web Components.
-- **Templates HTML Dinâmicos:** Útil para criar templates HTML com base em dados dinâmicos.
-
-## Padrões Relacionados
-
-- **Template Literals:** Utiliza a funcionalidade de template literals do JavaScript para interpolação de valores.
-- **Tagged Template Literals:** A função `html` é um exemplo de tagged template literal, permitindo a manipulação de strings de template.
-
-## Considerações Finais
-
-A função `html` oferece uma maneira eficiente e organizada de criar strings HTML dentro de JavaScript. Ao facilitar a interpolação de valores e a limpeza do conteúdo HTML, ela melhora a legibilidade do código e a experiência de desenvolvimento.
+- **Uso em Web Components**: A função `html` é ideal para o desenvolvimento de Web Components, especialmente quando utilizada em conjunto com Shadow DOM e a API de estilos adotados.
+- **Compatibilidade**: Verifique a compatibilidade do navegador para funcionalidades relacionadas a Web Components ao utilizar a função `html`.
