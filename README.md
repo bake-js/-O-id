@@ -29,7 +29,7 @@ npm install @bake-js/-o-id
 Abaixo está um exemplo simples de como utilizar a biblioteca para criar um contador interativo:
 
 ```javascript
-import { adopted, define } from '@bake-js/-o-id';
+import { define } from '@bake-js/-o-id';
 import { css, html, paint, repaint } from '@bake-js/-o-id/dom';
 import on from '@bake-js/-o-id/event';
 
@@ -82,12 +82,6 @@ class Counter extends HTMLElement {
   @on.click('button')
   increment() {
     this.number += 1;
-    return this;
-  }
-
-  @adopted
-  handleAdoption() {
-    // Lógica adicional ao ser adotado pode ser adicionada aqui
     return this;
   }
 }
