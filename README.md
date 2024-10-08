@@ -171,7 +171,13 @@ Documentação sobre como manipular o DOM e criar elementos personalizados.
 
 ### Eventos
 Documentação sobre como gerenciar eventos em Custom Elements, facilitando a comunicação e a interatividade.
-- [on](https://github.com/bake-js/-o-id/blob/main/src/event/README.md) - Decorator para adicionar listeners de eventos aos elementos.
+- [on](https://github.com/bake-js/-o-id/blob/main/src/event/event/README.md) - Decorator para adicionar listeners de eventos aos elementos.
+- [stop](https://github.com/bake-js/-o-id/blob/main/src/event/stop/README.md) - Filtro que chama `event.stopPropagation()` e retorna o evento, prevenindo que o evento suba na árvore do DOM.
+- [prevent](https://github.com/bake-js/-o-id/blob/main/src/event/prevent/README.md) - Filtro que chama `event.preventDefault()` e retorna o evento, prevenindo a ação padrão do evento.
+- [formData](https://github.com/bake-js/-o-id/blob/main/src/event/formData/README.md) - Filtro que extrai os dados do formulário e retorna um objeto contendo os pares chave-valor.
+- [value](https://github.com/bake-js/-o-id/blob/main/src/event/value/README.md) - Filtro que obtém o valor do evento, útil para inputs e select.
+
+Se precisar de mais alterações ou adições, é só avisar!
 
 ### Echo
 Documentação sobre o módulo Echo, um barramento de eventos que permite a comunicação entre componentes de forma eficiente.
