@@ -1,93 +1,111 @@
-# Value
+# Guia de Uso: Filtro `value`
 
-O `value` é um filtro utilizado com o decorator `@on` para extrair o valor de um campo de entrada de um evento. Ele faz parte da biblioteca `@bake-js/-o-id/event`.
+O filtro `value` é uma função que permite extrair o valor de um campo de entrada associado ao evento. Este filtro é especialmente útil em manipuladores de eventos que lidam com campos de formulários e elementos de entrada.
 
-## Visão Geral
+### Quando Usar
 
-### Nome e Classificação
+- **Obtenção de Valores de Input**: Ideal para situações em que é necessário capturar o valor inserido pelo usuário em campos de entrada, como caixas de texto, áreas de texto ou seletores.
+- **Manipulação de Formulários**: Útil em manipulações de formulários, permitindo que você obtenha rapidamente os dados inseridos pelos usuários.
 
-- **Nome:** Value
-- **Classificação:** Filtros de Evento
+### Como Funciona
 
-### Objetivo
+A função `value` acessa o campo de entrada que gerou o evento e retorna seu valor. Se o evento ou o campo de entrada não estiverem presentes, a função retorna `undefined`, evitando erros em situações inesperadas.
 
-O filtro `value` é utilizado para extrair o valor do campo de entrada (input) associado ao evento, facilitando a manipulação e acesso ao valor do campo.
-
-## Motivação
-
-Usar o filtro `value` oferece as seguintes vantagens:
-
-1. **Facilidade de Acesso:** Permite acessar diretamente o valor do campo de entrada do evento.
-2. **Simplicidade:** Simplifica o código ao fornecer uma forma direta e eficiente de obter o valor do campo de entrada.
-3. **Centralização de Lógica:** Elimina a necessidade de acessar o valor do campo de entrada manualmente em cada handler de evento.
-
-## Aplicabilidade
-
-Ideal para situações onde é necessário trabalhar com o valor de um campo de entrada em eventos, como ao processar a entrada do usuário ou ao validar os dados inseridos.
-
-## Importação
-
-Para utilizar o filtro `value`, importe-o da seguinte maneira:
+### Estrutura
 
 ```javascript
-import on, { value } from '@bake-js/-o-id/event';
-```
-
-## Implementação
-
-Aqui está a implementação do filtro `value`:
-
-```javascript
+/**
+ * @param {Event} event - O evento que contém o campo de entrada.
+ * @returns {string|undefined} O valor do campo de entrada, ou `undefined` se o campo não estiver presente.
+ */
 function value(event) {
   return event.target.value;
 }
-
-export default value;
 ```
+
+### Parâmetros
+
+1. **event** (obrigatório):
+   - **Tipo:** `Event`
+   - **Descrição:** O evento que contém o campo de entrada, geralmente um evento de interação do usuário, como `input` ou `change`.
+
+### Retorno
+
+- **Tipo:** `string | undefined`
+- **Descrição:** O valor do campo de entrada, caso esteja presente. Retorna `undefined` se o campo não estiver acessível, garantindo que o código não falhe em situações onde o evento não contém um campo de entrada.
+
+### Passos para Utilização
+
+1. **Importe o filtro `value`**:
+
+   ```javascript
+   import { value } from '@bake-js/-o-id/event';
+   ```
+
+2. **Utilize o filtro em um manipulador de eventos**:
+
+   - **Passo 1:** Capture o evento que você deseja manipular.
+   - **Passo 2:** Chame a função `value`, passando o evento como argumento.
+
+### Exemplo Prático: Usando o Filtro `value` em um Componente
+
+Este exemplo demonstra como usar o filtro `value` para capturar o valor de um campo de entrada dentro de um componente customizado.
+
+### Estrutura do Exemplo
+
+```javascript
+import { define } from '@bake-js/-o-id';
+import on, { value } from '@bake-js/-o-id/event';
+
+@define('my-input-component')
+class MyInputComponent extends HTMLElement {
+  @on.input('input', value)
+  handleInput(event) {
+    const inputValue = value(event);
+    console.log('Valor do input:', inputValue);
+    // Outras operações com inputValue podem ser realizadas aqui
+  }
+
+  connectedCallback() {
+    this.innerHTML = `
+      <div>
+        <input type="text" placeholder="Digite algo...">
+      </div>
+    `;
+  }
+}
+```
+
+### Descrição do Código
+
+1. **Importação de Módulos**:
+   - O componente importa o decorator `define` para registrar o Custom Element.
+   - Importa `on` e `value` do módulo de eventos.
+
+2. **Definição do Componente**:
+   - O componente `my-input-component` é definido usando o decorator `@define`.
+
+3. **Manipulação do Input**:
+   - O método `handleInput` é decorado com `@on.input`, que escuta o evento de entrada no campo de texto.
+   - O valor do campo de entrada é obtido usando o filtro `value`, que é então exibido no console.
+
+4. **Renderização do Campo de Entrada**:
+   - No método `connectedCallback`, o HTML do campo de entrada é inserido no componente.
+
+### Comportamento do Componente
+
+- Quando o usuário digita algo no campo de entrada, o valor é capturado e exibido no console em tempo real.
+- Isso permite que você execute outras operações com o valor, como validação ou atualização de estado.
 
 ### Exemplo de Uso
 
-Abaixo está um exemplo de uso do filtro `value` com o decorator `@on`:
+Ao digitar "Olá" no campo de entrada, a mensagem "Valor do input: Olá" será exibida no console.
 
-```javascript
-import on, { value } from '@bake-js/-o-id/event';
+### Benefícios do Uso
 
-class MyInputElement extends HTMLElement {
-  @on.input('input', value)
-  handleInput(value) {
-    console.log('Input value:', value);
-  }
-}
+- **Facilidade de Captura**: Simplifica o processo de captura de valores de entrada, permitindo que você escreva código mais limpo e compreensível.
+- **Integração com Decorators**: O uso do filtro `value` em conjunto com decorators permite uma abordagem declarativa para manipulação de eventos, resultando em um código mais organizado.
 
-customElements.define('my-input-element', MyInputElement);
-```
+### Considerações Finais
 
-Neste exemplo, o filtro `value` é usado para extrair o valor do campo de entrada e registrá-lo no console sempre que o usuário digita algo no campo.
-
-## Comparação com Concorrentes
-
-### Implementação Padrão
-
-Em JavaScript padrão, você precisaria acessar o valor do campo de entrada manualmente dentro do handler de evento:
-
-```javascript
-class MyInputElement extends HTMLElement {
-  connectedCallback() {
-    this.querySelector('input').addEventListener('input', (event) => {
-      const value = event.target.value;
-      console.log('Input value:', value);
-    });
-  }
-}
-
-customElements.define('my-input-element', MyInputElement);
-```
-
-### Vantagens do `value`
-
-- **Facilidade de Uso:** Simplifica a extração do valor do campo de entrada, eliminando a necessidade de código adicional para acessar o valor.
-- **Integração:** Se integra perfeitamente com o decorator `@on`, tornando a adição de filtros como `value` intuitiva e eficiente.
-
-## Considerações Finais
-
-O filtro `value` oferece uma maneira prática e direta de acessar o valor dos campos de entrada dos eventos, melhorando a legibilidade e manutenção do código ao centralizar a lógica de extração do valor do campo de entrada.
+Este exemplo demonstra a utilidade do filtro `value` no desenvolvimento de componentes web, proporcionando uma maneira eficaz de capturar e manipular valores de entrada dos usuários, essencial para interações ricas e dinâmicas.
