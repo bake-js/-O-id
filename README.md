@@ -158,9 +158,7 @@ Informações sobre os callbacks específicos para a interação de Custom Eleme
 - [formAssociated](https://github.com/bake-js/-o-id/blob/main/src/formAssociated/README.md) - Callback chamado quando um elemento é associado a um formulário.
 - [formDisabled](https://github.com/bake-js/-o-id/blob/main/src/formDisabled/README.md) - Callback chamado quando um elemento é desativado dentro de um formulário.
 - [formReset](https://github.com/bake-js/-o-id/blob/main/src/formReset/README.md) - Callback chamado quando um formulário associado é resetado.
-- [formStateRestore](https://github.com/b
-
-ake-js/-o-id/blob/main/src/formStateRestore/README.md) - Callback chamado para restaurar o estado do formulário.
+- [formStateRestore](https://github.com/bake-js/-o-id/blob/main/src/formStateRestore/README.md) - Callback chamado para restaurar o estado do formulário.
 
 ### DOM
 Documentação sobre como manipular o DOM e criar elementos personalizados.
