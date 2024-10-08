@@ -86,6 +86,8 @@ class Counter extends HTMLElement {
 }
 ```
 
+### Visualizar no CodePen
+
 Você pode ver o exemplo interativo no [CodePen](https://codepen.io/demgoncalves/pen/dyxpdLw?editors=1010).
 
 ### Explicação do Componente
