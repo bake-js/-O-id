@@ -1,7 +1,9 @@
-# Relatando Problemas de Segurança
+[🇧🇷 Leia em Português](./SECURITY.pt-BR.md) | [🇺🇸 Read in English](./SECURITY.md)
 
-Se você acredita ter descoberto uma vulnerabilidade de segurança no **-O-id**, pedimos que nos informe imediatamente. Levamos a segurança muito a sério e investigaremos todos os relatórios legítimos com rapidez, visando resolver qualquer problema o mais rápido possível.
+# Reporting Security Issues
 
-Para relatar uma vulnerabilidade ou obter mais informações sobre como proceder, visite a [issue de segurança do projeto](https://github.com/bake-js/-o-id/issues).
+If you believe you have discovered a security vulnerability in **-O-id**, please let us know immediately. We take security very seriously and will investigate all legitimate reports promptly, aiming to resolve any issues as quickly as possible.
 
-Obrigado por ajudar a manter o **-O-id** seguro.
+To report a vulnerability or for more information on how to proceed, please visit the [project's security issue](https://github.com/bake-js/-o-id/issues).
+
+Thank you for helping keep **-O-id** secure.
