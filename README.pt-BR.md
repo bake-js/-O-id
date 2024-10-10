@@ -136,9 +136,9 @@ A seguir, você encontrará a documentação detalhada para os principais módul
 
 - **[Ciclo de Vida e Formulários](https://github.com/bake-js/-o-id/blob/main/src/README.pt-BR.md)**: Um guia completo para entender e aplicar os principais módulos e decorators do **-O-id**.
 - **[DOM](https://github.com/bake-js/-o-id/blob/main/src/dom/README.pt-BR.md)**: Documentação sobre a manipulação do DOM e renderização de componentes.
-- **[Event](https://github.com/bake-js/-o-id/blob/main/src/event/README.md)**: Guia para manipulação e resposta a eventos dentro dos Web Components.
+- **[Event](https://github.com/bake-js/-o-id/blob/main/src/event/README.pt-BR.md)**: Guia para manipulação e resposta a eventos dentro dos Web Components.
 - **[Relay](https://github.com/bake-js/-o-id/blob/main/src/relay/README.md)**: Facilita a escuta de eventos emitidos pelo parentElement de um Custom Element.
-- **[Echo](https://github.com/bake-js/-o-id/blob/main/src/echo/README.md)**: Documentação sobre o barramento de eventos Echo, para comunicação entre componentes. **Nota:** Este módulo está em fase beta e pode estar sujeito a mudanças.
+- **[Echo](https://github.com/bake-js/-o-id/blob/main/src/echo/README.pt-BR.md)**: Documentação sobre o barramento de eventos Echo, para comunicação entre componentes. **Nota:** Este módulo está em fase beta e pode estar sujeito a mudanças.
 
 ## Índice de Referência
 

@@ -1,32 +1,34 @@
-# Módulo Echo do **-O-id**
+[🇧🇷 Leia em Português](./README.pt-BR.md) | [🇺🇸 Read in English](./README.md)
 
-> **Em fase beta**: O módulo Echo está em fase beta, o que significa que pode haver alterações na API e no comportamento antes da versão final. Fique atento às atualizações para garantir a compatibilidade.
+# Echo Module of **-O-id**
 
-## Introdução
+> **In beta phase**: The Echo module is in beta phase, which means there may be changes in the API and behavior before the final version. Keep an eye on updates to ensure compatibility.
 
-O módulo Echo do **-O-id** oferece uma solução poderosa para gerenciar eventos entre Web Components. Ele permite que você defina e escute eventos entre componentes de maneira fácil e eficiente. A seguir, apresentamos como utilizar o Echo para criar um sistema de eventos interconectados.
+## Introduction
 
-## Importação
+The Echo module of **-O-id** provides a powerful solution for managing events between Web Components. It allows you to define and listen to events between components easily and efficiently. Below, we present how to use Echo to create a system of interconnected events.
 
-Para utilizar o módulo Echo, importe-o da seguinte forma:
+## Import
+
+To use the Echo module, import it as follows:
 
 ```javascript
 import Echo from '@bake-js/-o-id/echo';
 ```
 
-## Estrutura do Atributo `on`
+## Structure of the `on` Attribute
 
-O atributo `on` do módulo Echo segue a estrutura "topic:mapper". A estrutura é detalhada a seguir:
+The `on` attribute of the Echo module follows the "topic:mapper" structure. The structure is detailed below:
 
-- **Topic:** Define o tópico do evento e é composto por "element/event".
-- **Mapper:** Especifica o destino e o nome do alvo dentro do evento. O mapper é composto por "target/target-name", onde os alvos podem ser:
-  - **attribute**: Referência a atributos do componente.
-  - **setter**: Referência a métodos setter do componente.
-  - **method**: Referência a métodos do componente.
+- **Topic:** Defines the event topic and is composed of "element/event".
+- **Mapper:** Specifies the target and the name of the target within the event. The mapper is composed of "target/target-name", where the targets can be:
+  - **attribute**: Reference to component attributes.
+  - **setter**: Reference to component setter methods.
+  - **method**: Reference to component methods.
 
-### Exemplos de Uso
+### Usage Examples
 
-#### Definindo um Componente com Echo
+#### Defining a Component with Echo
 
 ```javascript
 import { define } from '@bake-js/element';
@@ -43,27 +45,27 @@ class ReceiverComponent extends Echo(HTMLElement) {
 }
 ```
 
-#### Comunicação entre Componentes no HTML
+#### Communication between Components in HTML
 
 ```html
 <sender-component></sender-component>
 <receiver-component on="sender-component/messageSent:method/handleMessage"></receiver-component>
 ```
 
-No exemplo acima:
-- O `SenderComponent` emite um evento personalizado `messageSent` quando o botão é clicado.
-- O `ReceiverComponent` escuta esse evento e atualiza seu conteúdo com a mensagem recebida.
+In the example above:
+- The `SenderComponent` emits a custom event `messageSent` when the button is clicked.
+- The `ReceiverComponent` listens to this event and updates its content with the received message.
 
-## Por Que Usar o Decorator `@on`
+## Why Use the `@on` Decorator
 
-Utilizar o decorator `@on` oferece várias vantagens:
+Using the `@on` decorator offers several advantages:
 
-- **Simplicidade e Clareza:** Reduz a verbosidade do código, tornando a associação de eventos mais clara e direta.
-- **Reusabilidade:** Permite o uso de múltiplos decorators no mesmo método, simplificando a configuração e evitando a necessidade de chamar métodos manualmente.
-- **Eficiência:** Facilita a escrita e manutenção do código, pois o decorator gerencia automaticamente a associação e desassociação de eventos.
+- **Simplicity and Clarity:** Reduces code verbosity, making event association clearer and more straightforward.
+- **Reusability:** Allows the use of multiple decorators on the same method, simplifying configuration and avoiding the need to call methods manually.
+- **Efficiency:** Facilitates code writing and maintenance, as the decorator automatically manages event association and disassociation.
 
-## Conclusão
+## Conclusion
 
-Adotar o decorator `@on` proporciona uma abordagem mais limpa e organizada para gerenciar eventos em seus Web Components, resultando em uma implementação mais eficiente e menos propensa a erros.
+Adopting the `@on` decorator provides a cleaner and more organized approach to managing events in your Web Components, resulting in a more efficient and less error-prone implementation.
 
-Experimente o -O-id e veja como ele pode simplificar e aprimorar seu desenvolvimento de Web Components!
+Try **-O-id** and see how it can simplify and enhance your Web Component development!

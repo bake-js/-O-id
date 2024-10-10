@@ -1,119 +1,71 @@
-# Módulo Event do **-O-id**
+[🇧🇷 Leia em Português](./README.pt-BR.md) | [🇺🇸 Read in English](./README.md)
 
-O módulo **Event** do **-O-id** oferece uma maneira poderosa e flexível de gerenciar eventos dentro de seus Web Components. Através do uso de decorators, é possível associar eventos a métodos específicos de forma simples e eficiente, mantendo seu código organizado e de fácil manutenção.
+# Echo Module of **-O-id**
 
-## Introdução
+> **In beta phase**: The Echo module is in beta phase, which means there may be changes in the API and behavior before the final version. Keep an eye on updates to ensure compatibility.
 
-O **-O-id** simplifica a manipulação de eventos em Web Components por meio de decorators que permitem a vinculação direta de eventos a métodos. Com suporte a filtros e a possibilidade de interceptar qualquer evento do DOM, o módulo **Event** proporciona uma abordagem modular e extensível para o desenvolvimento de interfaces reativas. 
+## Introduction
 
-## Importação dos Decorators e Filtros
+The Echo module of **-O-id** provides a powerful solution for managing events between Web Components. It allows you to define and listen to events between components easily and efficiently. Below, we present how to use Echo to create a system of interconnected events.
 
-Para utilizar os módulos Event, importe-os da seguinte forma:
+## Import
+
+To use the Echo module, import it as follows:
 
 ```javascript
-import on, { stop, prevent, formData, value } from '@bake-js/-o-id/event';
+import Echo from '@bake-js/-o-id/echo';
 ```
 
-## Principais Funcionalidades
+## Structure of the `on` Attribute
 
-### Vinculação de Eventos
+The `on` attribute of the Echo module follows the "topic:mapper" structure. The structure is detailed below:
 
-O decorator `@on` é usado para vincular eventos a métodos específicos de um Web Component. Ele funciona como um proxy, interceptando eventos e permitindo que você aplique filtros antes de chamar o método associado. Isso não apenas simplifica a manipulação de eventos, como também permite maior controle e customização.
+- **Topic:** Defines the event topic and is composed of "element/event".
+- **Mapper:** Specifies the target and the name of the target within the event. The mapper is composed of "target/target-name", where the targets can be:
+  - **attribute**: Reference to component attributes.
+  - **setter**: Reference to component setter methods.
+  - **method**: Reference to component methods.
 
-### Uso do `@on`
+### Usage Examples
 
-O `@on` pode mapear qualquer evento do DOM para um método específico. Aqui está como você pode usá-lo:
-
-```javascript
-@on.click('button')
-handleClick() {
-  // Código executado quando o botão é clicado
-}
-
-@on.submit('form', prevent, formData)
-handleSubmit(data) {
-  // Código executado ao enviar o formulário
-  // `data` contém os dados processados pelo filtro `formData`
-}
-
-@on.input('input', stop, value)
-handleInput(event) {
-  const inputValue = value(event);
-  console.log('Valor do input:', inputValue);
-  // Outras operações com inputValue podem ser realizadas aqui
-}
-```
-
-### Filtros Disponíveis
-
-Os filtros permitem manipular e processar eventos antes de serem passados para os métodos vinculados. Os filtros disponíveis incluem:
-
-- **`prevent`**: Interrompe o comportamento padrão do evento.
-- **`stop`**: Interrompe a propagação do evento no DOM.
-- **`formData`**: Extrai dados do formulário e os retorna como um objeto.
-- **`value`**: Extrai o valor de um campo de entrada associado ao evento.
-
-### Criando Filtros Personalizados
-
-Além dos filtros nativos, você pode criar seus próprios filtros para manipular eventos conforme necessário. Um filtro personalizado segue a seguinte estrutura:
+#### Defining a Component with Echo
 
 ```javascript
-function myFilter(event) {
-  // Lógica de manipulação personalizada
-  return /* resultado da minha manipulação */;
+import { define } from '@bake-js/element';
+import Echo from '@bake-js/element/echo';
+
+@define('sender-component')
+class SenderComponent extends Echo(HTMLElement) {
+
+}
+
+@define('receiver-component')
+class ReceiverComponent extends Echo(HTMLElement) {
+
 }
 ```
 
-Filtros personalizados permitem que você introduza lógica adicional antes de o evento ser processado pelo método vinculado, oferecendo uma camada extra de flexibilidade e controle.
+#### Communication between Components in HTML
 
-### Múltiplos Filtros
-
-O decorator `@on` permite a aplicação de múltiplos filtros em um único evento, utilizando a abordagem de pipe & filters. Isso significa que você pode facilmente compor comportamento ao longo da cadeia de processamento de eventos, tornando o desenvolvimento mais modular e adaptável às suas necessidades.
-
-## Por Que Usar o Decorator `@on`?
-
-O uso do decorator `@on` no **-O-id** oferece várias vantagens que tornam o desenvolvimento de Web Components mais eficiente e menos verboso:
-
-- **Simplicidade e Clareza**: Em vez de adicionar manualmente ouvintes de eventos e espalhar a lógica pelo código, `@on` permite associar eventos diretamente aos métodos, deixando o código mais legível e fácil de manter.
-
-- **Modularidade**: Aplicar o mesmo decorator a vários métodos sem a necessidade de encadeamentos complexos simplifica a organização do código. Com `@on`, múltiplos métodos podem responder ao mesmo evento de forma intuitiva.
-
-- **Controle Total**: Funcionando como um proxy, `@on` intercepta eventos e permite a aplicação de filtros personalizados antes de repassá-los ao método correspondente. Isso oferece um controle preciso sobre como e quando os eventos são processados.
-
-- **Extensibilidade**: A capacidade de criar filtros personalizados permite adaptar o comportamento dos eventos às necessidades específicas da sua aplicação, integrando essa flexibilidade de maneira consistente com o restante do código.
-
-## Exemplos de Uso
-
-### Exemplo 1: Manipulação de Clique
-
-```javascript
-@on.click('button')
-handleClick() {
-  console.log('Botão clicado!');
-}
+```html
+<sender-component></sender-component>
+<receiver-component on="sender-component/messageSent:method/handleMessage"></receiver-component>
 ```
 
-### Exemplo 2: Submissão de Formulário com Extração de Dados
+In the example above:
+- The `SenderComponent` emits a custom event `messageSent` when the button is clicked.
+- The `ReceiverComponent` listens to this event and updates its content with the received message.
 
-```javascript
-@on.submit('form', prevent, formData)
-handleSubmit(data) {
-  console.log('Dados do formulário:', data);
-}
-```
+## Why Use the `@on` Decorator
 
-### Exemplo 3: Captura de Valor de Entrada
+Using the `@on` decorator offers several advantages:
 
-```javascript
-@on.input('input', stop, value)
-handleInput(event) {
-  const inputValue = value(event);
-  console.log('Valor do input:', inputValue);
-}
-```
+- **Simplicity and Clarity:** Reduces code verbosity, making event association clearer and more straightforward.
+- **Reusability:** Allows the use of multiple decorators on the same method, simplifying configuration and avoiding the need to call methods manually.
+- **Efficiency:** Facilitates code writing and maintenance, as the decorator automatically manages event association and disassociation.
 
-## Conclusão
+## Conclusion
 
-O decorator `@on` não só simplifica a manipulação de eventos, como também oferece uma abordagem mais estruturada e flexível para o desenvolvimento de Web Components. Com ele, você ganha clareza no código, modularidade nas funções e controle total sobre o fluxo de eventos, tudo isso enquanto mantém a simplicidade e eficiência que são a marca do **-O-id**. É uma solução elegante que equilibra facilidade de uso com poder de customização, facilitando a criação de aplicações modernas e robustas.
+Adopting the `@on` decorator provides a cleaner and more organized approach to managing events in your Web Components, resulting in a more efficient and less error-prone implementation.
 
-Experimente o **-O-id** e veja como ele pode simplificar e aprimorar seu desenvolvimento de Web Components!
+Try **-O-id** and see how it can simplify and enhance your Web Component development!
