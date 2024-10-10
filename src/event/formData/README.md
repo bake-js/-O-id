@@ -1,57 +1,59 @@
-# Guia de Uso: Filtro `formData`
+[🇧🇷 Leia em Português](./README.pt-BR.md) | [🇺🇸 Read in English](./README.md)
 
-O filtro `formData` é uma função que permite converter os dados de um formulário em um objeto JavaScript, facilitando a manipulação e o acesso a esses dados após a submissão do formulário.
+# Usage Guide: `formData` Filter
 
-### Quando Usar
+The `formData` filter is a function that allows you to convert form data into a JavaScript object, making it easier to manipulate and access this data after form submission.
 
-- **Manipulação de Dados de Formulário**: Ideal para situações em que você precisa capturar dados submetidos por um formulário e convertê-los em um formato mais acessível.
-- **Eventos de Submissão**: Útil em manipuladores de eventos de submissão, onde o acesso a dados chave-valor é necessário.
+### When to Use
 
-### Como Funciona
+- **Form Data Manipulation**: Ideal for situations where you need to capture data submitted by a form and convert it into a more accessible format.
+- **Submission Events**: Useful in submission event handlers, where access to key-value data is necessary.
 
-A função `formData` utiliza a API `FormData` para coletar os dados do formulário e a função `Object.fromEntries` para converter os pares chave-valor em um objeto JavaScript. Essa abordagem proporciona uma forma eficiente de transformar dados de formulários em um objeto simples.
+### How It Works
 
-### Estrutura
+The `formData` function uses the `FormData` API to collect form data and the `Object.fromEntries` function to convert key-value pairs into a JavaScript object. This approach provides an efficient way to transform form data into a simple object.
+
+### Structure
 
 ```javascript
 /**
- * @param {Event} event - O evento que contém os dados do formulário.
- * @returns {Object} Um objeto contendo os dados do formulário.
+ * @param {Event} event - The event containing the form data.
+ * @returns {Object} An object containing the form data.
  */
 const formData = (event) => {
   Object.fromEntries(new FormData(event.target, event.submitter));
 };
 ```
 
-### Parâmetros
+### Parameters
 
-1. **event** (obrigatório):
-   - **Tipo:** `Event`
-   - **Descrição:** O evento que contém os dados do formulário, geralmente um evento de submissão.
+1. **event** (required):
+   - **Type:** `Event`
+   - **Description:** The event that contains the form data, typically a submission event.
 
-### Retorno
+### Return
 
-- **Tipo:** `Object`
-- **Descrição:** Um objeto contendo os dados do formulário, onde cada chave corresponde a um nome de campo e cada valor corresponde ao valor do campo.
+- **Type:** `Object`
+- **Description:** An object containing the form data, where each key corresponds to a field name and each value corresponds to the field value.
 
-### Passos para Utilização
+### Steps for Usage
 
-1. **Importe o filtro `formData`**:
+1. **Import the `formData` filter**:
 
    ```javascript
    import { formData } from '@bake-js/-o-id/event';
    ```
 
-2. **Utilize o filtro em um manipulador de eventos de submissão**:
+2. **Use the filter in a submission event handler**:
 
-   - **Passo 1:** Captura o evento de submissão do formulário.
-   - **Passo 2:** Chame a função `formData` passando o evento como argumento.
+   - **Step 1:** Capture the form submission event.
+   - **Step 2:** Call the `formData` function, passing the event as an argument.
 
-# Exemplo Prático: Usando o Filtro `formData` com o Decorator `on`
+# Practical Example: Using the `formData` Filter with the `on` Decorator
 
-Este exemplo demonstra como usar o filtro `formData` em conjunto com o decorator `on` para manipular a submissão de um formulário em um componente customizado.
+This example demonstrates how to use the `formData` filter in conjunction with the `on` decorator to handle the submission of a form in a custom component.
 
-### Estrutura do Exemplo
+### Example Structure
 
 ```javascript
 import { define } from '@bake-js/-o-id';
@@ -61,7 +63,7 @@ import on, { prevent, formData } from '@bake-js/-o-id/event';
 class MyComponent extends HTMLElement {
   @on.submit('form', prevent, formData)
   handleSubmit(data) {
-    console.log(data); // Os dados do formulário são exibidos aqui
+    console.log(data); // The form data is logged here
   }
 
   connectedCallback() {
@@ -75,44 +77,44 @@ class MyComponent extends HTMLElement {
 }
 ```
 
-### Descrição do Código
+### Code Description
 
-1. **Importação de Módulos**:
-   - O componente importa o decorator `define` para registrar o Custom Element.
-   - Importa `on`, `prevent`, e `formData` do módulo de eventos.
+1. **Module Imports**:
+   - The component imports the `define` decorator to register the Custom Element.
+   - Imports `on`, `prevent`, and `formData` from the events module.
 
-2. **Definição do Componente**:
-   - O componente `my-component` é definido usando o decorator `@define`.
+2. **Component Definition**:
+   - The `my-component` is defined using the `@define` decorator.
 
-3. **Manipulação da Submissão do Formulário**:
-   - O método `handleSubmit` é decorado com `@on.submit`, que escuta o evento de submissão do formulário. 
-   - O filtro `prevent` é usado para evitar o comportamento padrão de submissão, e o filtro `formData` converte os dados do formulário em um objeto.
-   - Os dados do formulário são passados como argumento para o método `handleSubmit`.
+3. **Form Submission Handling**:
+   - The `handleSubmit` method is decorated with `@on.submit`, which listens for the form submission event.
+   - The `prevent` filter is used to prevent the default submission behavior, and the `formData` filter converts the form data into an object.
+   - The form data is passed as an argument to the `handleSubmit` method.
 
-4. **Renderização do Formulário**:
-   - No método `connectedCallback`, o HTML do formulário é inserido no componente.
-   - O formulário contém um campo de entrada (`input`) para a idade e um botão de envio.
+4. **Rendering the Form**:
+   - In the `connectedCallback` method, the HTML for the form is inserted into the component.
+   - The form contains an input field (`input`) for age and a submit button.
 
-### Comportamento do Componente
+### Component Behavior
 
-- Quando o botão "Save" é clicado, o evento de submissão é acionado.
-- O comportamento padrão de submissão é prevenido, e os dados do formulário são coletados e convertidos em um objeto JavaScript.
-- O objeto de dados é então passado para o método `handleSubmit`, onde pode ser manipulado como necessário (neste caso, exibido no console).
+- When the "Save" button is clicked, the submission event is triggered.
+- The default submission behavior is prevented, and the form data is collected and converted into a JavaScript object.
+- The data object is then passed to the `handleSubmit` method, where it can be manipulated as needed (in this case, logged to the console).
 
-### Exemplo de Uso
+### Example Usage
 
-Ao preencher o campo de entrada e clicar no botão "Save", os dados do formulário serão exibidos no console no formato:
+Upon filling in the input field and clicking the "Save" button, the form data will be displayed in the console in the format:
 
 ```javascript
-{ age: '30' } // Exemplo de dado coletado
+{ age: '30' } // Example of collected data
 ```
 
-### Benefícios do Uso
+### Benefits of Use
 
-- **Simplicidade**: O uso de `formData` torna fácil a conversão dos dados do formulário em um formato utilizável.
-- **Integração com Decorators**: A combinação de decorators permite uma abordagem declarativa para manipulação de eventos, resultando em código mais limpo e organizado.
-- **Evitando Comportamento Padrão**: O uso do filtro `prevent` assegura que o formulário não seja enviado de forma tradicional, permitindo que você controle como os dados são processados.
+- **Simplicity**: Using `formData` makes it easy to convert form data into a usable format.
+- **Integration with Decorators**: The combination of decorators allows for a declarative approach to event handling, resulting in cleaner and more organized code.
+- **Preventing Default Behavior**: Using the `prevent` filter ensures that the form is not submitted in the traditional way, allowing you to control how the data is processed.
 
-### Considerações Finais
+### Final Considerations
 
-Este exemplo ilustra a eficácia de utilizar filtros e decorators no desenvolvimento de componentes web, proporcionando uma maneira eficiente e organizada de lidar com eventos e dados de formulários.
+This example illustrates the effectiveness of using filters and decorators in web component development, providing an efficient and organized way to handle events and form data.

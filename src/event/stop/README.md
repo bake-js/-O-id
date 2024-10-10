@@ -1,58 +1,60 @@
-# Guia de Uso: Filtro `stop`
+[🇧🇷 Leia em Português](./README.pt-BR.md) | [🇺🇸 Read in English](./README.md)
 
-O filtro `stop` é uma função que permite interromper a propagação de um evento no DOM, evitando que ele seja transmitido para outros elementos que possam estar ouvindo o mesmo evento.
+# Usage Guide: `stop` Filter
 
-### Quando Usar
+The `stop` filter is a function that allows you to stop the propagation of an event in the DOM, preventing it from being transmitted to other elements that may be listening for the same event.
 
-- **Interrupção de Eventos**: Ideal em situações onde você deseja evitar que eventos sejam processados em elementos ancestrais ou irmãos, como prevenir efeitos colaterais indesejados.
-- **Eventos Complexos**: Útil em manipuladores de eventos que precisam isolar a ação de um evento específico, garantindo que a lógica não afete outros componentes.
+### When to Use
 
-### Como Funciona
+- **Event Interruption**: Ideal in situations where you want to prevent events from being processed in ancestor or sibling elements, such as avoiding unwanted side effects.
+- **Complex Events**: Useful in event handlers that need to isolate the action of a specific event, ensuring that the logic does not affect other components.
 
-A função `stop` utiliza o método `stopPropagation` do objeto `Event` para evitar que o evento continue sua propagação para outros elementos no DOM. Após interromper a propagação, a função retorna o próprio evento, permitindo que você realize outras operações com ele.
+### How It Works
 
-### Estrutura
+The `stop` function uses the `stopPropagation` method of the `Event` object to prevent the event from continuing its propagation to other elements in the DOM. After stopping the propagation, the function returns the event itself, allowing you to perform other operations with it.
+
+### Structure
 
 ```javascript
 /**
- * @param {Event} event - O evento a ser filtrado.
- * @returns {Event} O próprio evento, após interromper a propagação.
+ * @param {Event} event - The event to be filtered.
+ * @returns {Event} The event itself, after stopping propagation.
  */
 function stop(event) {
   event.stopPropagation();
-  return event
+  return event;
 }
 ```
 
-### Parâmetros
+### Parameters
 
-1. **event** (obrigatório):
-   - **Tipo:** `Event`
-   - **Descrição:** O evento a ser filtrado, geralmente um evento de interação do usuário, como um clique ou um movimento do mouse.
+1. **event** (required):
+   - **Type:** `Event`
+   - **Description:** The event to be filtered, usually a user interaction event, such as a click or mouse movement.
 
-### Retorno
+### Return
 
-- **Tipo:** `Event`
-- **Descrição:** O próprio evento, após a interrupção da propagação, permitindo que você execute operações adicionais com o evento modificado.
+- **Type:** `Event`
+- **Description:** The event itself, after stopping propagation, allowing you to perform additional operations with the modified event.
 
-### Passos para Utilização
+### Steps for Usage
 
-1. **Importe o filtro `stop`**:
+1. **Import the `stop` filter**:
 
    ```javascript
    import { stop } from '@bake-js/-o-id/event';
    ```
 
-2. **Utilize o filtro em um manipulador de eventos**:
+2. **Use the filter in an event handler**:
 
-   - **Passo 1:** Capture o evento que você deseja manipular.
-   - **Passo 2:** Chame a função `stop`, passando o evento como argumento.
+   - **Step 1:** Capture the event you want to manipulate.
+   - **Step 2:** Call the `stop` function, passing the event as an argument.
 
-# Exemplo Prático: Usando o Filtro `stop` com o Decorator `on`
+# Practical Example: Using the `stop` Filter with the `on` Decorator
 
-Este exemplo demonstra como usar o filtro `stop` em conjunto com o decorator `on` para interromper a propagação de um evento de clique em um botão dentro de um componente customizado.
+This example demonstrates how to use the `stop` filter in conjunction with the `on` decorator to stop the propagation of a click event on a button within a custom component.
 
-### Estrutura do Exemplo
+### Example Structure
 
 ```javascript
 import { define } from '@bake-js/-o-id';
@@ -62,8 +64,8 @@ import on, { stop } from '@bake-js/-o-id/event';
 class MyComponent extends HTMLElement {
   @on.click('button', stop)
   handleClick(event) {
-    console.log('Botão clicado!'); // Mensagem exibida no console
-    // A propagação do evento é interrompida aqui
+    console.log('Button clicked!'); // Message displayed in the console
+    // The event propagation is stopped here
   }
 
   connectedCallback() {
@@ -76,36 +78,36 @@ class MyComponent extends HTMLElement {
 }
 ```
 
-### Descrição do Código
+### Code Description
 
-1. **Importação de Módulos**:
-   - O componente importa o decorator `define` para registrar o Custom Element.
-   - Importa `on` e `stop` do módulo de eventos.
+1. **Module Imports**:
+   - The component imports the `define` decorator to register the Custom Element.
+   - Imports `on` and `stop` from the event module.
 
-2. **Definição do Componente**:
-   - O componente `my-component` é definido usando o decorator `@define`.
+2. **Component Definition**:
+   - The `my-component` component is defined using the `@define` decorator.
 
-3. **Manipulação do Clique do Botão**:
-   - O método `handleClick` é decorado com `@on.click`, que escuta o evento de clique no botão.
-   - O filtro `stop` é aplicado para interromper a propagação do evento, garantindo que ele não alcance elementos ancestrais.
+3. **Handling Button Click**:
+   - The `handleClick` method is decorated with `@on.click`, which listens for the click event on the button.
+   - The `stop` filter is applied to stop the event propagation, ensuring it does not reach ancestor elements.
 
-4. **Renderização do Botão**:
-   - No método `connectedCallback`, o HTML do botão é inserido no componente.
+4. **Button Rendering**:
+   - In the `connectedCallback` method, the HTML for the button is inserted into the component.
 
-### Comportamento do Componente
+### Component Behavior
 
-- Quando o botão "Click Me!" é clicado, a mensagem "Botão clicado!" é exibida no console.
-- A propagação do evento de clique é interrompida, evitando que o evento seja processado por outros manipuladores de eventos que possam estar associados a elementos ancestrais.
+- When the "Click Me!" button is clicked, the message "Button clicked!" is displayed in the console.
+- The propagation of the click event is stopped, preventing the event from being processed by other event handlers that may be associated with ancestor elements.
 
-### Exemplo de Uso
+### Usage Example
 
-Ao clicar no botão, a mensagem "Botão clicado!" será exibida no console, e a propagação do evento será interrompida, evitando ações adicionais em elementos superiores.
+When clicking the button, the message "Button clicked!" will be displayed in the console, and the propagation of the event will be stopped, preventing further actions on parent elements.
 
-### Benefícios do Uso
+### Benefits of Use
 
-- **Controle Total**: Permite que você controle a propagação de eventos, evitando efeitos colaterais indesejados em sua aplicação.
-- **Integração com Decorators**: O uso do filtro `stop` em combinação com decorators permite uma abordagem declarativa para manipulação de eventos, resultando em um código mais organizado e limpo.
+- **Total Control**: Allows you to control event propagation, avoiding unwanted side effects in your application.
+- **Integration with Decorators**: Using the `stop` filter in combination with decorators provides a declarative approach to event handling, resulting in cleaner and more organized code.
 
-### Considerações Finais
+### Final Considerations
 
-Este exemplo demonstra a utilidade do filtro `stop` no desenvolvimento de componentes web, proporcionando uma maneira eficaz de gerenciar a propagação de eventos e garantindo que sua lógica de aplicação se mantenha isolada e controlada.
+This example demonstrates the utility of the `stop` filter in web component development, providing an effective way to manage event propagation and ensuring that your application logic remains isolated and controlled.

@@ -1,22 +1,24 @@
-# Guia de Uso: Filtro `prevent`
+[🇧🇷 Leia em Português](./README.pt-BR.md) | [🇺🇸 Read in English](./README.md)
 
-O filtro `prevent` é uma função que impede o comportamento padrão de um evento, permitindo que você tenha controle total sobre a manipulação do evento em seu código.
+# Usage Guide: `prevent` Filter
 
-### Quando Usar
+The `prevent` filter is a function that prevents the default behavior of an event, allowing you to have complete control over event handling in your code.
 
-- **Prevenção de Comportamento Padrão**: Ideal para situações em que você precisa evitar a ação padrão associada a um evento, como a submissão de um formulário ou o comportamento de um botão.
-- **Manipulação de Eventos**: Útil em manipuladores de eventos onde a ação padrão não é desejada e você deseja implementar um comportamento customizado.
+### When to Use
 
-### Como Funciona
+- **Preventing Default Behavior**: Ideal for situations where you need to avoid the default action associated with an event, such as form submission or button behavior.
+- **Event Handling**: Useful in event handlers where the default action is not desired, and you want to implement custom behavior.
 
-A função `prevent` chama o método `preventDefault` do evento, evitando que a ação padrão associada ao evento seja executada. Após impedir o comportamento padrão, o próprio evento é retornado, permitindo que outras operações sejam realizadas com o evento modificado.
+### How It Works
 
-### Estrutura
+The `prevent` function calls the event's `preventDefault` method, preventing the default action associated with the event from being executed. After preventing the default behavior, the event itself is returned, allowing for further operations to be performed with the modified event.
+
+### Structure
 
 ```javascript
 /**
- * @param {Event} event - O evento a ser filtrado.
- * @returns {Event} O próprio evento, após impedir o comportamento padrão.
+ * @param {Event} event - The event to be filtered.
+ * @returns {Event} The event itself, after preventing the default behavior.
  */
 function prevent(event) {
   event.preventDefault();
@@ -24,35 +26,35 @@ function prevent(event) {
 }
 ```
 
-### Parâmetros
+### Parameters
 
-1. **event** (obrigatório):
-   - **Tipo:** `Event`
-   - **Descrição:** O evento que será filtrado para impedir seu comportamento padrão.
+1. **event** (required):
+   - **Type:** `Event`
+   - **Description:** The event that will be filtered to prevent its default behavior.
 
-### Retorno
+### Return
 
-- **Tipo:** `Event`
-- **Descrição:** O próprio evento, permitindo que você continue a manipulação após impedir a ação padrão.
+- **Type:** `Event`
+- **Description:** The event itself, allowing you to continue handling after preventing the default action.
 
-### Passos para Utilização
+### Steps for Usage
 
-1. **Importe o filtro `prevent`**:
+1. **Import the `prevent` filter**:
 
    ```javascript
    import { prevent } from '@bake-js/-o-id/event';
    ```
 
-2. **Utilize o filtro em um manipulador de eventos**:
+2. **Use the filter in an event handler**:
 
-   - **Passo 1:** Captura o evento que você deseja modificar.
-   - **Passo 2:** Chame a função `prevent` passando o evento como argumento.
+   - **Step 1:** Capture the event you want to modify.
+   - **Step 2:** Call the `prevent` function, passing the event as an argument.
 
-### Exemplo Prático: Usando o Filtro `prevent` com o Decorator `on`
+### Practical Example: Using the `prevent` Filter with the `on` Decorator
 
-Este exemplo demonstra como usar o filtro `prevent` em conjunto com o decorator `on` para controlar a submissão de um formulário em um componente customizado.
+This example demonstrates how to use the `prevent` filter in conjunction with the `on` decorator to control form submission in a custom component.
 
-### Estrutura do Exemplo
+### Example Structure
 
 ```javascript
 import { define } from '@bake-js/-o-id';
@@ -62,7 +64,7 @@ import on, { prevent, formData } from '@bake-js/-o-id/event';
 class MyComponent extends HTMLElement {
   @on.submit('form', prevent, formData)
   handleSubmit(data) {
-    console.log(data); // Os dados do formulário são exibidos aqui
+    console.log(data); // The form data is displayed here
   }
 
   connectedCallback() {
@@ -76,43 +78,43 @@ class MyComponent extends HTMLElement {
 }
 ```
 
-### Descrição do Código
+### Code Description
 
-1. **Importação de Módulos**:
-   - O componente importa o decorator `define` para registrar o Custom Element.
-   - Importa `on`, `prevent`, e `formData` do módulo de eventos.
+1. **Module Imports**:
+   - The component imports the `define` decorator to register the Custom Element.
+   - It imports `on`, `prevent`, and `formData` from the events module.
 
-2. **Definição do Componente**:
-   - O componente `my-component` é definido usando o decorator `@define`.
+2. **Component Definition**:
+   - The `my-component` component is defined using the `@define` decorator.
 
-3. **Manipulação da Submissão do Formulário**:
-   - O método `handleSubmit` é decorado com `@on.submit`, que escuta o evento de submissão do formulário.
-   - O filtro `prevent` é usado para evitar o comportamento padrão de submissão, e o filtro `formData` converte os dados do formulário em um objeto.
-   - Os dados do formulário são passados como argumento para o método `handleSubmit`.
+3. **Form Submission Handling**:
+   - The `handleSubmit` method is decorated with `@on.submit`, which listens for the form submission event.
+   - The `prevent` filter is used to avoid the default submission behavior, and the `formData` filter converts the form data into an object.
+   - The form data is passed as an argument to the `handleSubmit` method.
 
-4. **Renderização do Formulário**:
-   - No método `connectedCallback`, o HTML do formulário é inserido no componente.
-   - O formulário contém um campo de entrada (`input`) para a idade e um botão de envio.
+4. **Rendering the Form**:
+   - In the `connectedCallback` method, the HTML for the form is inserted into the component.
+   - The form contains an input field (`input`) for age and a submit button.
 
-### Comportamento do Componente
+### Component Behavior
 
-- Quando o botão "Save" é clicado, o evento de submissão é acionado.
-- O comportamento padrão de submissão é prevenido, permitindo que você controle como os dados são processados.
-- O objeto de dados do formulário é então passado para o método `handleSubmit`, onde pode ser manipulado como necessário (neste caso, exibido no console).
+- When the "Save" button is clicked, the submission event is triggered.
+- The default submission behavior is prevented, allowing you to control how the data is processed.
+- The form data object is then passed to the `handleSubmit` method, where it can be manipulated as needed (in this case, displayed in the console).
 
-### Exemplo de Uso
+### Usage Example
 
-Ao preencher o campo de entrada e clicar no botão "Save", os dados do formulário serão exibidos no console no formato:
+By filling in the input field and clicking the "Save" button, the form data will be displayed in the console in the format:
 
 ```javascript
-{ age: '30' } // Exemplo de dado coletado
+{ age: '30' } // Example of collected data
 ```
 
-### Benefícios do Uso
+### Benefits of Using
 
-- **Controle Total**: A função `prevent` proporciona controle total sobre o comportamento do evento, permitindo que você evite ações indesejadas.
-- **Integração com Decorators**: A combinação de decorators permite uma abordagem declarativa para manipulação de eventos, resultando em código mais limpo e organizado.
+- **Total Control**: The `prevent` function provides complete control over event behavior, allowing you to avoid unwanted actions.
+- **Integration with Decorators**: The combination of decorators allows for a declarative approach to event handling, resulting in cleaner and more organized code.
 
-### Considerações Finais
+### Final Considerations
 
-Este exemplo ilustra a eficácia de utilizar filtros e decorators no desenvolvimento de componentes web, proporcionando uma maneira eficiente e organizada de lidar com eventos e evitar comportamentos padrão indesejados.
+This example illustrates the effectiveness of using filters and decorators in web component development, providing an efficient and organized way to handle events and avoid unwanted default behaviors.

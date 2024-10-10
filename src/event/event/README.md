@@ -1,20 +1,22 @@
-# Guia de Uso: Decorator `event`
+[🇧🇷 Leia em Português](./README.pt-BR.md) | [🇺🇸 Read in English](./README.md)
 
-O decorator `event` permite que desenvolvedores declarem listeners de eventos de forma simplificada e gerenciem a conexão e desconexão desses eventos automaticamente com base no ciclo de vida do Custom Element. O decorator pode ser utilizado para eventos comuns como `click`, `keydown`, `mouseover`, entre outros, e inclui suporte para filtros que modificam o comportamento do evento antes que o método decorado seja executado.
+# Usage Guide: `event` Decorator
 
-### Quando Usar
+The `event` decorator allows developers to declare event listeners in a simplified manner and automatically manage the connection and disconnection of these events based on the lifecycle of the Custom Element. The decorator can be used for common events such as `click`, `keydown`, `mouseover`, among others, and includes support for filters that modify the behavior of the event before the decorated method is executed.
 
-- **Gerenciamento de Eventos Declarativo**: Útil para adicionar listeners a elementos do DOM de forma concisa, integrando-os ao ciclo de vida do componente.
-- **Uso de Filtros**: Permite aplicar filtros como `preventDefault`, `stopPropagation`, ou qualquer outro modificador antes de executar a lógica associada ao evento.
+### When to Use
 
-### Estrutura
+- **Declarative Event Management**: Useful for adding listeners to DOM elements concisely, integrating them into the component's lifecycle.
+- **Use of Filters**: Allows applying filters such as `preventDefault`, `stopPropagation`, or any other modifier before executing the logic associated with the event.
+
+### Structure
 
 ```javascript
 /**
- * @param {string} type - O tipo do evento a ser ouvido (e.g., 'click').
- * @param {string} query - Seletor CSS para filtrar o alvo do evento.
- * @param {...Function} filters - Funções de filtro aplicadas ao evento antes de chamar o método decorado.
- * @returns {Function} - O decorator para adicionar lógica ao método decorado.
+ * @param {string} type - The type of event to listen for (e.g., 'click').
+ * @param {string} query - CSS selector to filter the target of the event.
+ * @param {...Function} filters - Filter functions applied to the event before calling the decorated method.
+ * @returns {Function} - The decorator to add logic to the decorated method.
  */
 const attachEventListener = (type, query, ...filters) => (target, propertyKey) => {
   intercept(connectedCallback)
@@ -43,36 +45,36 @@ const attachEventListener = (type, query, ...filters) => (target, propertyKey) =
 };
 ```
 
-### Parâmetros
+### Parameters
 
 1. **type**:
-   - **Tipo:** `string`
-   - **Descrição:** O tipo de evento a ser monitorado, como `'click'`, `'mouseover'`, ou `'keydown'`.
+   - **Type:** `string`
+   - **Description:** The type of event to monitor, such as `'click'`, `'mouseover'`, or `'keydown'`.
 
 2. **query**:
-   - **Tipo:** `string`
-   - **Descrição:** Um seletor CSS que filtra o alvo do evento. Apenas eventos que correspondem ao seletor serão processados.
+   - **Type:** `string`
+   - **Description:** A CSS selector that filters the target of the event. Only events matching the selector will be processed.
 
 3. **filters**:
-   - **Tipo:** `Function[]`
-   - **Descrição:** Funções de filtro opcionais que são aplicadas ao evento antes de chamar o método decorado. Essas funções podem modificar o evento ou impedir sua propagação.
+   - **Type:** `Function[]`
+   - **Description:** Optional filter functions that are applied to the event before calling the decorated method. These functions can modify the event or prevent its propagation.
 
 4. **target**:
-   - **Tipo:** `Function`
-   - **Descrição:** A classe que contém o método decorado, geralmente um Custom Element.
+   - **Type:** `Function`
+   - **Description:** The class containing the decorated method, usually a Custom Element.
 
 5. **propertyKey**:
-   - **Tipo:** `string`
-   - **Descrição:** O nome do método que será chamado quando o evento ocorrer.
+   - **Type:** `string`
+   - **Description:** The name of the method that will be called when the event occurs.
 
-### Funcionalidade
+### Functionality
 
-1. **Intercepta o Ciclo de Vida**: O listener do evento é adicionado quando o Custom Element é conectado ao DOM (via `connectedCallback`) e removido quando o elemento é desconectado (via `disconnectedCallback`), usando um `AbortController` para facilitar a remoção do listener.
-2. **Aplicação de Filtros**: Funções de filtro, como `preventDefault()` e `stopPropagation()`, podem ser aplicadas ao evento antes de ele chegar ao método decorado. Isso permite modificar o evento ou bloquear sua propagação de forma declarativa.
+1. **Intercepts Lifecycle**: The event listener is added when the Custom Element is connected to the DOM (via `connectedCallback`) and removed when the element is disconnected (via `disconnectedCallback`), using an `AbortController` to facilitate listener removal.
+2. **Application of Filters**: Filter functions, such as `preventDefault()` and `stopPropagation()`, can be applied to the event before it reaches the decorated method. This allows for modifying the event or blocking its propagation declaratively.
 
-### Exemplo Prático
+### Practical Example
 
-**Exemplo: Listener para Evento de Clique com Filtros**
+**Example: Click Event Listener with Filters**
 
 ```javascript
 import { define } from '@bake-js/-o-id'
@@ -82,31 +84,31 @@ import on, { prevent, stop } from '@bake-js/-o-id/event';
 class MyComponent extends HTMLElement {
   @on.click('button', prevent, stop)
   handleClick(event) {
-    console.log('Botão clicado');
+    console.log('Button clicked');
   }
 
   connectedCallback() {
-    this.innerHTML = `<button>Clique Aqui</button>`;
+    this.innerHTML = `<button>Click Here</button>`;
   }
 }
 ```
 
-**Explicação**:
-- O decorator `@on.click('button', prevent, stop)` define um listener de clique que será disparado apenas quando o evento ocorrer em um botão dentro do componente.
-- Antes de o método `handleClick` ser chamado, os filtros `prevent` (que chama `preventDefault()`) e `stop` (que chama `stopPropagation()`) são aplicados ao evento.
-- O listener é automaticamente adicionado quando o componente é inserido no DOM e removido ao ser desconectado, evitando vazamento de memória.
+**Explanation**:
+- The decorator `@on.click('button', prevent, stop)` defines a click listener that will be triggered only when the event occurs on a button inside the component.
+- Before the `handleClick` method is called, the filters `prevent` (which calls `preventDefault()`) and `stop` (which calls `stopPropagation()`) are applied to the event.
+- The listener is automatically added when the component is inserted into the DOM and removed when it is disconnected, preventing memory leaks.
 
-### Filtros Disponíveis
+### Available Filters
 
-1. **`prevent`**: Impede a ação padrão do evento chamando `event.preventDefault()`.
-2. **`stop`**: Evita a propagação do evento chamando `event.stopPropagation()`.
+1. **`prevent`**: Prevents the default action of the event by calling `event.preventDefault()`.
+2. **`stop`**: Stops the propagation of the event by calling `event.stopPropagation()`.
 
-### Proxy para Criação de Decorators
+### Proxy for Creating Decorators
 
-O decorator `event` utiliza um Proxy para gerar decorators dinamicamente com base no tipo de evento:
+The `event` decorator uses a Proxy to dynamically generate decorators based on the event type:
 
 ```javascript
-// Proxy para gerar os decorators dinamicamente com base no tipo de evento
+// Proxy to dynamically generate decorators based on event type
 const event = new Proxy(
   {},
   {
@@ -115,13 +117,13 @@ const event = new Proxy(
 );
 ```
 
-Isso permite que você use a sintaxe `@on.eventType` para declarar listeners de eventos de maneira declarativa:
+This allows you to use the syntax `@on.eventType` to declaratively declare event listeners:
 
-- `@on.click('button')`: Escuta cliques em um botão.
-- `@on.keydown('input')`: Escuta o evento de pressionar teclas em um campo de input.
+- `@on.click('button')`: Listens for clicks on a button.
+- `@on.keydown('input')`: Listens for key press events on an input field.
 
-### Benefícios do Decorator `event`
+### Benefits of the `event` Decorator
 
-1. **Centralização de Lógica**: O código para adicionar e remover listeners de eventos fica encapsulado no decorator, simplificando a lógica dos Custom Elements.
-2. **Filtros Poderosos**: A adição de filtros permite modificar o comportamento do evento sem precisar duplicar código em diferentes partes do componente.
-3. **Gerenciamento Automático de Listeners**: Listeners são automaticamente limpos quando o componente é desconectado, evitando vazamentos de memória e garantindo uma gestão eficiente dos eventos.
+1. **Centralization of Logic**: The code for adding and removing event listeners is encapsulated in the decorator, simplifying the logic of Custom Elements.
+2. **Powerful Filters**: The addition of filters allows for modifying the event behavior without needing to duplicate code in different parts of the component.
+3. **Automatic Listener Management**: Listeners are automatically cleaned up when the component is disconnected, preventing memory leaks and ensuring efficient event management.

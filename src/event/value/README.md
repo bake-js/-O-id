@@ -1,57 +1,59 @@
-# Guia de Uso: Filtro `value`
+[🇧🇷 Leia em Português](./README.pt-BR.md) | [🇺🇸 Read in English](./README.md)
 
-O filtro `value` é uma função que permite extrair o valor de um campo de entrada associado ao evento. Este filtro é especialmente útil em manipuladores de eventos que lidam com campos de formulários e elementos de entrada.
+# Usage Guide: `value` Filter
 
-### Quando Usar
+The `value` filter is a function that allows you to extract the value from an input field associated with the event. This filter is especially useful in event handlers that deal with form fields and input elements.
 
-- **Obtenção de Valores de Input**: Ideal para situações em que é necessário capturar o valor inserido pelo usuário em campos de entrada, como caixas de texto, áreas de texto ou seletores.
-- **Manipulação de Formulários**: Útil em manipulações de formulários, permitindo que você obtenha rapidamente os dados inseridos pelos usuários.
+### When to Use
 
-### Como Funciona
+- **Getting Input Values**: Ideal for situations where you need to capture the value entered by the user in input fields, such as text boxes, text areas, or selectors.
+- **Form Handling**: Useful in form manipulations, allowing you to quickly obtain the data entered by users.
 
-A função `value` acessa o campo de entrada que gerou o evento e retorna seu valor. Se o evento ou o campo de entrada não estiverem presentes, a função retorna `undefined`, evitando erros em situações inesperadas.
+### How It Works
 
-### Estrutura
+The `value` function accesses the input field that triggered the event and returns its value. If the event or the input field is not present, the function returns `undefined`, avoiding errors in unexpected situations.
+
+### Structure
 
 ```javascript
 /**
- * @param {Event} event - O evento que contém o campo de entrada.
- * @returns {string|undefined} O valor do campo de entrada, ou `undefined` se o campo não estiver presente.
+ * @param {Event} event - The event that contains the input field.
+ * @returns {string|undefined} The value of the input field, or `undefined` if the field is not present.
  */
 function value(event) {
   return event.target.value;
 }
 ```
 
-### Parâmetros
+### Parameters
 
-1. **event** (obrigatório):
-   - **Tipo:** `Event`
-   - **Descrição:** O evento que contém o campo de entrada, geralmente um evento de interação do usuário, como `input` ou `change`.
+1. **event** (required):
+   - **Type:** `Event`
+   - **Description:** The event that contains the input field, typically a user interaction event, such as `input` or `change`.
 
-### Retorno
+### Return
 
-- **Tipo:** `string | undefined`
-- **Descrição:** O valor do campo de entrada, caso esteja presente. Retorna `undefined` se o campo não estiver acessível, garantindo que o código não falhe em situações onde o evento não contém um campo de entrada.
+- **Type:** `string | undefined`
+- **Description:** The value of the input field if present. Returns `undefined` if the field is not accessible, ensuring that the code does not fail in situations where the event does not contain an input field.
 
-### Passos para Utilização
+### Steps for Use
 
-1. **Importe o filtro `value`**:
+1. **Import the `value` filter**:
 
    ```javascript
    import { value } from '@bake-js/-o-id/event';
    ```
 
-2. **Utilize o filtro em um manipulador de eventos**:
+2. **Use the filter in an event handler**:
 
-   - **Passo 1:** Capture o evento que você deseja manipular.
-   - **Passo 2:** Chame a função `value`, passando o evento como argumento.
+   - **Step 1:** Capture the event you want to handle.
+   - **Step 2:** Call the `value` function, passing the event as an argument.
 
-### Exemplo Prático: Usando o Filtro `value` em um Componente
+### Practical Example: Using the `value` Filter in a Component
 
-Este exemplo demonstra como usar o filtro `value` para capturar o valor de um campo de entrada dentro de um componente customizado.
+This example demonstrates how to use the `value` filter to capture the value from an input field within a custom component.
 
-### Estrutura do Exemplo
+### Example Structure
 
 ```javascript
 import { define } from '@bake-js/-o-id';
@@ -62,50 +64,50 @@ class MyInputComponent extends HTMLElement {
   @on.input('input', value)
   handleInput(event) {
     const inputValue = value(event);
-    console.log('Valor do input:', inputValue);
-    // Outras operações com inputValue podem ser realizadas aqui
+    console.log('Input value:', inputValue);
+    // Other operations with inputValue can be performed here
   }
 
   connectedCallback() {
     this.innerHTML = `
       <div>
-        <input type="text" placeholder="Digite algo...">
+        <input type="text" placeholder="Type something...">
       </div>
     `;
   }
 }
 ```
 
-### Descrição do Código
+### Code Description
 
-1. **Importação de Módulos**:
-   - O componente importa o decorator `define` para registrar o Custom Element.
-   - Importa `on` e `value` do módulo de eventos.
+1. **Module Imports**:
+   - The component imports the `define` decorator to register the Custom Element.
+   - It imports `on` and `value` from the events module.
 
-2. **Definição do Componente**:
-   - O componente `my-input-component` é definido usando o decorator `@define`.
+2. **Component Definition**:
+   - The `my-input-component` is defined using the `@define` decorator.
 
-3. **Manipulação do Input**:
-   - O método `handleInput` é decorado com `@on.input`, que escuta o evento de entrada no campo de texto.
-   - O valor do campo de entrada é obtido usando o filtro `value`, que é então exibido no console.
+3. **Input Handling**:
+   - The `handleInput` method is decorated with `@on.input`, which listens for input events on the text field.
+   - The value of the input field is obtained using the `value` filter, which is then displayed in the console.
 
-4. **Renderização do Campo de Entrada**:
-   - No método `connectedCallback`, o HTML do campo de entrada é inserido no componente.
+4. **Rendering the Input Field**:
+   - In the `connectedCallback` method, the HTML for the input field is inserted into the component.
 
-### Comportamento do Componente
+### Component Behavior
 
-- Quando o usuário digita algo no campo de entrada, o valor é capturado e exibido no console em tempo real.
-- Isso permite que você execute outras operações com o valor, como validação ou atualização de estado.
+- When the user types something in the input field, the value is captured and displayed in the console in real-time.
+- This allows you to perform other operations with the value, such as validation or state updates.
 
-### Exemplo de Uso
+### Usage Example
 
-Ao digitar "Olá" no campo de entrada, a mensagem "Valor do input: Olá" será exibida no console.
+When typing "Hello" in the input field, the message "Input value: Hello" will be displayed in the console.
 
-### Benefícios do Uso
+### Benefits of Use
 
-- **Facilidade de Captura**: Simplifica o processo de captura de valores de entrada, permitindo que você escreva código mais limpo e compreensível.
-- **Integração com Decorators**: O uso do filtro `value` em conjunto com decorators permite uma abordagem declarativa para manipulação de eventos, resultando em um código mais organizado.
+- **Ease of Capture**: Simplifies the process of capturing input values, allowing you to write cleaner and more understandable code.
+- **Integration with Decorators**: Using the `value` filter in conjunction with decorators allows for a declarative approach to event handling, resulting in more organized code.
 
-### Considerações Finais
+### Final Considerations
 
-Este exemplo demonstra a utilidade do filtro `value` no desenvolvimento de componentes web, proporcionando uma maneira eficaz de capturar e manipular valores de entrada dos usuários, essencial para interações ricas e dinâmicas.
+This example demonstrates the utility of the `value` filter in web component development, providing an effective way to capture and manipulate user input values, essential for rich and dynamic interactions.
