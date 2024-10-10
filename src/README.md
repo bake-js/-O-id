@@ -1,43 +1,45 @@
-# Módulo de Ciclo de Vida e Formulários do **-O-id**
+[🇧🇷 Leia em Português](./README.pt-BR.md) | [🇺🇸 Read in English](./README.md)
 
-O módulo de **Ciclo de Vida e Formulários** do **-O-id** fornece uma série de decorators que simplificam a manipulação do ciclo de vida de Web Components e a interação com formulários. Esses decorators permitem que você adicione lógica personalizada a eventos cruciais do ciclo de vida dos componentes e gerencie a interação com elementos de formulário de maneira eficiente.
+# -O-id Lifecycle and Forms Module
 
-## Introdução
+The **Lifecycle and Forms** module of **-O-id** provides a series of decorators that simplify handling the lifecycle of Web Components and interaction with forms. These decorators allow you to add custom logic to crucial component lifecycle events and efficiently manage interaction with form elements.
 
-O **-O-id** oferece uma abordagem modular e reativa para gerenciar eventos do ciclo de vida dos Web Components e a associação a formulários. Com decorators específicos, você pode encapsular a lógica necessária para responder a alterações de atributos, estados de conexão, e eventos relacionados a formulários, promovendo uma experiência de desenvolvimento mais clara e organizada.
+## Introduction
 
-## Importação dos Decorators
+**-O-id** offers a modular and reactive approach to managing Web Component lifecycle events and form association. With specific decorators, you can encapsulate the necessary logic to respond to attribute changes, connection states, and form-related events, promoting a clearer and more organized development experience.
 
-Para utilizar as funcionalidades deste módulo, importe os decorators da seguinte forma:
+## Importing the Decorators
+
+To use the functionalities of this module, import the decorators as follows:
 
 ```javascript
 import { define, adopted, attributeChanged, connected, disconnected, formAssociated, formDisabled, formReset, formStateRestore } from '@bake-js/-o-id';
 ```
 
-## Principais Funcionalidades
+## Key Features
 
-### Decorators de Ciclo de Vida
+### Lifecycle Decorators
 
-Os decorators fornecem hooks para diferentes momentos no ciclo de vida do componente:
+The decorators provide hooks for different moments in the component's lifecycle:
 
-- **`@define`**: Define um Custom Element.
-- **`@adopted`**: Executa lógica quando o elemento é movido para um novo contexto no DOM.
-- **`@attributeChanged`**: Responde a mudanças em atributos do elemento.
-- **`@connected`**: Executa lógica quando o elemento é conectado ao DOM.
-- **`@disconnected`**: Executa lógica quando o elemento é desconectado do DOM.
+- **`@define`**: Defines a Custom Element.
+- **`@adopted`**: Executes logic when the element is moved to a new context in the DOM.
+- **`@attributeChanged`**: Responds to changes in the element’s attributes.
+- **`@connected`**: Executes logic when the element is connected to the DOM.
+- **`@disconnected`**: Executes logic when the element is disconnected from the DOM.
 
-### Decorators para Formulários
+### Form Decorators
 
-Os decorators específicos para interação com formulários permitem que você responda a eventos relacionados ao estado do formulário:
+The specific decorators for form interaction allow you to respond to form-related events:
 
-- **`@formAssociated`**: Indica que o elemento está associado a um formulário.
-- **`@formDisabled`**: Executa lógica quando o elemento é desabilitado dentro de um formulário.
-- **`@formReset`**: Responde ao evento de redefinição do formulário.
-- **`@formStateRestore`**: Executa lógica quando o estado do formulário associado é restaurado.
+- **`@formAssociated`**: Indicates that the element is associated with a form.
+- **`@formDisabled`**: Executes logic when the element is disabled within a form.
+- **`@formReset`**: Responds to the form reset event.
+- **`@formStateRestore`**: Executes logic when the associated form state is restored.
 
-### Estrutura dos Decorators
+### Decorator Structure
 
-Os decorators podem ser utilizados para simplificar a lógica de ciclo de vida e interação com formulários dos componentes. Aqui está um exemplo de como utilizá-los:
+The decorators can be used to simplify the component's lifecycle and form interaction logic. Here’s an example of how to use them:
 
 ```javascript
 @define('my-component')
@@ -48,49 +50,49 @@ class MyComponent extends HTMLElement {
 
   @adopted
   handleAdopted() {
-    // Lógica a ser executada quando o componente é movido no DOM.
+    // Logic to be executed when the component is moved in the DOM.
   }
 
   @attributeChanged
   handleAttributeChange(name, oldValue, newValue) {
-    // Lógica a ser executada quando um atributo é alterado.
+    // Logic to be executed when an attribute is changed.
   }
 
   @connected
   handleConnected() {
-    // Lógica a ser executada quando o componente é conectado ao DOM.
+    // Logic to be executed when the component is connected to the DOM.
   }
 
   @disconnected
   handleDisconnected() {
-    // Lógica a ser executada quando o componente é desconectado do DOM.
+    // Logic to be executed when the component is disconnected from the DOM.
   }
 
   @formAssociated
   handleFormAssociated() {
-    // Lógica para associar o componente a um formulário.
+    // Logic for associating the component with a form.
   }
 
   @formDisabled
   handleFormDisabled() {
-    // Lógica a ser executada quando o formulário é desabilitado.
+    // Logic to be executed when the form is disabled.
   }
 
   @formReset
   handleFormReset() {
-    // Lógica a ser executada quando o formulário é redefinido.
+    // Logic to be executed when the form is reset.
   }
 
   @formStateRestore
   handleFormStateRestore() {
-    // Lógica a ser executada quando o estado do formulário é restaurado.
+    // Logic to be executed when the form state is restored.
   }
 }
 ```
 
-## Exemplo Prático
+## Practical Example
 
-**Exemplo: Usando `@define`, `@connected`, e `@formStateRestore`**
+**Example: Using `@define`, `@connected`, and `@formStateRestore`**
 
 ```javascript
 import { define, connected, formStateRestore } from '@bake-js/-o-id';
@@ -103,29 +105,29 @@ class CustomElement extends HTMLElement {
 
   @connected
   handleConnected() {
-    console.log('O elemento foi conectado ao DOM.');
+    console.log('The element was connected to the DOM.');
   }
 
   @formStateRestore
   handleFormStateRestore() {
-    console.log('O estado do formulário foi restaurado.');
+    console.log('The form state was restored.');
   }
 }
 ```
 
-## Por Que Usar o Módulo de Ciclo de Vida e Formulários?
+## Why Use the Lifecycle and Forms Module?
 
-A utilização deste módulo no **-O-id** oferece várias vantagens que tornam o desenvolvimento de Web Components mais eficiente e modular:
+Using this module in **-O-id** offers several advantages that make developing Web Components more efficient and modular:
 
-- **Gerenciamento Eficiente**: Encapsula a lógica de ciclo de vida e interação com formulários em decorators, mantendo o código organizado e fácil de manter.
+- **Efficient Management**: Encapsulates lifecycle and form interaction logic in decorators, keeping code organized and maintainable.
   
-- **Flexibilidade**: Permite que você responda a eventos específicos do ciclo de vida e alterações de estado em formulários, melhorando a reatividade dos componentes.
+- **Flexibility**: Allows you to respond to specific lifecycle events and form state changes, improving component reactivity.
 
-- **Simplicidade**: Os decorators oferecem uma maneira clara e direta de implementar lógica sem complicar a estrutura do componente.
+- **Simplicity**: The decorators offer a clear and straightforward way to implement logic without complicating the component's structure.
 
-## Exemplos de Uso
+## Usage Examples
 
-### Exemplo 1: Criando um Componente com Ciclo de Vida
+### Example 1: Creating a Component with Lifecycle
 
 ```javascript
 @define('life-cycle-component')
@@ -136,17 +138,17 @@ class LifeCycleComponent extends HTMLElement {
 
   @connected
   handleConnected() {
-    console.log('O componente foi conectado ao DOM.');
+    console.log('The component was connected to the DOM.');
   }
 
   @disconnected
   handleDisconnected() {
-    console.log('O componente foi desconectado do DOM.');
+    console.log('The component was disconnected from the DOM.');
   }
 }
 ```
 
-### Exemplo 2: Usando `@formAssociated` e `@formReset`
+### Example 2: Using `@formAssociated` and `@formReset`
 
 ```javascript
 @define('form-component')
@@ -157,16 +159,16 @@ class FormComponent extends HTMLElement {
 
   @formAssociated
   handleFormAssociated() {
-    console.log('O componente está associado a um formulário.');
+    console.log('The component is associated with a form.');
   }
 
   @formReset
   handleFormReset() {
-    console.log('O formulário foi redefinido.');
+    console.log('The form was reset.');
   }
 }
 ```
 
-## Conclusão
+## Conclusion
 
-O módulo de Ciclo de Vida e Formulários do **-O-id** fornece uma maneira eficiente de gerenciar eventos de ciclo de vida e interações com formulários em Web Components. Com sua abordagem modular e flexível, você pode construir interfaces reativas e de fácil manutenção, garantindo que seu código permaneça claro e organizado. Experimente o módulo e descubra como ele pode aprimorar seu desenvolvimento de Web Components!
+The **-O-id** Lifecycle and Forms module provides an efficient way to manage lifecycle events and form interactions in Web Components. With its modular and flexible approach, you can build reactive and maintainable interfaces, ensuring your code remains clear and organized. Try out the module and discover how it can enhance your Web Component development!

@@ -134,7 +134,7 @@ Se você precisar de ajuda ou orientação sobre como usar a biblioteca **-O-id*
 
 A seguir, você encontrará a documentação detalhada para os principais módulos do **-O-id**. Cada link leva à página correspondente onde você pode aprender mais sobre como usar e implementar as funcionalidades oferecidas.
 
-- **[Ciclo de Vida e Formulários](https://github.com/bake-js/-o-id/blob/main/src/README.md)**: Um guia completo para entender e aplicar os principais módulos e decorators do **-O-id**.
+- **[Ciclo de Vida e Formulários](https://github.com/bake-js/-o-id/blob/main/src/README.pt-BR.md)**: Um guia completo para entender e aplicar os principais módulos e decorators do **-O-id**.
 - **[DOM](https://github.com/bake-js/-o-id/blob/main/src/dom/README.md)**: Documentação sobre a manipulação do DOM e renderização de componentes.
 - **[Event](https://github.com/bake-js/-o-id/blob/main/src/event/README.md)**: Guia para manipulação e resposta a eventos dentro dos Web Components.
 - **[Relay](https://github.com/bake-js/-o-id/blob/main/src/relay/README.md)**: Facilita a escuta de eventos emitidos pelo parentElement de um Custom Element.
