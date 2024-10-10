@@ -1,39 +1,41 @@
+[🇧🇷 Read in Portuguese](./README.pt-BR.md) | [🇺🇸 Read in English](./README.md)
+
 # Relay
 
-O `relay` é um decorator que facilita a escuta de eventos no `parentElement` de um Custom Element, sendo parte da biblioteca `@bake-js/-o-id/relay`.
+The `relay` is a decorator that simplifies listening for events on the `parentElement` of a Custom Element, being part of the library `@bake-js/-o-id/relay`.
 
-## Visão Geral
+## Overview
 
-### Nome e Classificação
+### Name and Classification
 
-- **Nome:** Relay
-- **Classificação:** Decorators [ES Proposals](https://www.proposals.es/proposals/Decorators), [TypeScript](https://www.typescriptlang.org/docs/handbook/decorators.html)
+- **Name:** Relay
+- **Classification:** Decorators [ES Proposals](https://www.proposals.es/proposals/Decorators), [TypeScript](https://www.typescriptlang.org/docs/handbook/decorators.html)
 
-### Objetivo
+### Purpose
 
-Facilitar a escuta de eventos no `parentElement` de um Custom Element, permitindo que os eventos do elemento pai sejam redirecionados e tratados pelo componente filho.
+To facilitate listening for events on the `parentElement` of a Custom Element, allowing events from the parent element to be redirected and handled by the child component.
 
-## Motivação
+## Motivation
 
-O uso do `relay` traz as seguintes vantagens:
+The use of `relay` brings the following advantages:
 
-1. **Escuta Automática de Eventos no Pai:** Elimina a necessidade de adicionar manualmente event listeners no `parentElement`, automatizando o processo.
-2. **Facilidade de Manutenção:** Centraliza a lógica de eventos herdados do pai no componente filho.
-3. **Consistência:** Garante que os listeners no `parentElement` sejam corretamente adicionados e removidos conforme o ciclo de vida do componente.
+1. **Automatic Event Listening on Parent:** Eliminates the need to manually add event listeners on the `parentElement`, automating the process.
+2. **Ease of Maintenance:** Centralizes the logic of inherited events from the parent in the child component.
+3. **Consistency:** Ensures that listeners on the `parentElement` are correctly added and removed according to the component's lifecycle.
 
-## Aplicabilidade
+## Applicability
 
-Ideal para situações em que um Custom Element filho precisa reagir a eventos disparados no `parentElement`, como atualizações em outros componentes ou mudanças globais no estado.
+Ideal for situations where a child Custom Element needs to react to events triggered on the `parentElement`, such as updates in other components or global state changes.
 
-## Importação
+## Import
 
-Para utilizar o decorator `relay`, importe-o da seguinte maneira:
+To use the `relay` decorator, import it as follows:
 
 ```javascript
 import relay from '@bake-js/-o-id/relay';
 ```
 
-## Implementação
+## Implementation
 
 ```javascript
 import intercept from "./intercept";
@@ -81,7 +83,7 @@ const relay = new Proxy(
 export default relay;
 ```
 
-### Exemplo de Uso
+### Usage Example
 
 ```javascript
 import relay from '@bake-js/-o-id/relay';
@@ -96,14 +98,14 @@ class MyChildElement extends HTMLElement {
 customElements.define('my-child-element', MyChildElement);
 ```
 
-Neste exemplo, o evento `changed` disparado no `parentElement` do componente filho será capturado e tratado pelo método `handleParentChange`.
+In this example, the `changed` event triggered on the `parentElement` of the child component will be captured and handled by the `handleParentChange` method.
 
-## Comparação com Concorrentes
+## Comparison with Competitors
 
 ### Lit
 
-- **Comportamento Padrão:** Em Lit, a escuta de eventos no `parentElement` requer configuração manual no `connectedCallback`.
-- **Extensão Obrigatória:** Requer a extensão de `LitElement` para definir componentes.
+- **Default Behavior:** In Lit, listening for events on the `parentElement` requires manual configuration in the `connectedCallback`.
+- **Mandatory Extension:** Requires extending `LitElement` to define components.
 
 ```javascript
 import { LitElement } from 'lit';
@@ -129,8 +131,8 @@ customElements.define('my-child-element', MyChildElement);
 
 ### Stencil
 
-- **Configuração Manual:** Em Stencil, a escuta de eventos do `parentElement` também precisa ser configurada manualmente.
-- **Shadow DOM Opcional:** O suporte ao Shadow DOM é opcional e configurável.
+- **Manual Configuration:** In Stencil, listening for events from the `parentElement` also needs to be configured manually.
+- **Optional Shadow DOM:** Shadow DOM support is optional and configurable.
 
 ```typescript
 import { Component } from '@stencil/core';
@@ -154,12 +156,12 @@ export class MyChildElement {
 }
 ```
 
-### Vantagens do `@relay`
+### Advantages of `@relay`
 
-- **Escuta Automática:** Simplifica o processo de escutar eventos do `parentElement` sem precisar escrever código de configuração manual no ciclo de vida.
-- **Código Mais Limpo:** Centraliza a lógica de eventos do `parentElement` diretamente nos métodos do Custom Element filho.
-- **Flexibilidade:** Não exige extensão de classes específicas, como `LitElement` ou `HTMLElement`.
+- **Automatic Listening:** Simplifies the process of listening for events from the `parentElement` without needing to write manual configuration code in the lifecycle.
+- **Cleaner Code:** Centralizes the logic of events from the `parentElement` directly in the methods of the child Custom Element.
+- **Flexibility:** Does not require extending specific classes, such as `LitElement` or `HTMLElement`.
 
-## Considerações Finais
+## Final Considerations
 
-O decorator `relay` é uma solução eficiente e declarativa para escutar eventos do `parentElement` em Custom Elements, melhorando a legibilidade e a manutenção do código em cenários onde os eventos do pai precisam ser manipulados pelos filhos.
+The `relay` decorator is an efficient and declarative solution for listening to events from the `parentElement` in Custom Elements, improving the readability and maintainability of the code in scenarios where parent events need to be handled by children.
