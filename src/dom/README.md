@@ -1,41 +1,43 @@
-# Módulo DOM do **-O-id**
+[🇧🇷 Leia em Português](./README.pt-BR.md) | [🇺🇸 Read in English](./README.md)
 
-O módulo **DOM** do **-O-id** fornece uma série de funcionalidades que facilitam a criação, estilização e gerenciamento do ciclo de vida de Web Components. Através de decorators e funções específicas, o módulo permite a implementação de templates dinâmicos e a aplicação de estilos de maneira eficiente e reativa.
+# DOM Module of **-O-id**
 
-## Introdução
+The **DOM** module of **-O-id** provides a series of functionalities that facilitate the creation, styling, and lifecycle management of Web Components. Through decorators and specific functions, the module allows for the implementation of dynamic templates and efficient, reactive styling.
 
-O **-O-id** simplifica a manipulação do DOM em Web Components através de decorators e funções utilitárias que permitem a renderização de conteúdo e a aplicação de estilos de forma modular. Com suporte a templates literais, estilos dinâmicos e hooks de ciclo de vida, o módulo **DOM** oferece uma abordagem robusta para o desenvolvimento de interfaces modernas.
+## Introduction
 
-## Importação dos Decorators e Funções
+**-O-id** simplifies DOM manipulation in Web Components through decorators and utility functions that enable modular rendering of content and styling application. With support for template literals, dynamic styles, and lifecycle hooks, the **DOM** module offers a robust approach to modern interface development.
 
-Para utilizar as funcionalidades do módulo DOM, importe-as da seguinte forma:
+## Importing Decorators and Functions
+
+To use the functionalities of the DOM module, import them as follows:
 
 ```javascript
 import { define, paint, repaint, willPaint, didPaint, html, css } from '@bake-js/-o-id/dom';
 ```
 
-## Principais Funcionalidades
+## Main Features
 
-### Renderização de Templates
+### Template Rendering
 
-A função `html` permite criar templates HTML utilizando template literals, facilitando a construção de interfaces dinâmicas e legíveis.
+The `html` function allows for creating HTML templates using template literals, making it easier to build dynamic and readable interfaces.
 
-### Estilização Dinâmica
+### Dynamic Styling
 
-A função `css` possibilita a criação de folhas de estilo dinâmicas, suportando interpolação de variáveis JavaScript diretamente no CSS. Ideal para Web Components que utilizam Shadow DOM, garante isolamento de estilos e reatividade.
+The `css` function enables the creation of dynamic stylesheets, supporting JavaScript variable interpolation directly in CSS. Ideal for Web Components using Shadow DOM, it ensures style isolation and reactivity.
 
-### Hooks de Ciclo de Vida
+### Lifecycle Hooks
 
-Os decorators `@paint`, `@repaint`, `@willPaint` e `@didPaint` fornecem um controle granular sobre o ciclo de vida de renderização dos componentes:
+The decorators `@paint`, `@repaint`, `@willPaint`, and `@didPaint` provide granular control over the rendering lifecycle of components:
 
-- **`@paint`**: Vincula a renderização do HTML e CSS a um componente.
-- **`@repaint`**: Permite re-renderizações de um componente, ideal para atualizar a interface em resposta a mudanças de estado.
-- **`@willPaint`**: Executa lógica antes da renderização, útil para preparar dados ou estados.
-- **`@didPaint`**: Permite a execução de lógica após a renderização, como animações ou interações.
+- **`@paint`**: Binds the rendering of HTML and CSS to a component.
+- **`@repaint`**: Allows re-rendering of a component, ideal for updating the interface in response to state changes.
+- **`@willPaint`**: Executes logic before rendering, useful for preparing data or states.
+- **`@didPaint`**: Allows the execution of logic after rendering, such as animations or interactions.
 
-### Estrutura dos Decorators
+### Decorator Structure
 
-Os decorators podem ser utilizados para simplificar a lógica de renderização e estilização dos componentes. Aqui está um exemplo de como utilizá-los:
+Decorators can be used to simplify the rendering and styling logic of components. Here’s an example of how to use them:
 
 ```javascript
 @define('my-component')
@@ -48,26 +50,26 @@ class MyComponent extends HTMLElement {
 
   @willPaint
   prepareData() {
-    // Lógica para preparar dados antes da renderização
+    // Logic to prepare data before rendering
   }
 
   @didPaint
   initializeInteractions() {
-    // Lógica para interações após a renderização
+    // Logic for interactions after rendering
   }
 }
 ```
 
-### Exemplo Prático
+### Practical Example
 
-**Exemplo: Usando `@paint`, `css`, e `html` para Criar um Componente Dinâmico**
+**Example: Using `@paint`, `css`, and `html` to Create a Dynamic Component**
 
 ```javascript
 import { define, paint, css, html } from '@bake-js/-o-id/dom';
 
 function template() {
   return html`
-    <div>Meu Componente Dinâmico</div>
+    <div>My Dynamic Component</div>
   `;
 }
 
@@ -91,21 +93,21 @@ class DynamicComponent extends HTMLElement {
 }
 ```
 
-## Por Que Usar o Módulo DOM?
+## Why Use the DOM Module?
 
-O uso do módulo DOM no **-O-id** oferece várias vantagens que tornam o desenvolvimento de Web Components mais eficiente e intuitivo:
+Using the DOM module in **-O-id** offers several advantages that make Web Component development more efficient and intuitive:
 
-- **Facilidade de Uso**: A função `html` simplifica a criação de templates, enquanto `css` permite a estilização direta usando template literals.
+- **Ease of Use**: The `html` function simplifies template creation, while `css` allows for direct styling using template literals.
   
-- **Reatividade**: A capacidade de interpolar variáveis no CSS e o suporte a hooks de ciclo de vida proporcionam uma experiência reativa e dinâmica.
+- **Reactivity**: The ability to interpolate variables in CSS and the support for lifecycle hooks provide a reactive and dynamic experience.
 
-- **Estrutura Modular**: A utilização de decorators para gerenciar o ciclo de vida do componente mantém o código organizado e de fácil manutenção.
+- **Modular Structure**: The use of decorators to manage the component's lifecycle keeps the code organized and easy to maintain.
 
-- **Controle Total**: Os hooks de ciclo de vida (`@willPaint`, `@didPaint`) oferecem controle preciso sobre a lógica de renderização, permitindo que você execute ações específicas em momentos determinados do ciclo de vida do componente.
+- **Total Control**: Lifecycle hooks (`@willPaint`, `@didPaint`) offer precise control over rendering logic, allowing you to perform specific actions at certain points in the component's lifecycle.
 
-## Exemplos de Uso
+## Usage Examples
 
-### Exemplo 1: Criando um Componente Simples
+### Example 1: Creating a Simple Component
 
 ```javascript
 @define('simple-component')
@@ -118,7 +120,7 @@ class SimpleComponent extends HTMLElement {
 }
 ```
 
-### Exemplo 2: Usando `@willPaint` e `@didPaint`
+### Example 2: Using `@willPaint` and `@didPaint`
 
 ```javascript
 @define('interactive-component')
@@ -131,16 +133,16 @@ class InteractiveComponent extends HTMLElement {
 
   @willPaint
   prepareData() {
-    // Lógica para preparar dados
+    // Logic to prepare data
   }
 
   @didPaint
   initializeInteractions() {
-    // Configuração de interações
+    // Interaction setup
   }
 }
 ```
 
-## Conclusão
+## Conclusion
 
-O módulo DOM do **-O-id** oferece uma maneira eficiente e clara de gerenciar a renderização, estilização e ciclo de vida de Web Components. Com sua abordagem modular e flexível, você pode criar interfaces reativas e de fácil manutenção, tudo enquanto mantém a simplicidade e a clareza que são marcas registradas do **-O-id**. Experimente o módulo DOM e descubra como ele pode aprimorar seu desenvolvimento de Web Components!
+The DOM module of **-O-id** offers an efficient and clear way to manage the rendering, styling, and lifecycle of Web Components. With its modular and flexible approach, you can create reactive and easy-to-maintain interfaces, all while maintaining the simplicity and clarity that are hallmarks of **-O-id**. Try out the DOM module and discover how it can enhance your Web Component development!
