@@ -180,7 +180,7 @@ Documentação sobre o módulo Echo, um barramento de eventos que permite a comu
 
 ## Contribuindo
 
-Contribuições são sempre bem-vindas! Sinta-se à vontade para abrir issues ou pull requests. Para começar, confira as [diretrizes de contribuição](https://github.com/bake-js/-o-id/blob/main/CONTRIBUTING.md).
+Contribuições são sempre bem-vindas! Sinta-se à vontade para abrir issues ou pull requests. Para começar, confira as [diretrizes de contribuição](https://github.com/bake-js/-o-id/blob/main/CONTRIBUTING.pt-BR.md).
 
 ## Licença
 
