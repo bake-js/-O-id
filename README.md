@@ -1,32 +1,34 @@
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=bake-js_-o-id&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=bake-js_-o-id)
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=bake-js_-o-id&metric=bugs)](https://sonarcloud.io/summary/new_code?id=bake-js_-o-id)
-[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=bake-js_-o-id&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=bake-js_-o-id)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=bake-js_-o-id&metric=coverage)](https://sonarcloud.io/summary/new_code?id=bake-js_-o-id)
+[🇧🇷 Leia em Português](./README.pt-BR.md) | [🇺🇸 Read in English](./README.md)
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=bake-js_-o-id&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=bake-js_-o-id)  
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=bake-js_-o-id&metric=bugs)](https://sonarcloud.io/summary/new_code?id=bake-js_-o-id)  
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=bake-js_-o-id&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=bake-js_-o-id)  
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=bake-js_-o-id&metric=coverage)](https://sonarcloud.io/summary/new_code?id=bake-js_-o-id)  
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=bake-js_-o-id&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=bake-js_-o-id)
 
 # -O-id
 
-**-O-id** é uma biblioteca leve e eficiente para a criação de Web Components personalizados, com foco em simplicidade e desempenho. Desenvolvida inteiramente em JavaScript, **-O-id** garante que seus componentes sejam rápidos, leves e de fácil manutenção. Com uma arquitetura intuitiva e a utilização de decorators como `@paint` e `@repaint`, o desenvolvimento de componentes reativos e modulares se torna simples e direto.
+**-O-id** is a lightweight and efficient library for creating custom Web Components, focusing on simplicity and performance. Built entirely in JavaScript, **-O-id** ensures that your components are fast, lightweight, and easy to maintain. With an intuitive architecture and decorators like `@paint` and `@repaint`, developing reactive and modular components becomes simple and straightforward.
 
-## Por que -O-id?
+## Why -O-id?
 
-O nome **-O-id** é inspirado na teoria psicanalítica de Sigmund Freud. O "**id**" representa a parte mais primitiva da personalidade humana, impulsionando nossos instintos fundamentais. Analogamente, a biblioteca **-O-id** serve como uma base essencial para a construção de interfaces web. O sufixo "**-O**" simboliza a transformação de ideias em resultados tangíveis — componentes funcionais e eficientes.
+The name **-O-id** is inspired by Sigmund Freud's psychoanalytic theory. The "**id**" represents the most primitive part of the human personality, driving our fundamental instincts. Similarly, the **-O-id** library serves as an essential foundation for building web interfaces. The suffix "**-O**" symbolizes the transformation of ideas into tangible results—functional and efficient components.
 
-**-O-id** não é apenas uma ferramenta, mas uma força que impulsiona a criação de interfaces, permitindo que desenvolvedores transformem conceitos em realidade de maneira ágil e intuitiva. Este nome destaca a importância de começar com uma base sólida, assim como o "**id**" é o ponto de partida na formação da personalidade.
+**-O-id** is not just a tool but a force driving interface creation, allowing developers to transform concepts into reality in an agile and intuitive way. This name highlights the importance of starting with a solid foundation, just as the "**id**" is the starting point in personality formation.
 
-## Instalação
+## Installation
 
-Para instalar a biblioteca, utilize o npm:
+To install the library, use npm:
 
 ```bash
 npm install @bake-js/-o-id
 ```
 
-> **Nota:** A biblioteca também é compatível com `yarn` e `bun`.
+> **Note:** The library is also compatible with `yarn` and `bun`.
 
-## Exemplo de Uso
+## Usage Example
 
-Abaixo está um exemplo simples de como utilizar a biblioteca para criar um contador interativo:
+Below is a simple example of how to use the library to create an interactive counter:
 
 ```javascript
 import { define } from '@bake-js/-o-id';
@@ -86,102 +88,98 @@ class Counter extends HTMLElement {
 }
 ```
 
-Você pode ver o exemplo interativo no [CodePen](https://codepen.io/demgoncalves/pen/dyxpdLw?editors=1010).
+You can view the interactive example on [CodePen](https://codepen.io/demgoncalves/pen/dyxpdLw?editors=1010).
 
-### Explicação do Componente
+### Component Explanation
 
-O exemplo ilustra a criação de um componente Custom Element chamado `o-id-counter`, representando um contador que pode ser incrementado por meio de um botão. A seguir, as principais características do componente:
+The example illustrates the creation of a custom element component named `o-id-counter`, representing a counter that can be incremented via a button. Below are the key features of the component:
 
-- **Definição do Elemento:**
-  - O elemento é definido como `o-id-counter` utilizando o decorator `@define`, e utiliza Shadow DOM para encapsular seus estilos e estrutura.
+- **Element Definition:**
+  - The element is defined as `o-id-counter` using the `@define` decorator, and it uses Shadow DOM to encapsulate its styles and structure.
 
-- **Estado Interno:**
-  - O estado do contador é armazenado em uma propriedade privada `#number`, iniciando em zero. O método `get number()` retorna o valor atual, enquanto o método `set number(value)` permite a atualização.
+- **Internal State:**
+  - The counter’s state is stored in a private property `#number`, starting at zero. The `get number()` method returns the current value, while the `set number(value)` method allows updates.
 
-- **Renderização do Componente:**
-  - A função `component(self)` gera a estrutura HTML do botão, e a função `style()` define os estilos CSS aplicados.
+- **Component Rendering:**
+  - The `component(self)` function generates the HTML structure for the button, and the `style()` function defines the applied CSS styles.
 
-- **Interatividade:**
-  - O método `increment()` é decorado com `@on.click('button')`, permitindo que o contador seja incrementado a cada clique no botão. Este método atualiza o estado e re-renderiza o componente automaticamente.
+- **Interactivity:**
+  - The `increment()` method is decorated with `@on.click('button')`, allowing the counter to be incremented with each button click. This method updates the state and re-renders the component automatically.
 
-### Como Usar
+### How to Use
 
-Para utilizar este componente em sua aplicação:
+To use this component in your application:
 
-1. Certifique-se de que o código esteja devidamente importado e definido.
-2. Adicione o elemento `<o-id-counter></o-id-counter>` em qualquer parte do seu HTML.
-3. O componente estará pronto para uso, incrementando o valor a cada clique no botão.
+1. Ensure the code is properly imported and defined.
+2. Add the `<o-id-counter></o-id-counter>` element anywhere in your HTML.
+3. The component will be ready to use, incrementing the value with each button click.
 
-Exemplo de uso em HTML:
+Example of usage in HTML:
 
 ```html
 <o-id-counter></o-id-counter>
 ```
 
-> Este exemplo demonstra como **-O-id** facilita a criação de componentes interativos com uma sintaxe clara e eficiente.
+> This example demonstrates how **-O-id** simplifies the creation of interactive components with a clear and efficient syntax.
 
-## Demonstração
+## Demo
 
-Para ver a biblioteca **-O-id** em ação, acesse nosso [demo interativo](https://github.com/bake-js/-o-id-demo).
+To see the **-O-id** library in action, check out our [interactive demo](https://github.com/bake-js/-o-id-demo).
 
-## Assistente
+## Assistant
 
-Se você precisar de ajuda ou orientação sobre como usar a biblioteca **-O-id**, sinta-se à vontade para acessar nosso [assistente online](https://hf.co/chat/assistant/6703c9dfe3610a31b5ef3523), que fornece suporte adicional e documentação interativa.
+If you need help or guidance on how to use the **-O-id** library, feel free to access our [online assistant](https://hf.co/chat/assistant/6703c9dfe3610a31b5ef3523), which provides additional support and interactive documentation.
 
-## Documentação
+## Documentation
 
-A seguir, você encontrará a documentação detalhada para os principais módulos do **-O-id**. Cada link leva à página correspondente onde você pode aprender mais sobre como usar e implementar as funcionalidades oferecidas.
+Below you will find detailed documentation for the main modules of **-O-id**. Each link leads to the corresponding page where you can learn more about how to use and implement the features offered.
 
-- **[Ciclo de Vida e Formulários](https://github.com/bake-js/-o-id/blob/main/src/README.md)**: Um guia completo para entender e aplicar os principais módulos e decorators do **-O-id**.
-- **[DOM](https://github.com/bake-js/-o-id/blob/main/src/dom/README.md)**: Documentação sobre a manipulação do DOM e renderização de componentes.
-- **[Event](https://github.com/bake-js/-o-id/blob/main/src/event/README.md)**: Guia para manipulação e resposta a eventos dentro dos Web Components.
-- **[Relay](https://github.com/bake-js/-o-id/blob/main/src/relay/README.md)**: Facilita a escuta de eventos emitidos pelo parentElement de um Custom Element.
-- **[Echo](https://github.com/bake-js/-o-id/blob/main/src/echo/README.md)**: Documentação sobre o barramento de eventos Echo, para comunicação entre componentes. **Nota:** Este módulo está em fase beta e pode estar sujeito a mudanças.
+- **[Lifecycle and Forms](https://github.com/bake-js/-o-id/blob/main/src/README.md)**: A complete guide to understanding and applying the main modules and decorators of **-O-id**.
+- **[DOM](https://github.com/bake-js/-o-id/blob/main/src/dom/README.md)**: Documentation on DOM manipulation and component rendering.
+- **[Event](https://github.com/bake-js/-o-id/blob/main/src/event/README.md)**: A guide for handling and responding to events within Web Components.
+- **[Relay](https://github.com/bake-js/-o-id/blob/main/src/relay/README.md)**: Facilitates listening to events emitted by a Custom Element's parentElement.
+- **[Echo](https://github.com/bake-js/-o-id/blob/main/src/echo/README.md)**: Documentation on the Echo event bus for communication between components. **Note:** This module is in beta and may be subject to changes.
 
-## Índice de Referência
+## Reference Index
 
-### Ciclo de Vida
-Documentação sobre os callbacks e métodos relacionados ao ciclo de vida dos Custom Elements. Esses métodos são fundamentais para gerenciar o estado e as mudanças dos elementos ao longo de sua existência no DOM.
-- [adopted](https://github.com/bake-js/-o-id/blob/main/src/adopted/README.md) - Callback chamado quando um Custom Element é adotado por um novo documento.
-- [attributeChanged](https://github.com/bake-js/-o-id/blob/main/src/attributeChanged/README.md) - Callback chamado quando um atributo de um Custom Element é alterado.
-- [connected](https://github.com/bake-js/-o-id/blob/main/src/connected/README.md) - Callback chamado quando um Custom Element é inserido no DOM.
-- [disconnected](https://github.com/bake-js/-o-id/blob/main/src/disconnected/README.md) - Callback chamado quando um Custom Element é removido do DOM.
-- [define](https://github.com/bake-js/-o-id/blob/main/src/define/README.md) - Função para definir e registrar um novo Custom Element.
+### Lifecycle
+Documentation on the callbacks and methods related to the lifecycle of Custom Elements. These methods are essential for managing the state and changes of elements throughout their existence in the DOM.
+- [adopted](https://github.com/bake-js/-o-id/blob/main/src/adopted/README.md) - Callback invoked when a Custom Element is adopted into a new document.
+- [attributeChanged](https://github.com/bake-js/-o-id/blob/main/src/attributeChanged/README.md) - Callback invoked when an attribute of a Custom Element is changed.
+- [connected](https://github.com/bake-js/-o-id/blob/main/src/connected/README.md) - Callback invoked when a Custom Element is inserted into the DOM.
+- [disconnected](https://github.com/bake-js/-o-id/blob/main/src/disconnected/README.md) - Callback invoked when a Custom Element is removed from the DOM.
+- [define](https://github.com/bake-js/-o-id/blob/main/src/define/README.md) - Function to define and register a new Custom Element.
 
-### Ciclo de Vida Associados a Formulários
-Informações sobre os callbacks específicos para a interação de Custom Elements com formulários. Esses callbacks são utilizados para gerenciar o estado e as ações relacionadas aos formulários.
-- [formAssociated](https://github.com/bake-js/-o-id/blob/main/src/formAssociated/README.md) - Callback chamado quando um elemento é associado a um formulário.
-- [formDisabled](https://github.com/bake-js/-o-id/blob/main/src/formDisabled/README.md) - Callback chamado quando um elemento é desativado dentro de um formulário.
-- [formReset](https://github.com/bake-js/-o-id/blob/main/src/formReset/README.md) - Callback chamado quando um formulário associado é resetado.
-- [formStateRestore](https://github.com/bake-js/-o-id/blob/main/src/formStateRestore/README.md) - Callback chamado para restaurar o estado do formulário.
+### Lifecycle Associated with Forms
+Information about the specific callbacks for Custom Elements interacting with forms. These callbacks are used to manage state and actions related to forms.
+- [formAssociated](https://github.com/bake-js/-o-id/blob/main/src/formAssociated/README.md) - Callback invoked when an element is associated with a form.
+- [formDisabled](https://github.com/bake-js/-o-id/blob/main/src/formDisabled/README.md) - Callback invoked when an element is disabled within a form.
+- [formReset](https://github.com/bake-js/-o-id/blob/main/src/formReset/README.md) - Callback invoked when an associated form is reset.
+- [formStateRestore](https://github.com/bake-js/-o-id/blob/main/src/formStateRestore/README.md) - Callback invoked to restore the form state.
 
 ### DOM
-Documentação sobre como manipular o DOM e criar elementos personalizados.
-- [css](https://github.com/bake-js/-o-id/blob/main/src/css/README.md) - Helper para criar estilos CSS personalizados para Custom Elements.
-- [didPaint](https://github.com/bake-js/-o-id/blob/main/src/didPaint/README.md) - Decorator que permite a execução de lógica após a renderização do componente.
-- [html](https://github.com/bake-js/-o-id/blob/main/src/html/README.md) - Helper para gerar HTML limpo e eficiente a partir de templates.
-- [paint](https://github.com/bake-js/-o-id/blob/main/src/paint/README.md) - Decorator que chama a função de renderização do componente.
-- [repaint](https://github.com/bake-js/-o-id/blob/main/src/repaint/README.md) - Decorator que atualiza a renderização do componente ao alterar o estado.
-- [willPaint](https://github.com/bake-js/-o-id/blob/main/src/willPaint/README.md) - Decorator que permite a execução de lógica antes da renderização do componente.
+Documentation on how to manipulate the DOM and create custom elements.
+- [css](https://github.com/bake-js/-o-id/blob/main/src/css/README.md) - Helper to create custom CSS styles for Custom Elements.
+- [didPaint](https://github.com/bake-js/-o-id/blob/main/src/didPaint/README.md) - Decorator that allows logic to be executed after the component is rendered.
+- [html](https://github.com/bake-js/-o-id/blob
 
-### Eventos
-Documentação sobre como gerenciar eventos em Custom Elements, facilitando a comunicação e a interatividade.
-- [on](https://github.com/bake-js/-o-id/blob/main/src/event/event/README.md) - Decorator para adicionar listeners de eventos aos elementos.
-- [stop](https://github.com/bake-js/-o-id/blob/main/src/event/stop/README.md) - Filtro que chama `event.stopPropagation()` e retorna o evento, prevenindo que o evento suba na árvore do DOM.
-- [prevent](https://github.com/bake-js/-o-id/blob/main/src/event/prevent/README.md) - Filtro que chama `event.preventDefault()` e retorna o evento, prevenindo a ação padrão do evento.
-- [formData](https://github.com/bake-js/-o-id/blob/main/src/event/formData/README.md) - Filtro que extrai os dados do formulário e retorna um objeto contendo os pares chave-valor.
-- [value](https://github.com/bake-js/-o-id/blob/main/src/event/value/README.md) - Filtro que obtém o valor do evento, útil para inputs e select.
+/main/src/html/README.md) - Helper to create HTML templates for Custom Elements.
+- [paint](https://github.com/bake-js/-o-id/blob/main/src/paint/README.md) - Decorator for defining how the component is rendered and styled.
+- [repaint](https://github.com/bake-js/-o-id/blob/main/src/repaint/README.md) - Allows the repainting logic to be executed when a component state changes.
+- [willPaint](https://github.com/bake-js/-o-id/blob/main/src/willPaint/README.md) - Runs logic just before the component is rendered.
 
-Se precisar de mais alterações ou adições, é só avisar!
+### Event
+Documentation on how to work with events inside Custom Elements.
+- [on](https://github.com/bake-js/-o-id/blob/main/src/on/README.md) - Allows listening for specific events triggered by Custom Elements.
 
 ### Echo
-Documentação sobre o módulo Echo, um barramento de eventos que permite a comunicação entre componentes de forma eficiente.
-- [echo](https://github.com/bake-js/-o-id/blob/main/src/echo/README.md) - Módulo para comunicação entre componentes, permitindo a emissão e escuta de eventos de forma simplificada.
+Documentation for the **Echo** event bus, which allows components to communicate with each other through events.
+- [Echo](https://github.com/bake-js/-o-id/blob/main/src/echo/README.md) - Facilitates communication between Custom Elements using an event bus. **Note:** This module is in beta.
 
-## Contribuindo
+## Contributing
 
-Contribuições são sempre bem-vindas! Sinta-se à vontade para abrir issues ou pull requests. Para começar, confira as [diretrizes de contribuição](https://github.com/bake-js/-o-id/blob/main/CONTRIBUTING.md).
+Contributions are always welcome! Feel free to open issues or submit pull requests. To get started, check out the [contribution guidelines](https://github.com/bake-js/-o-id/blob/main/CONTRIBUTING.md).
 
-## Licença
+## License
 
-Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](https://github.com/bake-js/-o-id/blob/main/LICENSE) para mais detalhes.
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/bake-js/-o-id/blob/main/LICENSE) file for more details.
