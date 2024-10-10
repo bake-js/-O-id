@@ -19,6 +19,8 @@ import intercept from "../intercept";
  * permitindo que o componente escute eventos do elemento pai.
  *
  * @example
+ * import relay from '@bake-js/-o-id/relay';
+ *
  * class ChildComponent extends HTMLElement {
  *   @relay.changed(prevent, stop)
  *   handleChanged(event) {

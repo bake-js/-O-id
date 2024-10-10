@@ -1,71 +1,121 @@
 [🇧🇷 Leia em Português](./README.pt-BR.md) | [🇺🇸 Read in English](./README.md)
 
-# Echo Module of **-O-id**
+# Event Module of **-O-id**
 
-> **In beta phase**: The Echo module is in beta phase, which means there may be changes in the API and behavior before the final version. Keep an eye on updates to ensure compatibility.
+The **Event** module of **-O-id** provides a powerful and flexible way to manage events within your Web Components. Through the use of decorators, it is possible to associate events with specific methods simply and efficiently, keeping your code organized and easy to maintain.
 
 ## Introduction
 
-The Echo module of **-O-id** provides a powerful solution for managing events between Web Components. It allows you to define and listen to events between components easily and efficiently. Below, we present how to use Echo to create a system of interconnected events.
+**-O-id** simplifies event handling in Web Components through decorators that allow direct binding of events to methods. With support for filters and the ability to intercept any DOM event, the **Event** module offers a modular and extensible approach to developing reactive interfaces.
 
-## Import
+## Importing Decorators and Filters
 
-To use the Echo module, import it as follows:
-
-```javascript
-import Echo from '@bake-js/-o-id/echo';
-```
-
-## Structure of the `on` Attribute
-
-The `on` attribute of the Echo module follows the "topic:mapper" structure. The structure is detailed below:
-
-- **Topic:** Defines the event topic and is composed of "element/event".
-- **Mapper:** Specifies the target and the name of the target within the event. The mapper is composed of "target/target-name", where the targets can be:
-  - **attribute**: Reference to component attributes.
-  - **setter**: Reference to component setter methods.
-  - **method**: Reference to component methods.
-
-### Usage Examples
-
-#### Defining a Component with Echo
+To use the Event modules, import them as follows:
 
 ```javascript
-import { define } from '@bake-js/element';
-import Echo from '@bake-js/element/echo';
+import on, { stop, prevent, formData, value } from '@bake-js/-o-id/event';
+```
 
-@define('sender-component')
-class SenderComponent extends Echo(HTMLElement) {
+## Main Features
 
+### Event Binding
+
+The `@on` decorator is used to bind events to specific methods of a Web Component. It functions as a proxy, intercepting events and allowing you to apply filters before calling the associated method. This not only simplifies event handling but also allows for greater control and customization.
+
+### Using `@on`
+
+The `@on` can map any DOM event to a specific method. Here’s how you can use it:
+
+```javascript
+@on.click('button')
+handleClick() {
+  // Code executed when the button is clicked
 }
 
-@define('receiver-component')
-class ReceiverComponent extends Echo(HTMLElement) {
+@on.submit('form', prevent, formData)
+handleSubmit(data) {
+  // Code executed when the form is submitted
+  // `data` contains the data processed by the `formData` filter
+}
 
+@on.input('input', stop, value)
+handleInput(event) {
+  const inputValue = value(event);
+  console.log('Input value:', inputValue);
+  // Other operations with inputValue can be performed here
 }
 ```
 
-#### Communication between Components in HTML
+### Available Filters
 
-```html
-<sender-component></sender-component>
-<receiver-component on="sender-component/messageSent:method/handleMessage"></receiver-component>
+Filters allow you to manipulate and process events before they are passed to the bound methods. The available filters include:
+
+- **`prevent`**: Stops the default behavior of the event.
+- **`stop`**: Stops the propagation of the event in the DOM.
+- **`formData`**: Extracts data from the form and returns it as an object.
+- **`value`**: Extracts the value of an input field associated with the event.
+
+### Creating Custom Filters
+
+In addition to native filters, you can create your own filters to manipulate events as needed. A custom filter follows this structure:
+
+```javascript
+function myFilter(event) {
+  // Custom manipulation logic
+  return /* result of my manipulation */;
+}
 ```
 
-In the example above:
-- The `SenderComponent` emits a custom event `messageSent` when the button is clicked.
-- The `ReceiverComponent` listens to this event and updates its content with the received message.
+Custom filters allow you to introduce additional logic before the event is processed by the bound method, providing an extra layer of flexibility and control.
 
-## Why Use the `@on` Decorator
+### Multiple Filters
 
-Using the `@on` decorator offers several advantages:
+The `@on` decorator allows the application of multiple filters on a single event, using the pipe & filters approach. This means you can easily compose behavior along the event processing chain, making development more modular and adaptable to your needs.
 
-- **Simplicity and Clarity:** Reduces code verbosity, making event association clearer and more straightforward.
-- **Reusability:** Allows the use of multiple decorators on the same method, simplifying configuration and avoiding the need to call methods manually.
-- **Efficiency:** Facilitates code writing and maintenance, as the decorator automatically manages event association and disassociation.
+## Why Use the `@on` Decorator?
+
+Using the `@on` decorator in **-O-id** offers several advantages that make the development of Web Components more efficient and less verbose:
+
+- **Simplicity and Clarity**: Instead of manually adding event listeners and spreading logic throughout the code, `@on` allows events to be associated directly with methods, making the code more readable and easier to maintain.
+
+- **Modularity**: Applying the same decorator to multiple methods without the need for complex chaining simplifies code organization. With `@on`, multiple methods can intuitively respond to the same event.
+
+- **Total Control**: Functioning as a proxy, `@on` intercepts events and allows the application of custom filters before passing them to the corresponding method. This offers precise control over how and when events are processed.
+
+- **Extensibility**: The ability to create custom filters allows you to tailor event behavior to the specific needs of your application, integrating this flexibility consistently with the rest of the code.
+
+## Usage Examples
+
+### Example 1: Click Handling
+
+```javascript
+@on.click('button')
+handleClick() {
+  console.log('Button clicked!');
+}
+```
+
+### Example 2: Form Submission with Data Extraction
+
+```javascript
+@on.submit('form', prevent, formData)
+handleSubmit(data) {
+  console.log('Form data:', data);
+}
+```
+
+### Example 3: Capturing Input Value
+
+```javascript
+@on.input('input', stop, value)
+handleInput(event) {
+  const inputValue = value(event);
+  console.log('Input value:', inputValue);
+}
+```
 
 ## Conclusion
 
-Adopting the `@on` decorator provides a cleaner and more organized approach to managing events in your Web Components, resulting in a more efficient and less error-prone implementation.
+The `@on` decorator not only simplifies event handling but also offers a more structured and flexible approach to developing Web Components. With it, you gain clarity in the code, modularity in functions, and total control over the flow of events, all while maintaining the simplicity and efficiency that is the hallmark of **-O-id**. It is an elegant solution that balances ease of use with customization power, facilitating the creation of modern and robust applications.
 
-Try **-O-id** and see how it can simplify and enhance your Web Component development!
+Try **-O-id** and see how it can simplify and enhance your development of Web Components!

@@ -1,167 +1,76 @@
-[🇧🇷 Leia em Português](./README.pt-BR.md) | [🇺🇸 Read in English](./README.md)
+[🇧🇷 Read in Portuguese](./README.pt-BR.md) | [🇺🇸 Read in English](./README.md)
 
-# Relay
+# Módulo Relay do **-O-id**
 
-O `relay` é um decorator que facilita a escuta de eventos no `parentElement` de um Custom Element, sendo parte da biblioteca `@bake-js/-o-id/relay`.
+O módulo **Relay** do **-O-id** fornece uma maneira eficaz de observar eventos emitidos pelo elemento pai de um Web Component. Através de decorators, você pode facilmente associar eventos do elemento pai a métodos específicos, mantendo seu código organizado e eficiente.
 
-## Visão Geral
+## Introdução
 
-### Nome e Classificação
+O **-O-id** simplifica a escuta de eventos do elemento pai em Web Components por meio de decorators que permitem a vinculação direta de eventos do `parentElement` a métodos. Com o suporte a filtros e uma abordagem declarativa, o módulo **Relay** facilita o gerenciamento de eventos em hierarquias de componentes.
 
-- **Nome:** Relay
-- **Classificação:** Decorators [ES Proposals](https://www.proposals.es/proposals/Decorators), [TypeScript](https://www.typescriptlang.org/docs/handbook/decorators.html)
+## Importação do Decorator
 
-### Objetivo
-
-Facilitar a escuta de eventos no `parentElement` de um Custom Element, permitindo que os eventos do elemento pai sejam redirecionados e tratados pelo componente filho.
-
-## Motivação
-
-O uso do `relay` traz as seguintes vantagens:
-
-1. **Escuta Automática de Eventos no Pai:** Elimina a necessidade de adicionar manualmente event listeners no `parentElement`, automatizando o processo.
-2. **Facilidade de Manutenção:** Centraliza a lógica de eventos herdados do pai no componente filho.
-3. **Consistência:** Garante que os listeners no `parentElement` sejam corretamente adicionados e removidos conforme o ciclo de vida do componente.
-
-## Aplicabilidade
-
-Ideal para situações em que um Custom Element filho precisa reagir a eventos disparados no `parentElement`, como atualizações em outros componentes ou mudanças globais no estado.
-
-## Importação
-
-Para utilizar o decorator `relay`, importe-o da seguinte maneira:
+Para utilizar o módulo Relay, importe-o da seguinte forma:
 
 ```javascript
 import relay from '@bake-js/-o-id/relay';
 ```
 
-## Implementação
+## Principais Funcionalidades
+
+### Escuta de Eventos do Pai
+
+O decorator `@relay` permite que um Web Component escute eventos emitidos pelo seu `parentElement`. Este decorator adiciona um event listener no `parentElement` quando o componente é conectado ao DOM e o remove automaticamente quando o componente é desconectado. A escuta de eventos é feita de maneira eficiente e declarativa.
+
+### Uso do `@relay`
+
+O `@relay` pode mapear qualquer evento do `parentElement` para um método específico. Aqui está como você pode usá-lo:
 
 ```javascript
-import intercept from "./intercept";
-import {
-  abortController,
-  connectedCallback,
-  disconnectedCallback,
-} from "./interfaces";
-
-const attachEventListener =
-  (type, ...filters) =>
-  (target, propertyKey) => {
-    intercept(connectedCallback)
-      .in(target)
-      .then(function () {
-        const controller = (this[abortController] ??= new AbortController());
-        const options = { signal: controller.signal };
-
-        const listener = (event) => {
-          this[propertyKey](
-            filters.reduce((target, filter) => filter(target), event),
-          );
-        };
-
-        this.parentElement.addEventListener(type, listener, options);
-      });
-
-    intercept(disconnectedCallback)
-      .in(target)
-      .then(function () {
-        this[abortController].abort();
-      });
-  };
-
-const relay = new Proxy(
-  {},
-  {
-    get:
-      (_, type) =>
-      (...filters) =>
-        attachEventListener(type, ...filters),
-  },
-);
-
-export default relay;
-```
-
-### Exemplo de Uso
-
-```javascript
-import relay from '@bake-js/-o-id/relay';
-
-class MyChildElement extends HTMLElement {
-  @relay.changed()
-  handleParentChange(event) {
-    console.log('Parent element changed!', event);
-  }
+@relay.changed(prevent, stop)
+handleChanged(event) {
+  console.log('Evento "changed" recebido do parentElement');
 }
 
-customElements.define('my-child-element', MyChildElement);
-```
-
-Neste exemplo, o evento `changed` disparado no `parentElement` do componente filho será capturado e tratado pelo método `handleParentChange`.
-
-## Comparação com Concorrentes
-
-### Lit
-
-- **Comportamento Padrão:** Em Lit, a escuta de eventos no `parentElement` requer configuração manual no `connectedCallback`.
-- **Extensão Obrigatória:** Requer a extensão de `LitElement` para definir componentes.
-
-```javascript
-import { LitElement } from 'lit';
-
-class MyChildElement extends LitElement {
-  connectedCallback() {
-    super.connectedCallback();
-    this.parentElement.addEventListener('changed', this.handleParentChange);
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    this.parentElement.removeEventListener('changed', this.handleParentChange);
-  }
-
-  handleParentChange(event) {
-    console.log('Parent element changed!', event);
-  }
-}
-
-customElements.define('my-child-element', MyChildElement);
-```
-
-### Stencil
-
-- **Configuração Manual:** Em Stencil, a escuta de eventos do `parentElement` também precisa ser configurada manualmente.
-- **Shadow DOM Opcional:** O suporte ao Shadow DOM é opcional e configurável.
-
-```typescript
-import { Component } from '@stencil/core';
-
-@Component({
-  tag: 'my-child-element',
-  shadow: true,
-})
-export class MyChildElement {
-  connectedCallback() {
-    this.parentElement.addEventListener('changed', this.handleParentChange);
-  }
-
-  disconnectedCallback() {
-    this.parentElement.removeEventListener('changed', this.handleParentChange);
-  }
-
-  handleParentChange(event: Event) {
-    console.log('Parent element changed!', event);
-  }
+@relay.updated(stop)
+handleUpdated(event) {
+  console.log('Evento "updated" recebido do parentElement');
 }
 ```
 
-### Vantagens do `@relay`
+### Filtros Disponíveis
 
-- **Escuta Automática:** Simplifica o processo de escutar eventos do `parentElement` sem precisar escrever código de configuração manual no ciclo de vida.
-- **Código Mais Limpo:** Centraliza a lógica de eventos do `parentElement` diretamente nos métodos do Custom Element filho.
-- **Flexibilidade:** Não exige extensão de classes específicas, como `LitElement` ou `HTMLElement`.
+Assim como no módulo Event, os filtros permitem manipular e processar eventos antes de serem passados para os métodos vinculados. Os filtros disponíveis incluem:
 
-## Considerações Finais
+- **`prevent`**: Interrompe o comportamento padrão do evento.
+- **`stop`**: Interrompe a propagação do evento no DOM.
 
-O decorator `relay` é uma solução eficiente e declarativa para escutar eventos do `parentElement` em Custom Elements, melhorando a legibilidade e a manutenção do código em cenários onde os eventos do pai precisam ser manipulados pelos filhos.
+### Estrutura do Decorator
+
+O decorator `@relay` é projetado para ser simples e intuitivo. Ele gera decorators dinamicamente com base no tipo de evento. Diferente do `@on`, ele não requer um seletor, já que o evento é sempre escutado no pai do elemento.
+
+## Exemplos de Uso
+
+### Exemplo 1: Escuta de Evento "changed"
+
+```javascript
+@relay.changed(prevent, stop)
+handleChanged(event) {
+  console.log('O pai emitiu um evento "changed"');
+}
+```
+
+### Exemplo 2: Escuta de Evento "updated"
+
+```javascript
+@relay.updated(stop)
+handleUpdated(event) {
+  console.log('O pai emitiu um evento "updated"');
+}
+```
+
+## Conclusão
+
+O decorator `@relay` simplifica a escuta de eventos do `parentElement`, oferecendo uma abordagem declarativa e flexível para o desenvolvimento de Web Components. Com ele, você pode facilmente reagir a eventos emitidos pelo elemento pai, mantendo a clareza e a modularidade no código. É uma solução poderosa que facilita a criação de interações dinâmicas em aplicações modernas.
+
+Experimente o **-O-id** e descubra como o módulo **Relay** pode otimizar o gerenciamento de eventos em seus Web Components!

@@ -1,167 +1,76 @@
 [🇧🇷 Read in Portuguese](./README.pt-BR.md) | [🇺🇸 Read in English](./README.md)
 
-# Relay
+# Relay Module of **-O-id**
 
-The `relay` is a decorator that simplifies listening for events on the `parentElement` of a Custom Element, being part of the library `@bake-js/-o-id/relay`.
+The **Relay** module of **-O-id** provides an effective way to observe events emitted by the parent element of a Web Component. Through decorators, you can easily associate events from the parent element with specific methods, keeping your code organized and efficient.
 
-## Overview
+## Introduction
 
-### Name and Classification
+**-O-id** simplifies listening to events from the parent element in Web Components through decorators that allow the direct binding of events from the `parentElement` to methods. With support for filters and a declarative approach, the **Relay** module facilitates event management in component hierarchies.
 
-- **Name:** Relay
-- **Classification:** Decorators [ES Proposals](https://www.proposals.es/proposals/Decorators), [TypeScript](https://www.typescriptlang.org/docs/handbook/decorators.html)
+## Importing the Decorator
 
-### Purpose
-
-To facilitate listening for events on the `parentElement` of a Custom Element, allowing events from the parent element to be redirected and handled by the child component.
-
-## Motivation
-
-The use of `relay` brings the following advantages:
-
-1. **Automatic Event Listening on Parent:** Eliminates the need to manually add event listeners on the `parentElement`, automating the process.
-2. **Ease of Maintenance:** Centralizes the logic of inherited events from the parent in the child component.
-3. **Consistency:** Ensures that listeners on the `parentElement` are correctly added and removed according to the component's lifecycle.
-
-## Applicability
-
-Ideal for situations where a child Custom Element needs to react to events triggered on the `parentElement`, such as updates in other components or global state changes.
-
-## Import
-
-To use the `relay` decorator, import it as follows:
+To use the Relay module, import it as follows:
 
 ```javascript
 import relay from '@bake-js/-o-id/relay';
 ```
 
-## Implementation
+## Key Features
+
+### Listening to Parent Events
+
+The `@relay` decorator allows a Web Component to listen for events emitted by its `parentElement`. This decorator adds an event listener on the `parentElement` when the component is connected to the DOM and automatically removes it when the component is disconnected. Event listening is done efficiently and declaratively.
+
+### Using `@relay`
+
+The `@relay` can map any event from the `parentElement` to a specific method. Here’s how you can use it:
 
 ```javascript
-import intercept from "./intercept";
-import {
-  abortController,
-  connectedCallback,
-  disconnectedCallback,
-} from "./interfaces";
-
-const attachEventListener =
-  (type, ...filters) =>
-  (target, propertyKey) => {
-    intercept(connectedCallback)
-      .in(target)
-      .then(function () {
-        const controller = (this[abortController] ??= new AbortController());
-        const options = { signal: controller.signal };
-
-        const listener = (event) => {
-          this[propertyKey](
-            filters.reduce((target, filter) => filter(target), event),
-          );
-        };
-
-        this.parentElement.addEventListener(type, listener, options);
-      });
-
-    intercept(disconnectedCallback)
-      .in(target)
-      .then(function () {
-        this[abortController].abort();
-      });
-  };
-
-const relay = new Proxy(
-  {},
-  {
-    get:
-      (_, type) =>
-      (...filters) =>
-        attachEventListener(type, ...filters),
-  },
-);
-
-export default relay;
-```
-
-### Usage Example
-
-```javascript
-import relay from '@bake-js/-o-id/relay';
-
-class MyChildElement extends HTMLElement {
-  @relay.changed()
-  handleParentChange(event) {
-    console.log('Parent element changed!', event);
-  }
+@relay.changed(prevent, stop)
+handleChanged(event) {
+  console.log('Event "changed" received from parentElement');
 }
 
-customElements.define('my-child-element', MyChildElement);
-```
-
-In this example, the `changed` event triggered on the `parentElement` of the child component will be captured and handled by the `handleParentChange` method.
-
-## Comparison with Competitors
-
-### Lit
-
-- **Default Behavior:** In Lit, listening for events on the `parentElement` requires manual configuration in the `connectedCallback`.
-- **Mandatory Extension:** Requires extending `LitElement` to define components.
-
-```javascript
-import { LitElement } from 'lit';
-
-class MyChildElement extends LitElement {
-  connectedCallback() {
-    super.connectedCallback();
-    this.parentElement.addEventListener('changed', this.handleParentChange);
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    this.parentElement.removeEventListener('changed', this.handleParentChange);
-  }
-
-  handleParentChange(event) {
-    console.log('Parent element changed!', event);
-  }
-}
-
-customElements.define('my-child-element', MyChildElement);
-```
-
-### Stencil
-
-- **Manual Configuration:** In Stencil, listening for events from the `parentElement` also needs to be configured manually.
-- **Optional Shadow DOM:** Shadow DOM support is optional and configurable.
-
-```typescript
-import { Component } from '@stencil/core';
-
-@Component({
-  tag: 'my-child-element',
-  shadow: true,
-})
-export class MyChildElement {
-  connectedCallback() {
-    this.parentElement.addEventListener('changed', this.handleParentChange);
-  }
-
-  disconnectedCallback() {
-    this.parentElement.removeEventListener('changed', this.handleParentChange);
-  }
-
-  handleParentChange(event: Event) {
-    console.log('Parent element changed!', event);
-  }
+@relay.updated(stop)
+handleUpdated(event) {
+  console.log('Event "updated" received from parentElement');
 }
 ```
 
-### Advantages of `@relay`
+### Available Filters
 
-- **Automatic Listening:** Simplifies the process of listening for events from the `parentElement` without needing to write manual configuration code in the lifecycle.
-- **Cleaner Code:** Centralizes the logic of events from the `parentElement` directly in the methods of the child Custom Element.
-- **Flexibility:** Does not require extending specific classes, such as `LitElement` or `HTMLElement`.
+Just like in the Event module, filters allow you to manipulate and process events before passing them to the bound methods. The available filters include:
 
-## Final Considerations
+- **`prevent`**: Stops the default behavior of the event.
+- **`stop`**: Stops the event from propagating in the DOM.
 
-The `relay` decorator is an efficient and declarative solution for listening to events from the `parentElement` in Custom Elements, improving the readability and maintainability of the code in scenarios where parent events need to be handled by children.
+### Structure of the Decorator
+
+The `@relay` decorator is designed to be simple and intuitive. It generates decorators dynamically based on the type of event. Unlike `@on`, it does not require a selector, as the event is always listened to on the parent of the element.
+
+## Usage Examples
+
+### Example 1: Listening to "changed" Event
+
+```javascript
+@relay.changed(prevent, stop)
+handleChanged(event) {
+  console.log('The parent emitted a "changed" event');
+}
+```
+
+### Example 2: Listening to "updated" Event
+
+```javascript
+@relay.updated(stop)
+handleUpdated(event) {
+  console.log('The parent emitted an "updated" event');
+}
+```
+
+## Conclusion
+
+The `@relay` decorator simplifies listening to events from the `parentElement`, offering a declarative and flexible approach to the development of Web Components. With it, you can easily respond to events emitted by the parent element, maintaining clarity and modularity in your code. It is a powerful solution that facilitates the creation of dynamic interactions in modern applications.
+
+Try **-O-id** and discover how the **Relay** module can optimize event management in your Web Components!
