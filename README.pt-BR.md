@@ -174,8 +174,6 @@ Documentação sobre como gerenciar eventos em Custom Elements, facilitando a co
 - [formData](https://github.com/bake-js/-o-id/blob/main/src/event/formData/README.md) - Filtro que extrai os dados do formulário e retorna um objeto contendo os pares chave-valor.
 - [value](https://github.com/bake-js/-o-id/blob/main/src/event/value/README.md) - Filtro que obtém o valor do evento, útil para inputs e select.
 
-Se precisar de mais alterações ou adições, é só avisar!
-
 ### Echo
 Documentação sobre o módulo Echo, um barramento de eventos que permite a comunicação entre componentes de forma eficiente.
 - [echo](https://github.com/bake-js/-o-id/blob/main/src/echo/README.md) - Módulo para comunicação entre componentes, permitindo a emissão e escuta de eventos de forma simplificada.

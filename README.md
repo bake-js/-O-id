@@ -159,22 +159,24 @@ Information about the specific callbacks for Custom Elements interacting with fo
 
 ### DOM
 Documentation on how to manipulate the DOM and create custom elements.
-- [css](https://github.com/bake-js/-o-id/blob/main/src/css/README.md) - Helper to create custom CSS styles for Custom Elements.
-- [didPaint](https://github.com/bake-js/-o-id/blob/main/src/didPaint/README.md) - Decorator that allows logic to be executed after the component is rendered.
-- [html](https://github.com/bake-js/-o-id/blob
+- [css](https://github.com/bake-js/-o-id/blob/main/src/css/README.md) - Helper for creating custom CSS styles for Custom Elements.
+- [didPaint](https://github.com/bake-js/-o-id/blob/main/src/didPaint/README.md) - Decorator that allows logic execution after the component's rendering.
+- [html](https://github.com/bake-js/-o-id/blob/main/src/html/README.md) - Helper for generating clean and efficient HTML from templates.
+- [paint](https://github.com/bake-js/-o-id/blob/main/src/paint/README.md) - Decorator that calls the component's render function.
+- [repaint](https://github.com/bake-js/-o-id/blob/main/src/repaint/README.md) - Decorator that updates the component's rendering when its state changes.
+- [willPaint](https://github.com/bake-js/-o-id/blob/main/src/willPaint/README.md) - Decorator that allows logic execution before the component's rendering.
 
-/main/src/html/README.md) - Helper to create HTML templates for Custom Elements.
-- [paint](https://github.com/bake-js/-o-id/blob/main/src/paint/README.md) - Decorator for defining how the component is rendered and styled.
-- [repaint](https://github.com/bake-js/-o-id/blob/main/src/repaint/README.md) - Allows the repainting logic to be executed when a component state changes.
-- [willPaint](https://github.com/bake-js/-o-id/blob/main/src/willPaint/README.md) - Runs logic just before the component is rendered.
-
-### Event
-Documentation on how to work with events inside Custom Elements.
-- [on](https://github.com/bake-js/-o-id/blob/main/src/on/README.md) - Allows listening for specific events triggered by Custom Elements.
+### Events
+Documentation on how to manage events in Custom Elements, facilitating communication and interactivity.
+- [on](https://github.com/bake-js/-o-id/blob/main/src/event/event/README.md) - Decorator for adding event listeners to elements.
+- [stop](https://github.com/bake-js/-o-id/blob/main/src/event/stop/README.md) - Filter that calls `event.stopPropagation()` and returns the event, preventing it from bubbling up the DOM tree.
+- [prevent](https://github.com/bake-js/-o-id/blob/main/src/event/prevent/README.md) - Filter that calls `event.preventDefault()` and returns the event, preventing the default action of the event.
+- [formData](https://github.com/bake-js/-o-id/blob/main/src/event/formData/README.md) - Filter that extracts form data and returns an object containing key-value pairs.
+- [value](https://github.com/bake-js/-o-id/blob/main/src/event/value/README.md) - Filter that retrieves the event's value, useful for inputs and selects.
 
 ### Echo
-Documentation for the **Echo** event bus, which allows components to communicate with each other through events.
-- [Echo](https://github.com/bake-js/-o-id/blob/main/src/echo/README.md) - Facilitates communication between Custom Elements using an event bus. **Note:** This module is in beta.
+Documentation on the Echo module, an event bus that enables efficient communication between components.
+- [echo](https://github.com/bake-js/-o-id/blob/main/src/echo/README.md) - Module for communication between components, allowing simplified event emission and listening.
 
 ## Contributing
 
