@@ -1,58 +1,60 @@
-# Guia de Uso: Função `html`
+[🇧🇷 Leia em Português](./README.pt-BR.md) | [🇺🇸 Read in English](./README.md)
 
-A função `html` facilita a criação de templates HTML otimizados dentro de Web Components. Utilizando template literals, ela permite a inserção de variáveis diretamente no HTML, melhorando a legibilidade e a manutenção do código.
+# Usage Guide: `html` Function
 
-### Quando Usar
+The `html` function simplifies the creation of optimized HTML templates within Web Components. By using template literals, it allows for the direct insertion of variables into the HTML, enhancing code readability and maintainability.
 
-- **Templates Dinâmicos**: Ideal para gerar conteúdo HTML que muda conforme as propriedades do componente.
-- **Interpolação de Variáveis**: Permite a inclusão de variáveis JavaScript diretamente no HTML, tornando o código mais expressivo.
+### When to Use
 
-### Estrutura
+- **Dynamic Templates**: Ideal for generating HTML content that changes according to the component's properties.
+- **Variable Interpolation**: Allows for the inclusion of JavaScript variables directly in the HTML, making the code more expressive.
+
+### Structure
 
 ```javascript
 /**
- * @param {TemplateStringsArray} strings - As partes literais da string do template.
- * @param {...any} values - Os valores interpolados na string do template.
- * @returns {string} O HTML gerado como uma string.
+ * @param {TemplateStringsArray} strings - The literal parts of the template string.
+ * @param {...any} values - The values interpolated in the template string.
+ * @returns {string} The generated HTML as a string.
  */
 const html = (strings, ...values) => {
   return String.raw({ raw: strings }, ...values)
-    .replace(/\n\s*/g, ' ') // Remove quebras de linha e espaços em branco indesejados.
-    .trim(); // Remove espaços em branco no início e no final da string.
+    .replace(/\n\s*/g, ' ') // Removes unwanted new lines and white spaces.
+    .trim(); // Removes white spaces at the beginning and end of the string.
 };
 ```
 
-### Parâmetros
+### Parameters
 
 1. **strings**:
-   - **Tipo:** `TemplateStringsArray`
-   - **Descrição:** As partes literais da string de template HTML.
+   - **Type:** `TemplateStringsArray`
+   - **Description:** The literal parts of the HTML template string.
 
 2. **values**:
-   - **Tipo:** `any[]`
-   - **Descrição:** Os valores interpolados na string, que podem ser variáveis, expressões ou resultados de funções.
+   - **Type:** `any[]`
+   - **Description:** The values interpolated in the string, which can be variables, expressions, or function results.
 
-### Retorno
+### Return
 
-- **Tipo:** `string`
-- **Descrição:** O HTML gerado como uma string, que pode ser utilizado diretamente no componente.
+- **Type:** `string`
+- **Description:** The generated HTML as a string, which can be used directly in the component.
 
-### Exemplo Prático
+### Practical Example
 
-**Exemplo: Usando `html` e `@paint` para Gerar Templates Dinâmicos**
+**Example: Using `html` and `@paint` to Generate Dynamic Templates**
 
 ```javascript
 import { define } from '@bake-js/-o-id';
 import { css, html, paint } from '@bake-js/-o-id/dom';
 
-// Função responsável por gerar o template HTML do componente
+// Function responsible for generating the HTML template of the component
 function component(self) {
   return html`
     <div>${self.text}</div>
   `;
 }
 
-// Função que retorna a folha de estilo dinâmica com interpolação de variáveis
+// Function that returns the dynamic stylesheet with variable interpolation
 function style() {
   return css`
     :host {
@@ -63,32 +65,32 @@ function style() {
   `;
 }
 
-// Define o Web Component e associa o template e os estilos via @paint
+// Define the Web Component and associate the template and styles via @paint
 @define('my-component')
 @paint(component, style)
 class MyComponent extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
-    this.text = 'Olá, Mundo!'; // Texto padrão a ser exibido no componente
+    this.text = 'Hello, World!'; // Default text to be displayed in the component
   }
 }
 ```
 
-### Explicação:
+### Explanation:
 
-- **Função `component(self)`**: Define o conteúdo HTML do componente, retornando o template via `html`. A variável `${self.text}` é interpolada diretamente no HTML, permitindo que o conteúdo seja dinâmico.
-- **Função `style()`**: Retorna a folha de estilo gerada pela função `css`, aplicando um estilo básico ao componente, como cor de fundo e cor do texto.
-- **Decorador `@paint`**: Aplica automaticamente o HTML e o CSS ao componente, integrando a lógica de renderização e estilização.
-- **Uso de `@define`**: Registra o Web Component, tornando-o disponível para uso em qualquer parte do documento HTML.
+- **Function `component(self)`**: Defines the HTML content of the component, returning the template via `html`. The variable `${self.text}` is interpolated directly into the HTML, allowing for dynamic content.
+- **Function `style()`**: Returns the stylesheet generated by the `css` function, applying basic styling to the component, such as background color and text color.
+- **Decorator `@paint`**: Automatically applies the HTML and CSS to the component, integrating the rendering and styling logic.
+- **Using `@define`**: Registers the Web Component, making it available for use anywhere in the HTML document.
 
-### Benefícios
+### Benefits
 
-1. **Legibilidade**: A utilização de template literals com `html` melhora a clareza do código, permitindo uma fácil visualização do layout do componente.
-2. **Flexibilidade**: A interpolação de variáveis permite que o conteúdo HTML mude dinamicamente, tornando o componente reativo a alterações de estado.
-3. **Integração com Estilos**: A função `html` se integra perfeitamente com `css` e `@paint`, permitindo uma abordagem coesa para a criação de componentes.
+1. **Readability**: The use of template literals with `html` improves code clarity, allowing for easy visualization of the component's layout.
+2. **Flexibility**: Variable interpolation allows the HTML content to change dynamically, making the component reactive to state changes.
+3. **Integration with Styles**: The `html` function integrates seamlessly with `css` and `@paint`, allowing for a cohesive approach to component creation.
 
-### Considerações Finais
+### Final Considerations
 
-- **Uso em Web Components**: A função `html` é ideal para o desenvolvimento de Web Components, especialmente quando utilizada em conjunto com Shadow DOM e a API de estilos adotados.
-- **Compatibilidade**: Verifique a compatibilidade do navegador para funcionalidades relacionadas a Web Components ao utilizar a função `html`.
+- **Usage in Web Components**: The `html` function is ideal for developing Web Components, especially when used in conjunction with Shadow DOM and the adopted styles API.
+- **Compatibility**: Check browser compatibility for features related to Web Components when using the `html` function.

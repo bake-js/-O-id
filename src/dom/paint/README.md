@@ -1,33 +1,35 @@
-# Guia de Uso: Decorator `paint`
+[🇧🇷 Leia em Português](./README.pt-BR.md) | [🇺🇸 Read in English](./README.md)
 
-O decorator `paint` é uma ferramenta poderosa que permite a definição declarativa de HTML e estilos para um Custom Element. Ele otimiza o processo de renderização e garante que os ciclos de vida do componente sejam respeitados.
+# Usage Guide: Decorator `paint`
 
-### Quando Usar
+The `paint` decorator is a powerful tool that allows for the declarative definition of HTML and styles for a Custom Element. It optimizes the rendering process and ensures that the component's lifecycle is respected.
 
-- **Renderização Controlada**: Ideal para componentes que requerem uma renderização específica e eficiente.
-- **Estilos Encapsulados**: Útil para aplicar estilos encapsulados a um componente, utilizando `adoptedStyleSheets`.
-- **Desempenho**: Para melhorar o desempenho de renderização ao utilizar `requestAnimationFrame`.
+### When to Use
 
-### Como Funciona
+- **Controlled Rendering**: Ideal for components that require specific and efficient rendering.
+- **Encapsulated Styles**: Useful for applying encapsulated styles to a component using `adoptedStyleSheets`.
+- **Performance**: To improve rendering performance when using `requestAnimationFrame`.
 
-O decorator `paint` intercepta os métodos de ciclo de vida `paintCallback`, `willPaintCallback`, `didPaintCallback` e `connectedCallback`, permitindo uma renderização otimizada e controlada do componente.
+### How It Works
 
-### Estrutura
+The `paint` decorator intercepts the lifecycle methods `paintCallback`, `willPaintCallback`, `didPaintCallback`, and `connectedCallback`, allowing for optimized and controlled rendering of the component.
+
+### Structure
 
 ```javascript
 /**
- * @param {Function} component - Função que retorna o HTML a ser renderizado.
- * @param {Function} [style] - Função opcional que retorna as folhas de estilo a serem aplicadas.
- * @returns {Function} - O decorator para ser aplicado à classe do componente.
+ * @param {Function} component - Function that returns the HTML to be rendered.
+ * @param {Function} [style] - Optional function that returns the stylesheets to be applied.
+ * @returns {Function} - The decorator to be applied to the component class.
  */
 const paint =
   (component, style = () => []) =>
   (target) => {
-    // Intercepta o método paintCallback para adicionar lógica de renderização
+    // Intercepts the paintCallback method to add rendering logic
     intercept(paintCallback)
       .in(target.prototype)
       .then(async function () {
-        // Função para renderizar o componente após o próximo frame
+        // Function to render the component after the next frame
         const render = (resolve) => {
           requestAnimationFrame(() => {
             (this.shadowRoot ?? document).adoptedStyleSheets = style(this);
@@ -37,53 +39,53 @@ const paint =
           });
         };
 
-        // Executa os callbacks de ciclo de vida antes e depois da renderização
+        // Executes lifecycle callbacks before and after rendering
         await this[willPaintCallback]?.();
         await new Promise(render);
         await this[didPaintCallback]?.();
       });
 
-    // Intercepta o método connectedCallback para garantir que paintCallback seja chamado
+    // Intercepts the connectedCallback method to ensure paintCallback is called
     intercept(connectedCallback)
-      .in(target.prototype) // Define o alvo do interceptor.
-      .then(exec(paintCallback)); // Define o método a ser executado pelo interceptor.
+      .in(target.prototype) // Defines the target of the interceptor.
+      .then(exec(paintCallback)); // Defines the method to be executed by the interceptor.
   };
 
 export default paint;
 ```
 
-### Parâmetros
+### Parameters
 
-1. **component** (obrigatório):
-   - **Tipo:** `Function`
-   - **Descrição:** Uma função que retorna uma string contendo o HTML a ser renderizado. Essa função é chamada com a instância do componente como argumento.
+1. **component** (required):
+   - **Type:** `Function`
+   - **Description:** A function that returns a string containing the HTML to be rendered. This function is called with the component instance as an argument.
 
-2. **style** (opcional):
-   - **Tipo:** `Function`
-   - **Descrição:** Uma função que retorna um array de folhas de estilo (`CSSStyleSheet`) a serem aplicadas ao componente. Se não fornecido, um array vazio será utilizado por padrão.
+2. **style** (optional):
+   - **Type:** `Function`
+   - **Description:** A function that returns an array of stylesheets (`CSSStyleSheet`) to be applied to the component. If not provided, an empty array will be used by default.
 
-### Passos para Utilização
+### Steps for Usage
 
-1. **Importe o decorator `paint`**:
+1. **Import the `paint` decorator**:
 
    ```javascript
    import { paint } from '@bake-js/-o-id/dom';
    ```
 
-2. **Aplique o decorator à classe do seu Custom Element**:
+2. **Apply the decorator to your Custom Element class**:
 
-   - **Passo 1:** Identifique a função que gera o HTML do seu componente.
-   - **Passo 2:** Aplique o decorator `paint`, passando a função de renderização e, opcionalmente, a função de estilo.
+   - **Step 1:** Identify the function that generates the HTML for your component.
+   - **Step 2:** Apply the `paint` decorator, passing the rendering function and, optionally, the style function.
 
-3. **Implemente a lógica de conexão**:
+3. **Implement the connection logic**:
 
-   - O decorator cuida da chamada ao método `paintCallback` dentro do ciclo de vida do componente, garantindo que a renderização ocorra no momento apropriado.
+   - The decorator handles the call to the `paintCallback` method within the component's lifecycle, ensuring that rendering occurs at the appropriate time.
 
-### Exemplo Prático
+### Practical Example
 
-**Exemplo 1: Renderização Simples**
+**Example 1: Simple Rendering**
 
-Aqui está um exemplo de como utilizar o `paint` para renderizar um Custom Element com um conteúdo dinâmico:
+Here’s an example of how to use `paint` to render a Custom Element with dynamic content:
 
 ```javascript
 import { define } from '@bake-js/-o-id'
@@ -107,17 +109,17 @@ const style = () => {
 @paint(component, style)
 class MyComponent extends HTMLElement {
   connectedCallback() {
-    console.log('MyComponent conectado');
+    console.log('MyComponent connected');
   }
 }
 ```
 
-**Explicação:**
-- O método de renderização gera um `div` contendo o valor de `someProperty`. As folhas de estilo são aplicadas através de `adoptedStyleSheets`.
+**Explanation:**
+- The rendering method generates a `div` containing the value of `someProperty`. The stylesheets are applied through `adoptedStyleSheets`.
 
-**Exemplo 2: Comportamento de Estilo Personalizado**
+**Example 2: Custom Style Behavior**
 
-Você pode adicionar estilos personalizados ao seu componente:
+You can add custom styles to your component:
 
 ```javascript
 import { define } from '@bake-js/-o-id'
@@ -141,21 +143,21 @@ const style = (element) => {
 @paint(component, style)
 class MyStyledComponent extends HTMLElement {
   connectedCallback() {
-    console.log('MyStyledComponent conectado');
-    this.color = 'blue'; // Define uma propriedade para a cor
+    console.log('MyStyledComponent connected');
+    this.color = 'blue'; // Sets a property for the color
   }
 }
 ```
 
-**Explicação:**
-- O `customStyle` retorna uma folha de estilo que aplica uma cor dinâmica ao texto do `div` baseado na propriedade `color` do componente.
+**Explanation:**
+- The `customStyle` returns a stylesheet that applies a dynamic color to the text of the `div` based on the component's `color` property.
 
-### Benefícios do Decorator `paint`
+### Benefits of the `paint` Decorator
 
-1. **Centralização da Lógica de Renderização**: Permite que a lógica de renderização e estilo seja centralizada, melhorando a legibilidade e manutenção do código.
-2. **Desempenho Otimizado**: Utiliza `requestAnimationFrame` para garantir que a renderização ocorra no momento ideal, melhorando o desempenho visual.
-3. **Estilos Encapsulados**: Suporte a `adoptedStyleSheets`, permitindo a aplicação de estilos sem poluir o escopo global.
+1. **Centralization of Rendering Logic**: Allows rendering and style logic to be centralized, improving code readability and maintainability.
+2. **Optimized Performance**: Uses `requestAnimationFrame` to ensure that rendering occurs at the ideal moment, enhancing visual performance.
+3. **Encapsulated Styles**: Supports `adoptedStyleSheets`, allowing styles to be applied without polluting the global scope.
 
-### Considerações Finais
+### Final Considerations
 
-O decorator `paint` oferece uma maneira eficaz e organizada de gerenciar a renderização e os estilos de Custom Elements, garantindo que o ciclo de vida de renderização seja respeitado e otimizado.
+The `paint` decorator offers an effective and organized way to manage the rendering and styles of Custom Elements, ensuring that the rendering lifecycle is respected and optimized.
