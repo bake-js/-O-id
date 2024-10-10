@@ -159,12 +159,12 @@ Informações sobre os callbacks específicos para a interação de Custom Eleme
 
 ### DOM
 Documentação sobre como manipular o DOM e criar elementos personalizados.
-- [css](https://github.com/bake-js/-o-id/blob/main/src/css/README.md) - Helper para criar estilos CSS personalizados para Custom Elements.
-- [didPaint](https://github.com/bake-js/-o-id/blob/main/src/didPaint/README.md) - Decorator que permite a execução de lógica após a renderização do componente.
-- [html](https://github.com/bake-js/-o-id/blob/main/src/html/README.md) - Helper para gerar HTML limpo e eficiente a partir de templates.
-- [paint](https://github.com/bake-js/-o-id/blob/main/src/paint/README.md) - Decorator que chama a função de renderização do componente.
-- [repaint](https://github.com/bake-js/-o-id/blob/main/src/repaint/README.md) - Decorator que atualiza a renderização do componente ao alterar o estado.
-- [willPaint](https://github.com/bake-js/-o-id/blob/main/src/willPaint/README.md) - Decorator que permite a execução de lógica antes da renderização do componente.
+- [css](https://github.com/bake-js/-o-id/blob/main/src/css/README.pt-BR.md) - Helper para criar estilos CSS personalizados para Custom Elements.
+- [didPaint](https://github.com/bake-js/-o-id/blob/main/src/didPaint/README.pt-BR.md) - Decorator que permite a execução de lógica após a renderização do componente.
+- [html](https://github.com/bake-js/-o-id/blob/main/src/html/README.pt-BR.md) - Helper para gerar HTML limpo e eficiente a partir de templates.
+- [paint](https://github.com/bake-js/-o-id/blob/main/src/paint/README.pt-BR.md) - Decorator que chama a função de renderização do componente.
+- [repaint](https://github.com/bake-js/-o-id/blob/main/src/repaint/README.pt-BR.md) - Decorator que atualiza a renderização do componente ao alterar o estado.
+- [willPaint](https://github.com/bake-js/-o-id/blob/main/src/willPaint/README.pt-BR.md) - Decorator que permite a execução de lógica antes da renderização do componente.
 
 ### Eventos
 Documentação sobre como gerenciar eventos em Custom Elements, facilitando a comunicação e a interatividade.
