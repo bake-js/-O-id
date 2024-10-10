@@ -176,7 +176,7 @@ Documentação sobre como gerenciar eventos em Custom Elements, facilitando a co
 
 ### Echo
 Documentação sobre o módulo Echo, um barramento de eventos que permite a comunicação entre componentes de forma eficiente.
-- [echo](https://github.com/bake-js/-o-id/blob/main/src/echo/README.md) - Módulo para comunicação entre componentes, permitindo a emissão e escuta de eventos de forma simplificada.
+- [echo](https://github.com/bake-js/-o-id/blob/main/src/echo/echo/README.pt-BR.md) - Módulo para comunicação entre componentes, permitindo a emissão e escuta de eventos de forma simplificada.
 
 ## Contribuindo
 

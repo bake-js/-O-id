@@ -176,7 +176,7 @@ Documentation on how to manage events in Custom Elements, facilitating communica
 
 ### Echo
 Documentation on the Echo module, an event bus that enables efficient communication between components.
-- [echo](https://github.com/bake-js/-o-id/blob/main/src/echo/README.md) - Module for communication between components, allowing simplified event emission and listening.
+- [echo](https://github.com/bake-js/-o-id/blob/main/src/echo/echo/README.md) - Module for communication between components, allowing simplified event emission and listening.
 
 ## Contributing
 
