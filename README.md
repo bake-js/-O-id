@@ -109,11 +109,11 @@ Drop by our [online assistant](https://hf.co/chat/assistant/6703c9dfe3610a31b5ef
 
 Get ready for an intergalactic journey through the **-O-id** universe:
 
-- [Lifecycle and Forms](https://github.com/bake-js/-o-id/blob/main/src/README.pt-BR.md): Understand your components' lifecycle. It's like the Circle of Life, but for code!
-- [DOM](https://github.com/bake-js/-o-id/blob/main/src/dom/README.pt-BR.md): Learn to tame the DOM like a true lion tamer!
-- [Event](https://github.com/bake-js/-o-id/blob/main/src/event/README.pt-BR.md): Because every superhero needs to react to world events, right?
-- [Relay](https://github.com/bake-js/-o-id/blob/main/src/relay/README.pt-BR.md): Make your components chat like gossipy neighbors!
-- [Echo](https://github.com/bake-js/-o-id/blob/main/src/echo/README.pt-BR.md): Our intergalactic communication system between components. Still in beta, but already causing a stir!
+- [Lifecycle and Forms](https://github.com/bake-js/-o-id/blob/main/src/README.md): Understand your components' lifecycle. It's like the Circle of Life, but for code!
+- [DOM](https://github.com/bake-js/-o-id/blob/main/src/dom/README.md): Learn to tame the DOM like a true lion tamer!
+- [Event](https://github.com/bake-js/-o-id/blob/main/src/event/README.md): Because every superhero needs to react to world events, right?
+- [Relay](https://github.com/bake-js/-o-id/blob/main/src/relay/README.md): Make your components chat like gossipy neighbors!
+- [Echo](https://github.com/bake-js/-o-id/blob/main/src/echo/README.md): Our intergalactic communication system between components. Still in beta, but already causing a stir!
 
 ## Reference Index: So you don't get lost in the -O-id multiverse! 🌌
 
@@ -131,26 +131,26 @@ Get ready for an intergalactic journey through the **-O-id** universe:
 - [formStateRestore](https://github.com/bake-js/-o-id/blob/main/src/formStateRestore/README.md) - Restoring the state. It's like a time machine for your form!
 
 ### DOM
-- [css](https://github.com/bake-js/-o-id/blob/main/src/css/README.pt-BR.md) - Give your component that style!
-- [didPaint](https://github.com/bake-js/-o-id/blob/main/src/didPaint/README.pt-BR.md) - For when you want to do something after the component appeared.
-- [html](https://github.com/bake-js/-o-id/blob/main/src/html/README.pt-BR.md) - Create HTML cleaner than your mom's room!
-- [paint](https://github.com/bake-js/-o-id/blob/main/src/paint/README.pt-BR.md) - Time to bring your component to life!
-- [repaint](https://github.com/bake-js/-o-id/blob/main/src/repaint/README.pt-BR.md) - When your component needs a visual change.
-- [willPaint](https://github.com/bake-js/-o-id/blob/main/src/willPaint/README.pt-BR.md) - Prepare everything before the show starts!
+- [css](https://github.com/bake-js/-o-id/blob/main/src/css/README.md) - Give your component that style!
+- [didPaint](https://github.com/bake-js/-o-id/blob/main/src/didPaint/README.md) - For when you want to do something after the component appeared.
+- [html](https://github.com/bake-js/-o-id/blob/main/src/html/README.md) - Create HTML cleaner than your mom's room!
+- [paint](https://github.com/bake-js/-o-id/blob/main/src/paint/README.md) - Time to bring your component to life!
+- [repaint](https://github.com/bake-js/-o-id/blob/main/src/repaint/README.md) - When your component needs a visual change.
+- [willPaint](https://github.com/bake-js/-o-id/blob/main/src/willPaint/README.md) - Prepare everything before the show starts!
 
 ### Events
-- [event](https://github.com/bake-js/-o-id/blob/main/src/event/event/README.pt-BR.md) - Make your component all ears!
-- [stop](https://github.com/bake-js/-o-id/blob/main/src/event/stop/README.pt-BR.md) - Say "Stop everything!" to events.
-- [prevent](https://github.com/bake-js/-o-id/blob/main/src/event/prevent/README.pt-BR.md) - Prevent default things from happening.
-- [formData](https://github.com/bake-js/-o-id/blob/main/src/event/formData/README.pt-BR.md) - Get all form data in the blink of an eye!
-- [value](https://github.com/bake-js/-o-id/blob/main/src/event/value/README.pt-BR.md) - Get the value of inputs and selects easy peasy.
+- [event](https://github.com/bake-js/-o-id/blob/main/src/event/event/README.md) - Make your component all ears!
+- [stop](https://github.com/bake-js/-o-id/blob/main/src/event/stop/README.md) - Say "Stop everything!" to events.
+- [prevent](https://github.com/bake-js/-o-id/blob/main/src/event/prevent/README.md) - Prevent default things from happening.
+- [formData](https://github.com/bake-js/-o-id/blob/main/src/event/formData/README.md) - Get all form data in the blink of an eye!
+- [value](https://github.com/bake-js/-o-id/blob/main/src/event/value/README.md) - Get the value of inputs and selects easy peasy.
 
 ### Echo
-- [echo](https://github.com/bake-js/-o-id/blob/main/src/echo/echo/README.pt-BR.md) - Make your components shout at each other (in a good way)!
+- [echo](https://github.com/bake-js/-o-id/blob/main/src/echo/echo/README.md) - Make your components shout at each other (in a good way)!
 
 ## Want to contribute? Go for it! 🤝
 
-Feel like getting your hands dirty? We love new heroes! Take a look at our [contribution guidelines](https://github.com/bake-js/-o-id/blob/main/CONTRIBUTING.pt-BR.md) and join us on this journey!
+Feel like getting your hands dirty? We love new heroes! Take a look at our [contribution guidelines](https://github.com/bake-js/-o-id/blob/main/CONTRIBUTING.md) and join us on this journey!
 
 ## License
 
