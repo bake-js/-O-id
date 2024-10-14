@@ -1,30 +1,34 @@
 [🇧🇷 Leia em Português](./README.pt-BR.md) | [🇺🇸 Read in English](./README.md)
 
-# -O-id: Your Web Components will never be the same! 🚀🧠
-
-Hey there, front-end folks! 👋 Ready to give your Web Components that extra boost? It's time to meet **-O-id**, the library that will make your ideas take off faster than Doc Brown's DeLorean! ⚡️
-
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=bake-js_-o-id&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=bake-js_-o-id)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=bake-js_-o-id&metric=bugs)](https://sonarcloud.io/summary/new_code?id=bake-js_-o-id)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=bake-js_-o-id&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=bake-js_-o-id)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=bake-js_-o-id&metric=coverage)](https://sonarcloud.io/summary/new_code?id=bake-js_-o-id)
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=bake-js_-o-id&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=bake-js_-o-id)
 
-## Why "-O-id"? 🤔
+# -O-id
 
-Picture this: you're coding away when suddenly BAM! 💥 A brilliant idea pops up! That's where **-O-id** comes into play. Like the "id" in Freud's psychoanalysis, it's the creative and instinctive part of your dev mind. The "-O-" is the portal that transforms these crazy ideas into real, functional components. It's like having a Dr. Emmett Brown for your interfaces, but without needing 1.21 gigawatts! ⚡🔧
+**-O-id** is a lightweight and efficient library for creating custom Web Components, focusing on simplicity and performance. Built entirely in JavaScript, **-O-id** ensures that your components are fast, lightweight, and easy to maintain. With an intuitive architecture and decorators like `@paint` and `@repaint`, developing reactive and modular components becomes simple and straightforward.
 
-## Installation: Easier than finding a bug in production! 🐛
+## Why -O-id?
+
+The name **-O-id** is inspired by Sigmund Freud's psychoanalytic theory. The "**id**" represents the most primitive part of the human personality, driving our fundamental instincts. Similarly, the **-O-id** library serves as an essential foundation for building web interfaces. The suffix "**-O**" symbolizes the transformation of ideas into tangible results—functional and efficient components.
+
+**-O-id** is not just a tool but a force driving interface creation, allowing developers to transform concepts into reality in an agile and intuitive way. This name highlights the importance of starting with a solid foundation, just as the "**id**" is the starting point in personality formation.
+
+## Installation
+
+To install the library, use npm:
 
 ```bash
 npm install @bake-js/-o-id
 ```
 
-Works with `npm`, `yarn`, and `bun`. We don't judge your favorite package manager! 😉
+> **Note:** The library is also compatible with `yarn` and `bun`.
 
-## Show me the code! 👨‍💻
+## Usage Example
 
-Want to see how easy it is to create a component with **-O-id** in practice? Check out this interactive counter that changes color:
+Below is a simple example of how to use the library to create an interactive counter:
 
 ```javascript
 import { define } from '@bake-js/-o-id';
@@ -84,78 +88,100 @@ class Counter extends HTMLElement {
 }
 ```
 
-Looks like magic, right? But it's just the power of **-O-id** in action! 🎩✨ Want to see this baby running? [Take a look at CodePen](https://codepen.io/demgoncalves/pen/dyxpdLw?editors=1010) and prepare to be amazed!
+You can view the interactive example on [CodePen](https://codepen.io/demgoncalves/pen/dyxpdLw?editors=1010).
 
-## How to use this thing in real life? 🤷‍♂️
+### Component Explanation
 
-1. Import everything correctly (don't forget the library, eh!).
-2. Throw this beauty in your HTML:
+The example illustrates the creation of a custom element component named `o-id-counter`, representing a counter that can be incremented via a button. Below are the key features of the component:
+
+- **Element Definition:**
+  - The element is defined as `o-id-counter` using the `@define` decorator, and it uses Shadow DOM to encapsulate its styles and structure.
+
+- **Internal State:**
+  - The counter’s state is stored in a private property `#number`, starting at zero. The `get number()` method returns the current value, while the `set number(value)` method allows updates.
+
+- **Component Rendering:**
+  - The `component(self)` function generates the HTML structure for the button, and the `style()` function defines the applied CSS styles.
+
+- **Interactivity:**
+  - The `increment()` method is decorated with `@on.click('button')`, allowing the counter to be incremented with each button click. This method updates the state and re-renders the component automatically.
+
+### How to Use
+
+To use this component in your application:
+
+1. Ensure the code is properly imported and defined.
+2. Add the `<o-id-counter></o-id-counter>` element anywhere in your HTML.
+3. The component will be ready to use, incrementing the value with each button click.
+
+Example of usage in HTML:
 
 ```html
 <o-id-counter></o-id-counter>
 ```
 
-3. Done! Now just sit back and watch the magic happen. 🪄✨
+> This example demonstrates how **-O-id** simplifies the creation of interactive components with a clear and efficient syntax.
 
-## Demonstration: Seeing is believing! 👀
+## Demo
 
-Think it's all talk? Then check out our [interactive demo](https://github.com/bake-js/-o-id-demo) and get ready to fall in love! 💘
+To see the **-O-id** library in action, check out our [interactive demo](https://github.com/bake-js/-o-id-demo).
 
-## Got questions? We've got answers! 🦸‍♂️
+## Assistant
 
-Drop by our [online assistant](https://hf.co/chat/assistant/6703c9dfe3610a31b5ef3523). It's like having an **-O-id** sage in your pocket!
+If you need help or guidance on how to use the **-O-id** library, feel free to access our [online assistant](https://hf.co/chat/assistant/6703c9dfe3610a31b5ef3523), which provides additional support and interactive documentation.
 
-## Documentation: Because knowledge is power! 💪📚
+## Documentation
 
-Get ready for an intergalactic journey through the **-O-id** universe:
+Below you will find detailed documentation for the main modules of **-O-id**. Each link leads to the corresponding page where you can learn more about how to use and implement the features offered.
 
-- [Lifecycle and Forms](https://github.com/bake-js/-o-id/blob/main/src/README.md): Understand your components' lifecycle. It's like the Circle of Life, but for code!
-- [DOM](https://github.com/bake-js/-o-id/blob/main/src/dom/README.md): Learn to tame the DOM like a true lion tamer!
-- [Event](https://github.com/bake-js/-o-id/blob/main/src/event/README.md): Because every superhero needs to react to world events, right?
-- [Relay](https://github.com/bake-js/-o-id/blob/main/src/relay/README.md): Make your components chat like gossipy neighbors!
-- [Echo](https://github.com/bake-js/-o-id/blob/main/src/echo/README.md): Our intergalactic communication system between components. Still in beta, but already causing a stir!
+- **[Lifecycle and Forms](https://github.com/bake-js/-o-id/blob/main/src/README.md)**: A complete guide to understanding and applying the main modules and decorators of **-O-id**.
+- **[DOM](https://github.com/bake-js/-o-id/blob/main/src/dom/README.md)**: Documentation on DOM manipulation and component rendering.
+- **[Event](https://github.com/bake-js/-o-id/blob/main/src/event/README.md)**: A guide for handling and responding to events within Web Components.
+- **[Relay](https://github.com/bake-js/-o-id/blob/main/src/relay/README.md)**: Facilitates listening to events emitted by a Custom Element's parentElement.
+- **[Echo](https://github.com/bake-js/-o-id/blob/main/src/echo/README.md)**: Documentation on the Echo event bus for communication between components. **Note:** This module is in beta and may be subject to changes.
 
-## Reference Index: So you don't get lost in the -O-id multiverse! 🌌
+## Reference Index
 
 ### Lifecycle
-- [adopted](https://github.com/bake-js/-o-id/blob/main/src/adopted/README.md) - When your component is adopted by a new document. Aww! 🐣
-- [attributeChanged](https://github.com/bake-js/-o-id/blob/main/src/attributeChanged/README.md) - For when your component decides to change its style!
-- [connected](https://github.com/bake-js/-o-id/blob/main/src/connected/README.md) - The moment your component says "Hello, world!"
-- [disconnected](https://github.com/bake-js/-o-id/blob/main/src/disconnected/README.md) - When it's time to say goodbye (for now)!
-- [define](https://github.com/bake-js/-o-id/blob/main/src/define/README.md) - Give your component a name. Choose wisely!
+Documentation on the callbacks and methods related to the lifecycle of Custom Elements. These methods are essential for managing the state and changes of elements throughout their existence in the DOM.
+- [adopted](https://github.com/bake-js/-o-id/blob/main/src/adopted/README.md) - Callback invoked when a Custom Element is adopted into a new document.
+- [attributeChanged](https://github.com/bake-js/-o-id/blob/main/src/attributeChanged/README.md) - Callback invoked when an attribute of a Custom Element is changed.
+- [connected](https://github.com/bake-js/-o-id/blob/main/src/connected/README.md) - Callback invoked when a Custom Element is inserted into the DOM.
+- [disconnected](https://github.com/bake-js/-o-id/blob/main/src/disconnected/README.md) - Callback invoked when a Custom Element is removed from the DOM.
+- [define](https://github.com/bake-js/-o-id/blob/main/src/define/README.md) - Function to define and register a new Custom Element.
 
-### Form-Associated Lifecycle
-- [formAssociated](https://github.com/bake-js/-o-id/blob/main/src/formAssociated/README.md) - Your component is now part of a form. What a responsibility!
-- [formDisabled](https://github.com/bake-js/-o-id/blob/main/src/formDisabled/README.md) - When your component takes a break in the form.
-- [formReset](https://github.com/bake-js/-o-id/blob/main/src/formReset/README.md) - Time to go back to the initial state. Real-life Ctrl+Z!
-- [formStateRestore](https://github.com/bake-js/-o-id/blob/main/src/formStateRestore/README.md) - Restoring the state. It's like a time machine for your form!
+### Lifecycle Associated with Forms
+Information about the specific callbacks for Custom Elements interacting with forms. These callbacks are used to manage state and actions related to forms.
+- [formAssociated](https://github.com/bake-js/-o-id/blob/main/src/formAssociated/README.md) - Callback invoked when an element is associated with a form.
+- [formDisabled](https://github.com/bake-js/-o-id/blob/main/src/formDisabled/README.md) - Callback invoked when an element is disabled within a form.
+- [formReset](https://github.com/bake-js/-o-id/blob/main/src/formReset/README.md) - Callback invoked when an associated form is reset.
+- [formStateRestore](https://github.com/bake-js/-o-id/blob/main/src/formStateRestore/README.md) - Callback invoked to restore the form state.
 
 ### DOM
-- [css](https://github.com/bake-js/-o-id/blob/main/src/css/README.md) - Give your component that style!
-- [didPaint](https://github.com/bake-js/-o-id/blob/main/src/didPaint/README.md) - For when you want to do something after the component appeared.
-- [html](https://github.com/bake-js/-o-id/blob/main/src/html/README.md) - Create HTML cleaner than your mom's room!
-- [paint](https://github.com/bake-js/-o-id/blob/main/src/paint/README.md) - Time to bring your component to life!
-- [repaint](https://github.com/bake-js/-o-id/blob/main/src/repaint/README.md) - When your component needs a visual change.
-- [willPaint](https://github.com/bake-js/-o-id/blob/main/src/willPaint/README.md) - Prepare everything before the show starts!
+Documentation on how to manipulate the DOM and create custom elements.
+- [css](https://github.com/bake-js/-o-id/blob/main/src/css/README.md) - Helper for creating custom CSS styles for Custom Elements.
+- [didPaint](https://github.com/bake-js/-o-id/blob/main/src/didPaint/README.md) - Decorator that allows logic execution after the component's rendering.
+- [html](https://github.com/bake-js/-o-id/blob/main/src/html/README.md) - Helper for generating clean and efficient HTML from templates.
+- [paint](https://github.com/bake-js/-o-id/blob/main/src/paint/README.md) - Decorator that calls the component's render function.
+- [repaint](https://github.com/bake-js/-o-id/blob/main/src/repaint/README.md) - Decorator that updates the component's rendering when its state changes.
+- [willPaint](https://github.com/bake-js/-o-id/blob/main/src/willPaint/README.md) - Decorator that allows logic execution before the component's rendering.
 
 ### Events
-- [event](https://github.com/bake-js/-o-id/blob/main/src/event/event/README.md) - Make your component all ears!
-- [stop](https://github.com/bake-js/-o-id/blob/main/src/event/stop/README.md) - Say "Stop everything!" to events.
-- [prevent](https://github.com/bake-js/-o-id/blob/main/src/event/prevent/README.md) - Prevent default things from happening.
-- [formData](https://github.com/bake-js/-o-id/blob/main/src/event/formData/README.md) - Get all form data in the blink of an eye!
-- [value](https://github.com/bake-js/-o-id/blob/main/src/event/value/README.md) - Get the value of inputs and selects easy peasy.
+Documentation on how to manage events in Custom Elements, facilitating communication and interactivity.
+- [on](https://github.com/bake-js/-o-id/blob/main/src/event/event/README.md) - Decorator for adding event listeners to elements.
+- [stop](https://github.com/bake-js/-o-id/blob/main/src/event/stop/README.md) - Filter that calls `event.stopPropagation()` and returns the event, preventing it from bubbling up the DOM tree.
+- [prevent](https://github.com/bake-js/-o-id/blob/main/src/event/prevent/README.md) - Filter that calls `event.preventDefault()` and returns the event, preventing the default action of the event.
+- [formData](https://github.com/bake-js/-o-id/blob/main/src/event/formData/README.md) - Filter that extracts form data and returns an object containing key-value pairs.
+- [value](https://github.com/bake-js/-o-id/blob/main/src/event/value/README.md) - Filter that retrieves the event's value, useful for inputs and selects.
 
 ### Echo
-- [echo](https://github.com/bake-js/-o-id/blob/main/src/echo/echo/README.md) - Make your components shout at each other (in a good way)!
+Documentation on the Echo module, an event bus that enables efficient communication between components.
+- [echo](https://github.com/bake-js/-o-id/blob/main/src/echo/echo/README.md) - Module for communication between components, allowing simplified event emission and listening.
 
-## Want to contribute? Go for it! 🤝
+## Contributing
 
-Feel like getting your hands dirty? We love new heroes! Take a look at our [contribution guidelines](https://github.com/bake-js/-o-id/blob/main/CONTRIBUTING.md) and join us on this journey!
+Contributions are always welcome! Feel free to open issues or submit pull requests. To get started, check out the [contribution guidelines](https://github.com/bake-js/-o-id/blob/main/CONTRIBUTING.md).
 
 ## License
 
-This project is under the MIT License. This means you can use, abuse, and even juggle with the code (but please don't do the latter, it might hurt). 😉
-
----
-
-Made with ❤️, many cups of ☕, and probably some pizzas 🍕 by the **-O-id** crew. Let's go, dev! 🚀
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/bake-js/-o-id/blob/main/LICENSE) file for more details.
