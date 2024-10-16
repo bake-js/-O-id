@@ -67,5 +67,5 @@
   "source": "src/index.js",
   "type": "module",
   "types": "types.d.ts",
-  "version": "0.0.66"
+  "version": "0.0.67"
 }
