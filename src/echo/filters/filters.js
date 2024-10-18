@@ -55,6 +55,25 @@ const filters = {
       return undefined;
     }
   },
+
+  /**
+   * Inverte o valor booleano de um objeto.
+   *
+   * @param {*} object - O valor a ser invertido. Pode ser de qualquer tipo.
+   * @returns {boolean} O valor booleano inverso do objeto fornecido.
+   *
+   * @description
+   * A função `not` recebe qualquer tipo de valor e retorna o seu inverso booleano. Isso é útil para fazer
+   * verificações rápidas em condições, onde você deseja saber se o valor é falsy (`null`, `undefined`, `0`, `false`, `''`, etc.).
+   *
+   * @example
+   * const isActive = true;
+   * console.log(filters.not(isActive)); // false
+   *
+   * const user = null;
+   * console.log(filters.not(user)); // true
+   */
+  not: (object) => !object,
 };
 
 export default filters;
