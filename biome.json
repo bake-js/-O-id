@@ -19,6 +19,7 @@
       },
       "suspicious": {
         "noAssignInExpressions": "off",
+        "noDoubleEquals": "off",
         "noExplicitAny": "off",
         "noShadowRestrictedNames": "off",
         "noThenProperty": "off"
